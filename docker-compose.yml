@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  user-db:
+    image: mongo
+    restart: always
+    container_name: user-db-container
+    environment:
+      - MONGO_DB_ROOT_USERNAME=root
+      - MONGO_DB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - "./user_service/mongodb_data:/data/db"
+
+  user-service:
+    build: "./user_service"
+    depends_on:
+      - user-db
+    container_name: user-service-container
+    ports:
+      - "4001:4001"
+    volumes:
+      - "./user_service:/app"
+      - "./user_service/node_modules:/app/node_modules"
