@@ -28,6 +28,9 @@ All backend functions and hosting are carried out using Docker
 Create a .env file here in the root directory and it MUST follow this format
 
 ```
+# Node environments
+NODE_ENV=development
+
 # Ports
 GATEWAY_PORT=provide-a-port-number
 USER_SERVICE_PORT=provide-a-port-number
@@ -36,12 +39,17 @@ AUTH_SERVICE_PORT=provide-a-port-number
 
 # Databases
 MONGO_DB_PASSWORD=your-password-here
+MONGO_HOST_URL=db-url
 ```
 
 Although you can customize the .env file to your liking, here is an example of how it should look
 
 ```
+# Node environments
+NODE_ENV=development
+
 # Ports
+FRONTEND_HOST=http://localhost:3000
 GATEWAY_PORT=4000
 USER_SERVICE_PORT=4001
 CLUB_SERVICE_PORT=4002
@@ -49,5 +57,5 @@ AUTH_SERVICE_PORT=4003
 
 # Databases
 MONGO_DB_PASSWORD=abc123
-```
+MONGO_HOST_URL=mongodb://root:abc123@...
 ```
