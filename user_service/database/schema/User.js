@@ -1,5 +1,25 @@
 const mongoose = require("mongoose");
 
+/**
+ * The schema for the user
+ * 
+ * @type {string} name
+ * @type {string} email
+ * @type {string} password
+ * @type {string} college_name
+ * @type {string} gender?
+ * @type {string} race?
+ * @type {string} sexual_orientation?
+ * @type {string[]} majors?
+ * @type {string[]} minors?
+ * @type {number} gpa?
+ * @type {string} year?
+ * @type {string[]} courses?
+ * @type {string[]} clubs?
+ * @type {string} profile_img
+ * @type {string} desc?
+ * @type {string[]} interests?
+ */
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,11 +29,6 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
-    },
-
-    username: {
-        type: String,
-        required: true,
     },
 
     password: {

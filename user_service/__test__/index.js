@@ -1,13 +1,12 @@
-const assert = require("assert");
-const axios = require("axios");
-require("dotenv").config();
+const { initializationTesting } = require("./init");
+const { addingFetchingAndDeletingFromDatabaseTest } = require("./database");
 
-describe("Initialization Testing", () => {
-    it(`Testing to make sure that the User Service is up at ${process.env.USER_SERVICE_HOST}`, async () => {
-        try {
-            await axios.get(process.env.USER_SERVICE_HOST);
-        } catch (err) {
-            assert.fail(err);
-        }
-    });
-});
+
+async function startUserServiceTest() {
+    await initializationTesting();
+
+    await addingFetchingAndDeletingFromDatabaseTest();
+}
+
+startUserServiceTest();
+
