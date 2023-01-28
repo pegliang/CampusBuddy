@@ -31,6 +31,10 @@ Create a .env file here in the root directory and it MUST follow this format
 # Node environments
 NODE_ENV=development
 
+# Hosts
+FRONTEND_HOST=url
+GATEWAY_HOST=url
+
 # Ports
 GATEWAY_PORT=provide-a-port-number
 USER_SERVICE_PORT=provide-a-port-number
@@ -48,8 +52,11 @@ Although you can customize the .env file to your liking, here is an example of h
 # Node environments
 NODE_ENV=development
 
-# Ports
+# Hosts
 FRONTEND_HOST=http://localhost:3000
+GATEWAY_HOST=http://localhost:4000
+
+# Ports
 GATEWAY_PORT=4000
 USER_SERVICE_PORT=4001
 CLUB_SERVICE_PORT=4002

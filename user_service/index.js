@@ -3,16 +3,22 @@ const cors = require('cors');
 const { initDatabase } = require('./database');
 require("dotenv").config();
 
+const fetchRoutes = require("./routes/fetchRoutes");
+
 const app = express();
 const PORT = process.env.USER_SERVICE_PORT || 4001;
 
-app.use(express.json());
-
 // dev only: allow access from anywhere
-// production only: only allow access from the frontend host
+// production only: only allow access from the gateway host
 app.use(cors({
-    origin: [process.env.NODE_ENV !== 'production' ? "*" : process.env.FRONTEND_HOSt]
+    origin: [process.env.NODE_ENV !== 'production' ? "*" : process.env.GATEWAY_HOST]
 }));
+
+app.use(express.json());
+app.use("/", fetchRoutes);
+
+// home route
+app.get("/", (req, res) => res.send());
 
 // initialize the database and if it is successful, start the server
 initDatabase().then(() => {

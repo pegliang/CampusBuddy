@@ -23,7 +23,7 @@ services:
     environment:
       - DATABASE_URL=${MONGO_HOST_URL}
       - USER_SERVICE_HOST=${USER_SERVICE_PORT}
-      - FRONTEND_HOST=${FRONTEND_HOST}
+      - GATEWAY_HOST=${GATEWAY_HOST}
     ports:
       - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     env_file:
