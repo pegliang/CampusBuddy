@@ -16,13 +16,15 @@ All backend functions and hosting are carried out using Docker
 
 1. Pull this repository
 
-2. Install Docker and NodeJS (recommended)
+2. Install Docker, NodeJS, Python, and Flask
 
 3. Create a .env file in this directory and it must follow the format specified below
 
-4. Run the command `docker compose up` in this directory to start all containers
+4. Run `npm install` in every service directory that runs NodeJS
 
-5. To stop the backend servers, run `docker compose down` in this directory to stop all containers
+5. Run the command `docker compose up` in this directory to start all containers
+
+6. To stop the backend servers, run `docker compose down` in this directory to stop all containers
 
 ## Environment File Format
 Create a .env file here in the root directory and it MUST follow this format
