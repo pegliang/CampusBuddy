@@ -15,7 +15,7 @@ const { encryptPassword } = require("../encryption");
  * @returns 500 if there is a database error
  */
 async function registerController(req, res) {
-    if (!req.registerRequest) return res.status(400).send();
+    if (!req.body.registerRequest) return res.status(400).send();
 
     const name = req.body.registerRequest.name;
     const email = req.body.registerRequest.email;
@@ -30,7 +30,7 @@ async function registerController(req, res) {
     const year = req.body.registerRequest.year || null;
     const courses = req.body.registerRequest.courses || [];
     const clubs = req.body.registerRequest.clubs || [];
-    const profile_img = req.body.profile_img;
+    const profile_img = req.body.registerRequest.profile_img;
     const desc = req.body.registerRequest.desc || null;
     const interests = req.body.registerRequest.interests || [];
 
