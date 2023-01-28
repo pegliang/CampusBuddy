@@ -22,7 +22,8 @@ services:
     container_name: user-service-container
     environment:
       - DATABASE_URL=${MONGO_HOST_URL}
-      - USER_SERVICE_HOST=${USER_SERVICE_PORT}
+      - USER_SERVICE_HOST=${USER_SERVICE_HOST}
+      - USER_SERVICE_PORT=${USER_SERVICE_PORT}
       - GATEWAY_HOST=${GATEWAY_HOST}
     ports:
       - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
