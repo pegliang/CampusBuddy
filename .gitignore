@@ -2,4 +2,4 @@
 .env
 
 # ignore docker volumes
-./user_service/mongodb_data
+/user_service/mongodb_data/
