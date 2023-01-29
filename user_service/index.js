@@ -6,6 +6,7 @@ require("dotenv").config();
 const fetchRoutes = require("./routes/fetchRoutes");
 const insertRoutes = require("./routes/insertRoutes");
 const deleteRoutes = require("./routes/deleteRoutes");
+const loginRoute = require("./routes/loginRoute");
 
 const app = express();
 const PORT = process.env.USER_SERVICE_PORT || 4001;
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/", fetchRoutes);
 app.use("/", insertRoutes);
 app.use("/", deleteRoutes);
+app.use("/", loginRoute);
 
 // home route
 app.get("/", (req, res) => res.send());
