@@ -46,6 +46,10 @@ AUTH_SERVICE_PORT=provide-a-port-number
 # Databases
 MONGO_DB_PASSWORD=your-password-here
 MONGO_HOST_URL=db-url
+
+# Secret keys
+JWT_SECRET_ACCESS_TOKEN_KEY=your-key-here
+JWT_SECRET_REFRESH_TOKEN_KEY=your-key-here
 ```
 
 Although you can customize the .env file to your liking, here is an example of how it should look
@@ -67,4 +71,8 @@ AUTH_SERVICE_PORT=4003
 # Databases
 MONGO_DB_PASSWORD=abc123
 MONGO_HOST_URL=mongodb://root:abc123@...
+
+# Secret keys
+JWT_SECRET_ACCESS_TOKEN_KEY=abc123
+JWT_SECRET_REFRESH_TOKEN_KEY=123xyz
 ```
