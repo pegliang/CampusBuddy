@@ -2,50 +2,14 @@ const assert = require("assert");
 const axios = require("axios");
 require("dotenv").config();
 
-const fullDummyData = {
-    name: "Joe Dummy Doe",
-    email: "joeDummyDoe@sample.university.edu",
-    password: "dummyPassword123",
-    college_name: "Sample University",
-    gender: "Male",
-    race: "White",
-    sexual_orientation: "Straight",
-    majors: ["Computer Science"],
-    minors: ["English", "Philosophy"],
-    gpa: 3.8,
-    year: "Junior",
-    courses: ["18381", "129183", "13818", "18313"],
-    clubs: ["Sample Club A", "Sample Club B"],
-    profile_img: "https://google.com",
-    desc: "My Sample Description",
-    interests: ["Sample Interest A", "Sample Interest B"]
-
-}
-
-const partialDummyData = {
-    name: "Joe Dummy Doe",
-    email: "joeDummyDoe@sample.university.edu",
-    password: "dummyPassword123",
-    college_name: "Sample University",
-    profile_img: "https://google.com",
-}
+const fullDummyData = require("./fullDummyData.json");
+const partialDummyData = require("./partialDummyData.json");
 
 let dummyId = null;
 
-async function addingFetchingAndDeletingFromDatabaseTest() {
-    describe("Testing the user database", () => {
-        it("Adding a dummy user into the database", async () => {
-            const registerRequest = fullDummyData;
-
-            try {
-                await axios.post(process.env.USER_SERVICE_HOST + "/register", { registerRequest });
-            } catch (err) {
-                assert.fail(err);
-            }
-
-        });
-
-        it("Fetching the dummy user data using its email address", async () => {
+async function fetchingUserTesting() {
+    describe("Testing the fetch route", async () => {
+        it("Fetching the dummy user with every single field filled using their email", async () => {
             try {
                 const res = await axios.get(process.env.USER_SERVICE_HOST + `/getUserAccountInfoByEmail?email=${fullDummyData.email}`);
 
@@ -109,7 +73,7 @@ async function addingFetchingAndDeletingFromDatabaseTest() {
             }
         });
 
-        it("Fetching the dummy user data using its id", async () => {
+        it("Fetching the dummy user with every single field filled using their id", async () => {
             try {
                 const res = await axios.get(process.env.USER_SERVICE_HOST + `/getUserAccountInfoById?id=${dummyId}`);
 
@@ -171,27 +135,9 @@ async function addingFetchingAndDeletingFromDatabaseTest() {
             } catch (err) {
                 assert.fail(err);
             }
-        })
-
-        it("Deleting the dummy user using the DELETE email route", async () => {
-            try {
-                await axios.delete(process.env.USER_SERVICE_HOST + `/deleteUserByEmail?email=${fullDummyData.email}`);
-            } catch (err) {
-                assert.fail(err);
-            }
         });
 
-        it("Adding a new dummy user with ONLY the required fields", async () => {
-            const registerRequest = partialDummyData;
-
-            try {
-                await axios.post(process.env.USER_SERVICE_HOST + "/register", { registerRequest });
-            } catch (err) {
-                assert.fail(err);
-            }
-        });
-
-        it("Fetching the partial dummy user using their email", async () => {
+        it("Fetching the dummy user with ONLY required field filled using their email", async () => {
             try {
                 const res = await axios.get(process.env.USER_SERVICE_HOST + `/getUserAccountInfoByEmail?email=${partialDummyData.email}`);
 
@@ -255,7 +201,7 @@ async function addingFetchingAndDeletingFromDatabaseTest() {
 
         });
 
-        it("Fetching the partial dummy user using their id", async () => {
+        it("Fetching the dummy user with ONLY required field filled using their id", async () => {
             try {
                 const res = await axios.get(process.env.USER_SERVICE_HOST + `/getUserAccountInfoById?id=${dummyId}`);
 
@@ -312,18 +258,10 @@ async function addingFetchingAndDeletingFromDatabaseTest() {
             } catch (err) {
                 assert.fail(err);
             }
-        })
-
-        it("Removing the partial dummy user using the DELETE email route", async () => {
-            try {
-                await axios.delete(process.env.USER_SERVICE_HOST + `/deleteUserByEmail?email=${partialDummyData.email}`);
-            } catch (err) {
-                assert.fail(err);
-            }
         });
-    })
+    });
 }
 
 module.exports = {
-    addingFetchingAndDeletingFromDatabaseTest,
+    fetchingUserTesting,
 }
