@@ -31,7 +31,9 @@ async function insertUser(registerRequest) {
     try {
         await User.create({
             name, email, password, college_name, gender, race, sexual_orientation, majors, minors,
-            gpa, year, courses, clubs, profile_img, desc, interests
+            gpa, year, courses, clubs, profile_img, desc, interests,
+            verifiedEmail: false,
+            isPremiumMember: false,
         });
     } catch (err) {
         throw err;

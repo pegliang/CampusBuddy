@@ -99,6 +99,16 @@ const UserSchema = new mongoose.Schema({
     interests: {
         type: [String],
         required: false,
+    },
+
+    verifiedEmail: {
+        type: Boolean,
+        required: true,
+    },
+
+    isPremiumMember: {
+        type: Boolean,
+        required: true,
     }
 });
 
