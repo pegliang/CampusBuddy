@@ -40,6 +40,8 @@ services:
     depends_on:
       - user-db
     container_name: matching-service-container
+    environment:
+      - DATABASE_URL=${MONGO_HOST_URL}
     ports:
       - "8080:8080"
     volumes:

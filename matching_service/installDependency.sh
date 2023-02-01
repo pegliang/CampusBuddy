@@ -3,7 +3,7 @@
 
 for var in "$@"
 do
-    pip install var
+    pip install $var
 done
 
 pip freeze > requirements.txt
