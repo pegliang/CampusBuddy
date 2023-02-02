@@ -20,11 +20,16 @@ All backend functions and hosting are carried out using Docker
 
 3. Create a .env file in this directory and it must follow the format specified below
 
-4. Run `npm install` in every service directory that runs NodeJS
+4. Run `npm install` in every service directory that runs NodeJS OR follow the instructions named `Setting up npm packages automatically`  
 
 5. Run the command `docker compose up` in this directory to start all containers
 
 6. To stop the backend servers, run `docker compose down` in this directory to stop all containers
+
+## Setting up npm packages automatically
+1. Make sure that your terminal is set to `Bash`
+2. Run `chmod +x inp.sh`
+3. Run `./inp.sh` OR `bash inp.sh`
 
 ## Environment File Format
 Create a .env file here in the root directory and it MUST follow this format
@@ -70,7 +75,7 @@ AUTH_SERVICE_PORT=4003
 
 # Databases
 MONGO_DB_PASSWORD=abc123
-MONGO_HOST_URL=mongodb://root:abc123@...
+MONGO_HOST_URL=mongodb://root:abc123@user-db-container:27017/streamhatchet?directConnection=true&authSource=admin&replicaSet=replicaset&retryWrites=true
 
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
