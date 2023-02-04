@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
  * @type {string[]} majors?
  * @type {string[]} minors?
  * @type {number} gpa?
- * @type {string} year?
+ * @type {number} year?
  * @type {string[]} courses?
  * @type {string[]} clubs?
  * @type {string} profile_img
@@ -72,7 +72,7 @@ const UserSchema = new mongoose.Schema({
     },
 
     year: {
-        type: String,
+        type: Number,
         required: false,
     },
 
