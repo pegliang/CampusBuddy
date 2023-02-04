@@ -55,6 +55,21 @@ services:
       - "./user_service:/app"
       - "./user_service/node_modules:/app/node_modules"
 
+  auth-service:
+    build: "./auth_service"
+    container_name: auth-service-container
+    environment:
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+    ports:
+      - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - "./auth_service:/app"
+      - "./auth_service/node_modules:/app/node_modules"
+
   matching-service:
     build: "./matching_service"
     depends_on:
