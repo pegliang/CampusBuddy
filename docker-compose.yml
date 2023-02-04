@@ -15,6 +15,26 @@ services:
     volumes:
       - "./user_service/mongodb_data:/data/db"
 
+  gateway-service:
+    build: "./gateway"
+    depends_on:
+      - user-db
+    container_name: api-gatweay-service-container
+    environment:
+      - USER_SERVICE_HOST=${USER_SERVICE_HOST}
+      - USER_SERVICE_PORT=${USER_SERVICE_PORT}
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - GATEWAY_PORT=${GATEWAY_PORT}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+    ports:
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+    env_file:
+      - .env
+    volumes:
+      - "./gateway:/app"
+      - "./gateway/node_modules:/app/node_modules"
+
   user-service:
     build: "./user_service"
     depends_on:
