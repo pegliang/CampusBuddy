@@ -75,7 +75,7 @@ AUTH_SERVICE_PORT=4003
 
 # Databases
 MONGO_DB_PASSWORD=abc123
-MONGO_HOST_URL=mongodb://root:abc123@user-db-container:27017/streamhatchet?directConnection=true&authSource=admin&replicaSet=replicaset&retryWrites=true
+MONGO_HOST_URL=mongodb://root:abc123@user-db-container:27017/campusbuddy?directConnection=true&authSource=admin&retryWrites=true
 
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
