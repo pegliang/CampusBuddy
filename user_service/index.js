@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { initDatabase } = require('./database');
+const {insertNRandomUsers} = require("./dev/populateUserDatabase.js")
 require("dotenv").config();
 
 const fetchRoutes = require("./routes/fetchRoutes");
@@ -30,6 +31,10 @@ app.get("/", (req, res) => res.send());
 initDatabase().then(() => {
     console.log(`Database connection established`);
     app.listen(PORT, () => console.log(`User Service listening on ${PORT}`));
+    // While in development generate process.env.GENERATE_TEST_USERS users (Default is 0 test users)
+    if (process.NODE_ENV == "development") {
+        insertNRandomUsers(process.env.GENERATE_TEST_USERS || 0)
+    }
 }).catch(err => {
     console.error(`Failed to start user service due to a database connection error`);
     console.error(err);
