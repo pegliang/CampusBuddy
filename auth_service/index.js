@@ -1,6 +1,7 @@
 const express = require("express");
 const router = require("./router");
 const cors = require("cors");
+const { init } = require("./database");
 require("dotenv").config();
 
 const app = express();
@@ -15,4 +16,10 @@ app.use("/", router);
 
 app.get("/", (req, res) => res.send());
 
-app.listen(PORT, () => console.log(`Auth Service is running on port ${PORT}`));
+init().then(() => {
+    console.log(`Redis Connection established`);
+    app.listen(PORT, () => console.log(`Auth Service is running on port ${PORT}`));
+}).catch(err => {
+    console.log(`Redis Connection failed`);
+    console.error(err);
+});

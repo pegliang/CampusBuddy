@@ -15,10 +15,23 @@ services:
     volumes:
       - "./user_service/mongodb_data:/data/db"
 
+  auth-db:
+    image: redis:alpine
+    restart: always
+    container_name: auth-db-container
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    ports:
+      - "6379:6379"
+    env_file:
+      - .env
+
   gateway-service:
     build: "./gateway"
     depends_on:
       - user-db
+      - auth-db
     container_name: api-gatweay-service-container
     environment:
       - USER_SERVICE_HOST=${USER_SERVICE_HOST}
@@ -60,6 +73,8 @@ services:
   auth-service:
     build: "./auth_service"
     container_name: auth-service-container
+    depends_on:
+      - auth-db
     environment:
       - GATEWAY_HOST=${GATEWAY_HOST}
       - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
