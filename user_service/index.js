@@ -32,7 +32,7 @@ initDatabase().then(() => {
     console.log(`Database connection established`);
     app.listen(PORT, () => console.log(`User Service listening on ${PORT}`));
     // While in development generate process.env.GENERATE_TEST_USERS users (Default is 0 test users)
-    if (process.NODE_ENV == "development") {
+    if (process.env.NODE_ENV == "development") {
         insertNRandomUsers(process.env.GENERATE_TEST_USERS || 0)
     }
 }).catch(err => {
