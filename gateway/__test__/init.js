@@ -4,10 +4,9 @@ require("dotenv").config();
 
 async function initializationTest() {
     describe("Initialization Testing", async () => {
-        it("Checking to make sure that the API Gateway is been up", async () => {
+        it(`Checking to make sure that the API Gateway is been up at ${process.env.GATEWAY_HOST}`, async () => {
             try {
                 await axios.get(process.env.GATEWAY_HOST);
-                return;
             } catch (err) {
                 assert.fail(err);
             }

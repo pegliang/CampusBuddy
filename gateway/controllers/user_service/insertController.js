@@ -42,13 +42,13 @@ async function registerController(req, res) {
     const desc = req.body?.desc || null;
     const interests = req.body?.interests || [];
 
+    const registerRequest = {
+        name, email, password, college_name, gender, race, sexual_orientation,
+        majors, minors, gpa, year, courses, clubs, profile_img, desc, interests,
+    }
+
     try {
-        await axios.post(process.env.USER_SERVICE_HOST + "/register", {
-            registerRequest: {
-                name, email, password, college_name, gender, race, sexual_orientation,
-                majors, minors, gpa, year, courses, clubs, profile_img, desc, interests,
-            }
-        });
+        await axios.post(process.env.USER_SERVICE_HOST + "/register", { registerRequest });
 
         return res.send();
     } catch (err) {
