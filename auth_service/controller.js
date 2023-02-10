@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const db = require("./database");
 
-async function auth(req, res) {
+async function authController(req, res) {
     const accessToken = req.body.accessToken;
     const refreshToken = req.body.refreshToken;
 
@@ -23,7 +23,8 @@ async function auth(req, res) {
                 // check the refresh token is in cache
                 try {
                     // token not in cache
-                    if (!await db.verifyRefreshToken(decodedRefreshToken.id, refreshToken)) return res.status(401).send();
+                    const result = await db.verifyRefreshToken(decodedRefreshToken.id, refreshToken);
+                    if (!result) return res.status(401).send();
 
                 } catch (err) {
                     console.error(err);
@@ -61,12 +62,29 @@ async function auth(req, res) {
             }
 
             // refresh token has expired, sign the user out
-            return res.status(401).send();
+            return res.status(403).send();
         });
     });
+}
 
+async function addRefreshTokenController(req, res) {
+    const refreshToken = req.body.refreshToken;
+    const userId = req.body.id;
+
+    if (!refreshToken || !userId) return res.status(400).send();
+
+    try {
+        const reply = await db.addRefreshTokenToCache(userId, refreshToken);
+        if (!reply) return res.status(500).send();
+
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
 }
 
 module.exports = {
-    auth,
+    authController,
+    addRefreshTokenController,
 }

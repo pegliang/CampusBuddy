@@ -35,8 +35,8 @@ async function loginController(req, res) {
 
         // sign jwt access token and refresh token
         // access token lasts 5 min
-        const accessToken = jwt.sign(payload, process.env.JWT_SECRET_ACCESS_TOKEN_KEY, { expiresIn: "5m" });
-        const refreshToken = jwt.sign(payload, process.env.JWT_SECRET_REFRESH_TOKEN_KEY, { expiresIn: "12h" });
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET_ACCESS_TOKEN_KEY, { expiresIn: "15s" });
+        const refreshToken = jwt.sign(payload, process.env.JWT_SECRET_REFRESH_TOKEN_KEY, { expiresIn: "30s" });
 
         return res.json({
             id: user._id,

@@ -9,7 +9,7 @@ const { redisClient } = require("./init");
 async function addRefreshTokenToCache(userId, refreshToken) {
     try {
         const reply = await redisClient.SADD(userId, refreshToken);
-        return reply === 1 ? true : false;
+        return reply === 1;
 
     } catch (err) {
         throw err;

@@ -10,7 +10,7 @@ async function verifyRefreshToken(userId, refreshToken) {
     try {
         const reply = await redisClient.SISMEMBER(userId, refreshToken);
 
-        return reply === 1 ? true : false;
+        return reply;
 
     } catch (err) {
         throw err;
