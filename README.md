@@ -41,6 +41,9 @@ NODE_ENV=development
 # Hosts
 FRONTEND_HOST=url
 GATEWAY_HOST=url
+USER_SERVICE_HOST=url
+CLUB_SERVICE_HOST=url
+AUTH_SERVICE_HOST=url
 
 # Ports
 GATEWAY_PORT=provide-a-port-number
@@ -65,7 +68,10 @@ NODE_ENV=development
 
 # Hosts
 FRONTEND_HOST=http://localhost:3000
-GATEWAY_HOST=http://localhost:4000
+GATEWAY_HOST=http://api-gateway-service:4000
+USER_SERVICE_HOST=http://user-service-container:4001
+CLUB_SERVICE_HOST=http://club-service-container:4002
+AUTH_SERVICE_HOST=http://auth-service-container:4003
 
 # Ports
 GATEWAY_PORT=4000
@@ -79,5 +85,5 @@ MONGO_HOST_URL=mongodb://root:abc123@user-db-container:27017/campusbuddy?directC
 
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
-JWT_SECRET_REFRESH_TOKEN_KEY=123xyz
+JWT_SECRET_REFRESH_TOKEN_KEY=123abc
 ```

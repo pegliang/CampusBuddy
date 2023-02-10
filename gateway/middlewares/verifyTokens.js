@@ -1,3 +1,7 @@
+const axios = require("axios");
+const getHTTPErrorCode = require("../controllers/utils/getHTTPErrorCode");
+require("dotenv").config();
+
 /**
  * Middleware to verify that the frontend request contains the right credentials (i.e. access token and refresh token)
  * 
@@ -28,7 +32,15 @@ async function verifyTokens(req, res, next) {
     }
 
     // ping auth service
+    try {
+        const response = await axios.post(process.env.AUTH_SERVICE_HOST + "/auth", { accessToken, refreshToken });
 
+        if (response.data?.newAccessToken) return res.json({ newAccessToken: response.data.newAccessToken });
+
+        return res.json({});
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
 
     next();
 }

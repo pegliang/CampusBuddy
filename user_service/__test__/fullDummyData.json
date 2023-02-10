@@ -14,7 +14,7 @@
         "Philosophy"
     ],
     "gpa": 3.8,
-    "year": "Junior",
+    "year": 3,
     "courses": [
         "18381",
         "129183",
@@ -28,7 +28,13 @@
     "profile_img": "https://google.com",
     "desc": "My Sample Description",
     "interests": [
-        "Sample Interest A",
-        "Sample Interest B"
+        {
+            "name": "Sample Interest A",
+            "rank": 9
+        },
+        {
+            "name": "Sample Interest B",
+            "rank": 1
+        }
     ]
 }

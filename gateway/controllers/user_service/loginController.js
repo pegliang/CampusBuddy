@@ -28,6 +28,9 @@ async function loginController(req, res) {
         // send the refresh token to a http only cookie
         res.cookie("refreshToken", user.refreshToken, { httpOnly: true });
 
+        // add the refresh token to cache
+        await axios.put(process.env.AUTH_SERVICE_HOST + "/addRefreshToken", { id: user.id, refreshToken: user.refreshToken });
+
         // send the user info back 
         return res.send({ ...user, refreshToken: undefined });
 

@@ -15,16 +15,31 @@ services:
     volumes:
       - "./user_service/mongodb_data:/data/db"
 
+  auth-db:
+    image: redis:alpine
+    restart: always
+    container_name: auth-db-container
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    ports:
+      - "6379:6379"
+    env_file:
+      - .env
+
   gateway-service:
     build: "./gateway"
     depends_on:
       - user-db
+      - auth-db
     container_name: api-gatweay-service-container
     environment:
       - USER_SERVICE_HOST=${USER_SERVICE_HOST}
       - USER_SERVICE_PORT=${USER_SERVICE_PORT}
       - GATEWAY_HOST=${GATEWAY_HOST}
       - GATEWAY_PORT=${GATEWAY_PORT}
+      - AUTH_SERVICE_HOST=${AUTH_SERVICE_HOST}
+      - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
       - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
       - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
     ports:
@@ -55,6 +70,23 @@ services:
     volumes:
       - "./user_service:/app"
       - "./user_service/node_modules:/app/node_modules"
+
+  auth-service:
+    build: "./auth_service"
+    container_name: auth-service-container
+    depends_on:
+      - auth-db
+    environment:
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+    ports:
+      - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - "./auth_service:/app"
+      - "./auth_service/node_modules:/app/node_modules"
 
   matching-service:
     build: "./matching_service"

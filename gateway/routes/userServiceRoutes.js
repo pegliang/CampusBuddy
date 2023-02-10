@@ -15,4 +15,6 @@ router.get("/getUserAccountInfoById", fetchController.fetchUserByIdController);
 
 router.delete("/deleteUserByEmail", middlewares.verifyTokens, deleteController.deleteUserByEmailController);
 
+router.post("/test_auth", middlewares.verifyTokens);
+
 module.exports = router;
