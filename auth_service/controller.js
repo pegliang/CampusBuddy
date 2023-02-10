@@ -2,6 +2,14 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const db = require("./database");
 
+/**
+ * Controller for authenticating users with access and refresh tokens 
+ * @returns 200 - OK
+ * @returns 400 - no access or refresh tokens
+ * @returns 401 - access token error or a refresh token dne in cache
+ * @returns 403 - refresh token has expired
+ * @returns 500 - redis error
+ */
 async function authController(req, res) {
     const accessToken = req.body.accessToken;
     const refreshToken = req.body.refreshToken;
@@ -67,6 +75,12 @@ async function authController(req, res) {
     });
 }
 
+/**
+ * Controller to add a refresh token to the cache
+ * @returns 200 - OK 
+ * @returns 400 - no refresh token or user id
+ * @returns 500 - redis cache error
+ */
 async function addRefreshTokenController(req, res) {
     const refreshToken = req.body.refreshToken;
     const userId = req.body.id;
