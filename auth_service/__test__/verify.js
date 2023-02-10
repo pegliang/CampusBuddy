@@ -24,10 +24,7 @@ async function verifyTokensTest() {
 
         it("Adding the refresh token to cache", async () => {
             try {
-                const res = await addRefreshTokenToCache(dummyPayload.id, refreshToken);
-
-                assert.ok(res, "Failed to add refresh token to cache");
-
+                await axios.put(process.env.AUTH_SERVICE_HOST + "/addRefreshToken", { id: dummyPayload.id, refreshToken });
             } catch (err) {
                 assert.fail(err);
             }
@@ -49,7 +46,7 @@ async function verifyTokensTest() {
 
                 if (!res.data || !res.data.newAccessToken) return assert.fail("No new access token from the auth server");
 
-                jwt.verify(res.data.newAccessToken, JWT_SECRET_ACCESS_TOKEN_KEY, (err, decodedAccessToken) => {
+                jwt.verify(res.data.newAccessToken, process.env.JWT_SECRET_ACCESS_TOKEN_KEY, (err, decodedAccessToken) => {
                     if (err) return assert.fail("Invalid new access token");
 
                     assert.equal(dummyPayload.id, decodedAccessToken.id);
