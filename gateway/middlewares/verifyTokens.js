@@ -27,6 +27,10 @@ async function verifyTokens(req, res, next) {
     // get current refresh token
     const refreshToken = req.cookies.refreshToken;
 
+    console.log(req);
+
+    // console.log(refreshToken);
+
     if (!refreshToken) {
         return res.status(401).send();
     }
@@ -35,14 +39,14 @@ async function verifyTokens(req, res, next) {
     try {
         const response = await axios.post(process.env.AUTH_SERVICE_HOST + "/auth", { accessToken, refreshToken });
 
-        if (response.data?.newAccessToken) return res.json({ newAccessToken: response.data.newAccessToken });
+        if (response.data?.newAccessToken) {
+            req.newAccessToken = response.data.newAccessToken;
+        }
 
-        return res.json({});
+        return next();
     } catch (err) {
         return res.status(getHTTPErrorCode(err)).send();
     }
-
-    next();
 }
 
 module.exports = {

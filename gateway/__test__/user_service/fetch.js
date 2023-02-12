@@ -10,7 +10,7 @@ async function userServiceFetchUserTest() {
     describe("User Service: Testing the fetch user route", () => {
         it("Fetching the dummy user with every single field filled using their email", async () => {
             try {
-                const res = await axios.get(process.env.GATEWAY_HOST + `/getUserAccountInfoByEmail?email=${fullDummyData.email}`);
+                const res = await axios.get(process.env.GATEWAY_HOST + `/user/getUserAccountInfoByEmail?email=${fullDummyData.email}`);
 
                 const data = res.data;
 
@@ -77,7 +77,7 @@ async function userServiceFetchUserTest() {
 
         it("Fetching the dummy user with every single field filled using their id", async () => {
             try {
-                const res = await axios.get(process.env.GATEWAY_HOST + `/getUserAccountInfoById?id=${dummyId}`);
+                const res = await axios.get(process.env.GATEWAY_HOST + `/user/getUserAccountInfoById?id=${dummyId}`);
 
                 const data = res.data;
 
@@ -145,7 +145,7 @@ async function userServiceFetchUserTest() {
 
         it("Fetching the dummy user with ONLY required field filled using their email", async () => {
             try {
-                const res = await axios.get(process.env.GATEWAY_HOST + `/getUserAccountInfoByEmail?email=${partialDummyData.email}`);
+                const res = await axios.get(process.env.GATEWAY_HOST + `/user/getUserAccountInfoByEmail?email=${partialDummyData.email}`);
 
                 const data = res.data;
 
@@ -209,7 +209,7 @@ async function userServiceFetchUserTest() {
 
         it("Fetching the dummy user with ONLY required field filled using their id", async () => {
             try {
-                const res = await axios.get(process.env.GATEWAY_HOST + `/getUserAccountInfoById?id=${dummyId}`);
+                const res = await axios.get(process.env.GATEWAY_HOST + `/user/getUserAccountInfoById?id=${dummyId}`);
 
                 const data = res.data;
 

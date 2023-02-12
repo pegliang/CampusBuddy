@@ -7,6 +7,8 @@ async function startUnitTest() {
     // user service test
     await userServiceTest.userServiceRegisterTest();
     await userServiceTest.userServiceFetchUserTest();
+    await userServiceTest.userServiceLoginAndDeleteTest();
+
 }
 
 startUnitTest();
