@@ -54,6 +54,8 @@ AUTH_SERVICE_PORT=provide-a-port-number
 # Databases
 MONGO_DB_PASSWORD=your-password-here
 MONGO_HOST_URL=db-url
+REDIS_HOST=db-url
+REDIS_PASSWORD=your-password-here
 
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=your-key-here
@@ -82,6 +84,8 @@ AUTH_SERVICE_PORT=4003
 # Databases
 MONGO_DB_PASSWORD=abc123
 MONGO_HOST_URL=mongodb://root:abc123@user-db-container:27017/campusbuddy?directConnection=true&authSource=admin&retryWrites=true
+REDIS_HOST=redis://:abc123@auth-db-container:6379
+REDIS_PASSWORD=abc123
 
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
