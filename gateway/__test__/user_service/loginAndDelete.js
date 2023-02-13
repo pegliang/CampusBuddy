@@ -9,6 +9,7 @@ let fullDummyId = null;
 let partialDummyId = null;
 
 let accessToken = null;
+let refreshToken = null;
 
 async function userServiceLoginAndDeleteTest() {
     describe("User Service: Testing the login route", () => {
@@ -21,10 +22,11 @@ async function userServiceLoginAndDeleteTest() {
                 // store the user id
                 fullDummyId = res.data.id;
 
-                // get the access token
+                // get the access token and refresh token
                 accessToken = res.data.accessToken;
+                refreshToken = res.data.refreshToken;
 
-                if (!accessToken) return assert.fail("No access token");
+                if (!accessToken || !refreshToken) return assert.fail("No access token");
 
             } catch (err) {
                 assert.fail(err);
@@ -34,7 +36,10 @@ async function userServiceLoginAndDeleteTest() {
         it("Testing the delete route with the first user", async () => {
             try {
                 await axios.delete(process.env.GATEWAY_HOST + `/user/deleteUserByEmail?email=${fullDummyData.email}`, {
-                    headers: { Authorization: `Bearer ${accessToken}` },
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        refreshToken: `${refreshToken}`
+                    },
                     withCredentials: true,
                 });
             } catch (err) {

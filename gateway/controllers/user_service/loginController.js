@@ -32,7 +32,10 @@ async function loginController(req, res) {
         await axios.put(process.env.AUTH_SERVICE_HOST + "/addRefreshToken", { id: user.id, refreshToken: user.refreshToken });
 
         // send the user info back 
-        return res.send({ ...user, refreshToken: undefined });
+        return res.send({
+            ...user,
+            refreshToken: process.env.NODE_ENV !== 'production' ? user.refreshToken : undefined
+        });
 
     } catch (err) {
         return res.status(getHTTPErrorCode(err)).send();
