@@ -8,13 +8,14 @@ const userRoutes = require("./routes/userServiceRoutes");
 
 const PORT = process.env.GATEWAY_PORT || 4000;
 
+app.use(cookieParser());
+
 app.use(cors({
     origin: ["*"],
-    withCredentials: true
+    credentials: true
 }));
 
 app.use(express.json());
-app.use(cookieParser());
 app.use("/user", userRoutes);
 
 app.get("/", (req, res) => res.send());

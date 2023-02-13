@@ -25,7 +25,9 @@ async function verifyTokens(req, res, next) {
     const accessToken = line[1];
 
     // get current refresh token
-    const refreshToken = req.cookies.refreshToken;
+    // during testing, refresh token will be in the header
+    const refreshToken = process.env.NODE_ENV !== 'production' ?
+        req.headers.refreshtoken : req.cookies.refreshToken;
 
     if (!refreshToken) {
         return res.status(401).send();
@@ -35,14 +37,14 @@ async function verifyTokens(req, res, next) {
     try {
         const response = await axios.post(process.env.AUTH_SERVICE_HOST + "/auth", { accessToken, refreshToken });
 
-        if (response.data?.newAccessToken) return res.json({ newAccessToken: response.data.newAccessToken });
+        if (response.data?.newAccessToken) {
+            req.newAccessToken = response.data.newAccessToken;
+        }
 
-        return res.json({});
+        return next();
     } catch (err) {
         return res.status(getHTTPErrorCode(err)).send();
     }
-
-    next();
 }
 
 module.exports = {
