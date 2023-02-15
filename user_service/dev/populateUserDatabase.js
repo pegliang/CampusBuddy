@@ -18,6 +18,7 @@ async function insertNRandomUsers(n) {
             console.error(err);
         }
     }
+    console.log("Created " + n + " Users")
 }
 
 module.exports = {

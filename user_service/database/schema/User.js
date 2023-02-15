@@ -97,10 +97,7 @@ const UserSchema = new mongoose.Schema({
     },
 
     interests: {
-        type: [{
-            name: String,
-            rank: Number,
-        }],
+        type: [String],
         required: false,
     },
 
