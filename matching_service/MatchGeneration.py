@@ -70,8 +70,8 @@ def compare(target, df):
     max = new_df["minors_similarity"].abs().max() 
     new_df["minors_similarity"] = new_df["minors_similarity"]/ (max if max != 0 else 1) # Normalizing
 
-    new_df["gpa_similarity"] = df.apply(lambda x: abs(x["gpa"] - target['gpa'])/4.0, axis = 1)
-    new_df["year_similarity"] = df.apply(lambda x: abs(x["year"] - target['year'])/10.0, axis = 1)
+    new_df["gpa_similarity"] = df.apply(lambda x: (4.0 - abs(x["gpa"] - target['gpa']))/4.0, axis = 1)
+    new_df["year_similarity"] = df.apply(lambda x: (10.0 - abs(x["year"] - target['year']))/10.0, axis = 1)
 
     new_df["similarity_score"] = (new_df["club_similarity"] + new_df["same_college"] + new_df["courses_similarity"] + new_df["interests_similarity"] + new_df["majors_similarity"] + new_df["minors_similarity"] + new_df["gpa_similarity"] + new_df["year_similarity"])/8.0
     new_df = new_df.drop(columns=["club_similarity", "same_college", "courses_similarity", "interests_similarity", "majors_similarity", "minors_similarity", "gpa_similarity", "year_similarity"])
