@@ -8,7 +8,7 @@ final _passwordReg =
 
 /// Ping the backend server to register a new user
 /// Throw an exception if the status code is not 200
-Future registerRequest(Map<String, String> registerObj) async {
+Future<void> registerRequest(Map<String, String> registerObj) async {
   final reqEmail = registerObj["email"];
   final reqPassword = registerObj["password"];
 
@@ -29,7 +29,7 @@ Future registerRequest(Map<String, String> registerObj) async {
   }
 
   try {
-    final res = await http.post(RequestURL.register,
+    final res = await http.post(Uri.parse(RequestURL.register),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(registerObj));
 
