@@ -11,6 +11,7 @@ db = client.campusbuddy
 users = db.users
 
 def suggestedMatches():
+
     try:
         userID = request.get_json()["user_id"]
     except:

@@ -34,6 +34,8 @@ services:
       - auth-db
     container_name: api-gatweay-service-container
     environment:
+      - MATCHING_SERVICE_HOST=${MATCHING_SERVICE_HOST}
+      - MATCHING_SERVICE_PORT=${MATCHING_SERVICE_PORT}
       - USER_SERVICE_HOST=${USER_SERVICE_HOST}
       - USER_SERVICE_PORT=${USER_SERVICE_PORT}
       - GATEWAY_HOST=${GATEWAY_HOST}

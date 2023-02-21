@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const app = express();
 const userRoutes = require("./routes/userServiceRoutes");
+const matchingRoutes = require("./routes/matchingServiceRoutes")
 
 const PORT = process.env.GATEWAY_PORT || 4000;
 
@@ -17,6 +18,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/user", userRoutes);
+app.use("/matching", matchingRoutes)
 
 app.get("/", (req, res) => res.send());
 
