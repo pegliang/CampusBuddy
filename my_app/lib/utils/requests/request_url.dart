@@ -1,4 +1,5 @@
 class RequestURL {
-  static final login = Uri.parse("http://localhost:4000/user/login");
-  static final register = Uri.parse("http://localhost:4000/user/register");
+  static const login = "http://localhost:4000/user/login";
+  static const register = "http://localhost:4000/user/register";
+  static const deleteUser = "http://localhost:4000/user/deleteUserByEmail";
 }

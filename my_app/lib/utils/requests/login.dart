@@ -8,7 +8,7 @@ import 'request_url.dart';
 /// If successful, return the user's information, access token, and the refresh token as an JSON object
 Future<Map<String, dynamic>> loginRequest(String email, String password) async {
   try {
-    final res = await http.post(RequestURL.login,
+    final res = await http.post(Uri.parse(RequestURL.login),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({"email": email, "password": password}));
 
