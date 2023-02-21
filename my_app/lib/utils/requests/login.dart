@@ -12,9 +12,10 @@ Future<Map<String, dynamic>> loginRequest(String email, String password) async {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({"email": email, "password": password}));
 
-    if (res.statusCode != 200) {
-      throw Exception(
-          "Login request failed with a status code of $res.statusCode");
+    final statusCode = res.statusCode;
+
+    if (statusCode != 200) {
+      throw Exception("Login request failed with a status code of $statusCode");
     }
 
     return jsonDecode(res.body);
