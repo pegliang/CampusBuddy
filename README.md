@@ -44,12 +44,14 @@ GATEWAY_HOST=url
 USER_SERVICE_HOST=url
 CLUB_SERVICE_HOST=url
 AUTH_SERVICE_HOST=url
+MATCHING_SERVICE_HOST=url
 
 # Ports
 GATEWAY_PORT=provide-a-port-number
 USER_SERVICE_PORT=provide-a-port-number
 CLUB_SERVICE_PORT=provide-a-port-number
 AUTH_SERVICE_PORT=provide-a-port-number
+MATCHING_SERVICE_PORT=provide-a-port-number
 
 # Databases
 MONGO_DB_PASSWORD=your-password-here
@@ -74,12 +76,14 @@ GATEWAY_HOST=http://api-gateway-service:4000
 USER_SERVICE_HOST=http://user-service-container:4001
 CLUB_SERVICE_HOST=http://club-service-container:4002
 AUTH_SERVICE_HOST=http://auth-service-container:4003
+MATCHING_SERVICE_HOST=http://matching-service-container:8080
 
 # Ports
 GATEWAY_PORT=4000
 USER_SERVICE_PORT=4001
 CLUB_SERVICE_PORT=4002
 AUTH_SERVICE_PORT=4003
+MATCHING_SERVICE_PORT=8080
 
 # Databases
 MONGO_DB_PASSWORD=abc123
@@ -90,4 +94,7 @@ REDIS_PASSWORD=abc123
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
 JWT_SECRET_REFRESH_TOKEN_KEY=123abc
+
+# Dev Environment
+GENERATE_TEST_USERS=0
 ```
