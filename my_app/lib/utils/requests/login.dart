@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:my_app/utils/storage/user_secure_storage.dart';
 import 'request_url.dart';
 
 /// Ping the backend server to login a user
@@ -18,7 +19,21 @@ Future<Map<String, dynamic>> loginRequest(String email, String password) async {
       throw Exception("Login request failed with a status code of $statusCode");
     }
 
-    return jsonDecode(res.body);
+    final bodyContent = jsonDecode(res.body);
+
+    if (bodyContent["accessToken"] == null ||
+        bodyContent["refreshToken"] == null) {
+      throw Exception("No access or refresh token given");
+    }
+
+    try {
+      await UserSecureStorage.setAccessToken(bodyContent["accessToken"]);
+      await UserSecureStorage.setRefreshToken(bodyContent["refreshToken"]);
+    } catch (err) {
+      throw Exception("An error occurred while storing tokens");
+    }
+
+    return bodyContent;
   } catch (err) {
     rethrow;
   }
