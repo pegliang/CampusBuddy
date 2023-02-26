@@ -11,6 +11,9 @@ Microservice that will handle all user requests such as login, registration, and
 ### Auth Service
 Microservice that will handle all authentication requests when logging in, logging out, changing user settings, and modifying user sessions.
 
+### Matching Service
+Microservice that will handle all matching related services, i.e. get possible user matches and record user choices.
+
 ## Setup
 All backend functions and hosting are carried out using Docker
 
