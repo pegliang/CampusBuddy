@@ -27,14 +27,5 @@
     ],
     "profile_img": "https://google.com",
     "desc": "My Sample Description",
-    "interests": [
-        {
-            "name": "Sample Interest A",
-            "rank": 9
-        },
-        {
-            "name": "Sample Interest B",
-            "rank": 1
-        }
-    ]
+    "interests": ["Sample Interest A","Sample Interest B"]
 }
