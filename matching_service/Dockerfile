@@ -7,6 +7,6 @@ COPY . .
 EXPOSE 8080
 
 # Dependencies
-RUN pip install -r requirements.txt
+RUN python3.10 -m pip install -r requirements.txt
 
-CMD ["python", "./main.py"]
+CMD ["python3.10", "./main.py"]
