@@ -10,6 +10,52 @@ client = MongoClient(os.getenv("DATABASE_URL"))
 db = client.campusbuddy
 users = db.users
 
+def getArgument(name, body):
+    value = None
+    try:
+        value = body[name]
+    except:
+        return None
+    return value
+
+def buildFilterObject(body, userObject):
+    fil = {}
+    if getArgument("same_college", body):
+        fil["college_name"] = userObject.college_name
+    if getArgument("filter_by_clubs", body) != None and len(getArgument("filter_by_clubs", body)) > 0:
+        fil["clubs"] = {
+            "$in": getArgument("filter_by_clubs", body)
+        }
+    if getArgument("filter_by_interests", body) != None and len(getArgument("filter_by_interests", body)) > 0:
+        fil["interests"] = {
+            "$in": getArgument("filter_by_interests", body)
+        }
+    if getArgument("filter_by_major", body) != None and len(getArgument("filter_by_major", body)) > 0:
+        fil["majors"] = {
+            "$in": getArgument("filter_by_major", body)
+        }
+    if getArgument("filter_by_minor", body) != None and len(getArgument("filter_by_minor", body)) > 0:
+        fil["minors"] = {
+            "$in": getArgument("filter_by_minor", body)
+        }
+    gpaLimiter = {}
+    if getArgument("filter_by_max_GPA", body) != None:
+        gpaLimiter["$lte"] = getArgument("filter_by_max_GPA", body)
+    if getArgument("filter_by_min_GPA", body) != None:
+        gpaLimiter["$gte"] = getArgument("filter_by_min_GPA", body)
+    if len(gpaLimiter) > 0:
+        fil["gpa"] = gpaLimiter
+
+    yearLimiter = {}
+    if getArgument("filter_by_max_year", body) != None:
+        yearLimiter["$lte"] = getArgument("filter_by_max_year", body)
+    if getArgument("filter_by_min_year", body) != None:
+        yearLimiter["$gte"] = getArgument("filter_by_min_year", body)
+    if len(yearLimiter) > 0:
+        fil["year"] = yearLimiter
+    
+    return fil
+
 def suggestedMatches():
 
     try:
@@ -31,7 +77,9 @@ def suggestedMatches():
     except:
         return Response(jsonify({"message": f'Error finding user with id = {userID}.'}), status=500, mimetype='application/json')
     
-    randUsers = users.aggregate([{"$sample": { "size": 200 }}])
+    filterObject = buildFilterObject(request.get_json(), User(userDoc))
+    pipeline = [{"$match": filterObject}, {"$sample": { "size": 200 }}]
+    randUsers = users.aggregate(pipeline=pipeline)
     randUsersDicts = []
 
     for doc in randUsers:
