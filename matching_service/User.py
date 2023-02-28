@@ -1,4 +1,24 @@
-class User:
+from mongoengine import Document, \
+StringField, ListField, FloatField, IntField, URLField, BooleanField
+
+class User(Document):
+    id = StringField()
+    name = StringField()
+    college_name = StringField()
+    gender = StringField()
+    race = StringField()
+    sexual_orientation = StringField()
+    majors = ListField()
+    minors = ListField()
+    gpa = FloatField()
+    year = IntField()
+    courses = ListField()
+    clubs = ListField()
+    profile_img = URLField()
+    desc = StringField()
+    interests = ListField()
+    isPremiumMember = BooleanField()
+    meta = {'collection': 'users'}
     def __init__(self) -> None:
         pass
     def __init__(self, userObject) -> None:
@@ -25,7 +45,6 @@ class User:
         for key in userObject:
             res += key + ": " + str(userObject[key]) + ", "
         return res[:-2]
-
 
     def serialize(self) -> dict:
         return {
