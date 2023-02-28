@@ -98,7 +98,26 @@ async function addRefreshTokenController(req, res) {
     }
 }
 
+/**
+ * Controller to remove a refresh token to the cache
+ * @returns 200 - OK 
+ * @returns 500 - redis cache error
+ */
+async function removeRefreshTokenController(req, res) {
+    const refreshToken = req.body.refreshToken;
+    const userId = req.body.id;
+
+    if (!refreshToken || !userId) return res.status(400).send();
+
+    try {
+        await db.deleteRefreshTokenFromCache(userId, refreshToken);
+    } catch (err) {
+        return res.status(500).send();
+    }
+}
+
 module.exports = {
     authController,
     addRefreshTokenController,
+    removeRefreshTokenController,
 }

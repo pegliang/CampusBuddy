@@ -8,9 +8,6 @@ const userRoutes = require("./routes/userServiceRoutes");
 const matchingRoutes = require("./routes/matchingServiceRoutes")
 
 const PORT = process.env.GATEWAY_PORT || 4000;
-app.listen(PORT, () => {
-    console.log('Gateway listening on port', PORT);
-});
 
 app.use(cookieParser());
 
