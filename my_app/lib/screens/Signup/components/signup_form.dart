@@ -3,24 +3,47 @@ import 'package:flutter/material.dart';
 import '../../../components/already_have_an_account.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
+import '../../../utils/requests/register.dart';
 
-class SignUpForm extends StatelessWidget {
-  const SignUpForm({
-    Key? key,
-  }) : super(key: key);
+
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+  @override
+  _SignupFormState createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignUpForm> {
+
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailTextFieldController = TextEditingController();
+  final TextEditingController _passwordTextFieldController = TextEditingController();
+  final TextEditingController _reenteredPasswordTextFieldController = TextEditingController();
+  final TextEditingController _fullNameTextFieldController = TextEditingController();
+  final TextEditingController _majorTextFieldController = TextEditingController();
+
+  Future<void> registerUser() async {
+    await registerRequest({
+      'email': _emailTextFieldController.text,
+      'password': _passwordTextFieldController.text,
+      'name': _fullNameTextFieldController.text,
+      'majors': [_majorTextFieldController.text]
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              keyboardType: TextInputType.emailAddress,
+            child: TextFormField( // Full Name Text Field
+              keyboardType: TextInputType.name,
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
-              onSaved: (email) {},
+              controller: _fullNameTextFieldController,
               decoration: InputDecoration(
                 hintText: "Full Name",
                 prefixIcon: Padding(
@@ -30,26 +53,28 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            onSaved: (email) {},
-            decoration: InputDecoration(
-              hintText: "School Email",
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.email),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
+
+           TextFormField( // Email Text Field
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
-              onSaved: (email) {},
+              controller: _emailTextFieldController,
+              decoration: InputDecoration(
+                hintText: "School Email",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.email),
+                ),
+              ),
+            ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+            child: TextFormField( // Major Text Field
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              cursorColor: kPrimaryColor,
+              controller: _majorTextFieldController,
               decoration: InputDecoration(
                 hintText: "Major",
                 prefixIcon: Padding(
@@ -63,7 +88,6 @@ class SignUpForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            onSaved: (email) {},
             decoration: InputDecoration(
               hintText: "School",
               prefixIcon: Padding(
@@ -77,6 +101,13 @@ class SignUpForm extends StatelessWidget {
             child: TextFormField(
               textInputAction: TextInputAction.done,
               obscureText: true,
+              controller: _reenteredPasswordTextFieldController,
+              validator: (value) {
+                if (_reenteredPasswordTextFieldController.text != _passwordTextFieldController.text) {
+                  return "Passwords must match.";
+                }
+                return null;
+              },
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: "Enter Password",
@@ -101,7 +132,9 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding / 1),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (_formKey.currentState != null && _formKey.currentState!.validate()) registerUser();
+            },
             child: Text("Sign Up".toUpperCase()),
           ),
           const SizedBox(height: defaultPadding),

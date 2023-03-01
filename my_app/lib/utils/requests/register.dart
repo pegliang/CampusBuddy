@@ -8,11 +8,11 @@ final _passwordReg =
 
 /// Ping the backend server to register a new user
 /// Throw an exception if the status code is not 200
-Future<void> registerRequest(Map<String, String> registerObj) async {
+Future<void> registerRequest(Map<String, dynamic> registerObj) async {
   final reqEmail = registerObj["email"];
   final reqPassword = registerObj["password"];
 
-  // no email field given
+  // no email or password field given
   if (reqEmail == null || reqPassword == null) {
     throw Exception("The email or password field is empty");
   }
