@@ -23,7 +23,7 @@ class _SignupFormState extends State<SignUpForm> {
   final TextEditingController _majorTextFieldController = TextEditingController();
 
   Future<void> registerUser() async {
-    await registerRequest({
+    return registerRequest({
       'email': _emailTextFieldController.text,
       'password': _passwordTextFieldController.text,
       'name': _fullNameTextFieldController.text,
@@ -88,6 +88,13 @@ class _SignupFormState extends State<SignUpForm> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
+            controller: _passwordTextFieldController,
+            validator: (value) {
+                if (_reenteredPasswordTextFieldController.text != _passwordTextFieldController.text) {
+                  return "Passwords must match.";
+                }
+                return null;
+              },
             decoration: InputDecoration(
               hintText: "School",
               prefixIcon: Padding(
@@ -133,7 +140,15 @@ class _SignupFormState extends State<SignUpForm> {
           const SizedBox(height: defaultPadding / 1),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState != null && _formKey.currentState!.validate()) registerUser();
+              if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+                try {
+                  registerUser().then((_) {
+                  // Do Something once user registers successfully (Move on to home screen, save credentials etc)
+                  });
+                } catch (err) {
+                  // Do something when User register fails (Display message etc)
+                }
+              }
             },
             child: Text("Sign Up".toUpperCase()),
           ),

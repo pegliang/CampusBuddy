@@ -1,0 +1,7 @@
+
+*.xcworkspacedata
+*.pbxproj
+*.xcconfig
+*.xcconfig
+my_app/ios/Podfile
+*.lock
