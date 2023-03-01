@@ -5,7 +5,9 @@ import os
 from User import User
 import pandas as pd
 import numpy as np
+from mongoengine import *
 
+connect(host=os.getenv("DATABASE_URL"))
 client = MongoClient(os.getenv("DATABASE_URL"))
 db = client.campusbuddy
 users = db.users
