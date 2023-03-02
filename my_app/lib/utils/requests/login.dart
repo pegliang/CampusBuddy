@@ -29,6 +29,9 @@ Future<Map<String, dynamic>> loginRequest(String email, String password) async {
     try {
       await UserSecureStorage.setAccessToken(bodyContent["accessToken"]);
       await UserSecureStorage.setRefreshToken(bodyContent["refreshToken"]);
+      final accToken = await UserSecureStorage.getAccessToken();
+      final refToken = await UserSecureStorage.getRefreshToken();
+      print('$accToken $refToken');
     } catch (err) {
       throw Exception("An error occurred while storing tokens");
     }

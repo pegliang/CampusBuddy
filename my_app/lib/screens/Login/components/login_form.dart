@@ -68,11 +68,12 @@ class _LoginFormState extends State<LoginForm> {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                   try {
-                    loginRequest(_emailTextFieldController.text, _passwordTextFieldController.text).then((responseBody) {
+                    final res = await loginRequest(_emailTextFieldController.text, _passwordTextFieldController.text);
                       // Do Something with Body Response which will contain: (Save in application global state)
+                      print(res);
                       /*
                         id: user._id,
                         name: user.name,
@@ -95,7 +96,6 @@ class _LoginFormState extends State<LoginForm> {
                         accessToken,
                         refreshToken,
                       */
-                    });
                   } catch (err) {
                     // Do something with erro (Let user know credentials were incorrect)
                     print(err);

@@ -27,7 +27,9 @@ class _SignupFormState extends State<SignUpForm> {
       'email': _emailTextFieldController.text,
       'password': _passwordTextFieldController.text,
       'name': _fullNameTextFieldController.text,
-      'majors': [_majorTextFieldController.text]
+      'majors': [_majorTextFieldController.text],
+      'college_name': "The City College of New York",
+      "profile_img": "www.google.com"
     });
   }
 
@@ -139,14 +141,15 @@ class _SignupFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: defaultPadding / 1),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                 try {
-                  registerUser().then((_) {
+                  await registerUser();
+
                   // Do Something once user registers successfully (Move on to home screen, save credentials etc)
-                  });
                 } catch (err) {
                   // Do something when User register fails (Display message etc)
+
                 }
               }
             },
