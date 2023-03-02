@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/Dashboard/dashboard.dart';
 import 'package:my_app/utils/requests/login.dart';
 // import 'package:flutter/theme.dart';
 
@@ -36,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
                 return "Email must not be empty";
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
@@ -78,6 +79,14 @@ class _LoginFormState extends State<LoginForm> {
                         _passwordTextFieldController.text);
                     // Do Something with Body Response which will contain: (Save in application global state)
                     print(res);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DashboardScreen();
+                        },
+                      ),
+                    );
                     /*
                         id: user._id,
                         name: user.name,
