@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_club_account.dart';
@@ -18,11 +20,11 @@ class ClubSignUpForm extends StatelessWidget {
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            //onSaved: (email) {},
-            decoration: InputDecoration(
+            onSaved: (string) {},
+            decoration: const InputDecoration(
               hintText: "club Name",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.local_activity),
               ),
             ),
@@ -33,11 +35,11 @@ class ClubSignUpForm extends StatelessWidget {
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 cursorColor: kPrimaryColor,
-                onSaved: (String) {},
-                decoration: InputDecoration(
-                  hintText: "club President Name",
+                onSaved: (string) {},
+                decoration: const InputDecoration(
+                  hintText: "Club President Name",
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
+                    padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.person),
                   ),
                 ),
@@ -47,10 +49,10 @@ class ClubSignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "club email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.email),
               ),
             ),
@@ -61,10 +63,10 @@ class ClubSignUpForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -74,10 +76,11 @@ class ClubSignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.done,
             obscureText: true,
             cursorColor: kPrimaryColor,
-            decoration: InputDecoration(
+            onSaved: (PasswordCredential) {}, ///// double check this
+            decoration: const InputDecoration(
               hintText: "Re-enter password",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),
               ),
             ),
@@ -88,13 +91,13 @@ class ClubSignUpForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 cursorColor: kPrimaryColor,
-                onSaved: (Text) {},
+                onSaved: (string) {},
                 textAlign: TextAlign.left,
                 decoration: const InputDecoration(
                   hintText: "Breif Description",
                   isDense: true,
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 60.0),
+                    padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 50.0),
                   ),
                 ),
               )),
@@ -111,7 +114,7 @@ class ClubSignUpForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ClubLoginScreen();
+                    return const ClubLoginScreen();
                   },
                 ),
               );
