@@ -7,9 +7,6 @@ require("dotenv").config();
 const app = express();
 
 const PORT = process.env.PORT || 4003;
-app.listen(PORT, () => {
-    console.log('Auth Service listening on port', PORT);
-});
 
 app.use(cors({
     origin: [process.env.NODE_ENV !== 'production' ? "*" : process.env.GATEWAY_HOST]
