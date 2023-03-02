@@ -60,10 +60,8 @@ async function fetchingUserTesting() {
                 assert.equal(fullDummyData.desc, data.desc);
 
                 // assert interests
-                assert.equal(fullDummyData.interests[0].name, data.interests[0].name);
-                assert.equal(fullDummyData.interests[0].rank, data.interests[0].rank);
-                assert.equal(fullDummyData.interests[1].name, data.interests[1].name);
-                assert.equal(fullDummyData.interests[1].rank, data.interests[1].rank);
+                assert.equal(fullDummyData.interests[0], data.interests[0]);
+                assert.equal(fullDummyData.interests[1], data.interests[1]);
 
                 // assert verified email
                 assert.equal(false, data.verifiedEmail);
