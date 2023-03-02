@@ -12,6 +12,7 @@ class ClubSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Background(
+      
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),
@@ -38,6 +39,7 @@ class ClubSignUpScreen extends StatelessWidget {
         ),
       ),
     );
+    
   }
 }
 

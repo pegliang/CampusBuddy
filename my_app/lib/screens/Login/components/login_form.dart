@@ -7,8 +7,6 @@ import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
 import '../../../utils/requests/login.dart';
 
-
-
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
   @override
@@ -16,10 +14,11 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailTextFieldController = TextEditingController();
-  final TextEditingController _passwordTextFieldController = TextEditingController();
+  final TextEditingController _emailTextFieldController =
+      TextEditingController();
+  final TextEditingController _passwordTextFieldController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +32,14 @@ class _LoginFormState extends State<LoginForm> {
             cursorColor: kPrimaryColor,
             controller: _emailTextFieldController,
             validator: (value) {
-              if (value == null || value!.length < 1) return "Email must not be empty";
+              if (value == null || value!.length < 1)
+                return "Email must not be empty";
               return null;
             },
             decoration: InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -52,13 +52,14 @@ class _LoginFormState extends State<LoginForm> {
               cursorColor: kPrimaryColor,
               controller: _passwordTextFieldController,
               validator: (value) {
-                if (value == null || value!.length < 1) return "Password must not be empty";
+                if (value == null || value!.length < 1)
+                  return "Password must not be empty";
                 return null;
               },
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -69,12 +70,15 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () async {
-                if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+                if (_formKey.currentState != null &&
+                    _formKey.currentState!.validate()) {
                   try {
-                    final res = await loginRequest(_emailTextFieldController.text, _passwordTextFieldController.text);
-                      // Do Something with Body Response which will contain: (Save in application global state)
-                      print(res);
-                      /*
+                    final res = await loginRequest(
+                        _emailTextFieldController.text,
+                        _passwordTextFieldController.text);
+                    // Do Something with Body Response which will contain: (Save in application global state)
+                    print(res);
+                    /*
                         id: user._id,
                         name: user.name,
                         email: user.email,
@@ -114,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 ),
               );
