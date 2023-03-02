@@ -5,3 +5,4 @@
 *.xcconfig
 my_app/ios/Podfile
 *.lock
+*.pbxproj

@@ -21,6 +21,7 @@ class _SignupFormState extends State<SignUpForm> {
   final TextEditingController _reenteredPasswordTextFieldController = TextEditingController();
   final TextEditingController _fullNameTextFieldController = TextEditingController();
   final TextEditingController _majorTextFieldController = TextEditingController();
+  final TextEditingController _schoolNameTextFieldController = TextEditingController();
 
   Future<void> registerUser() async {
     return registerRequest({
@@ -28,7 +29,7 @@ class _SignupFormState extends State<SignUpForm> {
       'password': _passwordTextFieldController.text,
       'name': _fullNameTextFieldController.text,
       'majors': [_majorTextFieldController.text],
-      'college_name': "The City College of New York",
+      'college_name': _schoolNameTextFieldController.text,
       "profile_img": "www.google.com"
     });
   }
@@ -90,13 +91,7 @@ class _SignupFormState extends State<SignUpForm> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            controller: _passwordTextFieldController,
-            validator: (value) {
-                if (_reenteredPasswordTextFieldController.text != _passwordTextFieldController.text) {
-                  return "Passwords must match.";
-                }
-                return null;
-              },
+            controller: _schoolNameTextFieldController,
             decoration: InputDecoration(
               hintText: "School",
               prefixIcon: Padding(
@@ -131,6 +126,13 @@ class _SignupFormState extends State<SignUpForm> {
             textInputAction: TextInputAction.done,
             obscureText: true,
             cursorColor: kPrimaryColor,
+            controller: _passwordTextFieldController,
+            validator: (value) {
+                if (_reenteredPasswordTextFieldController.text != _passwordTextFieldController.text) {
+                  return "Passwords must match.";
+                }
+                return null;
+              },
             decoration: InputDecoration(
               hintText: "Re-enter Password",
               prefixIcon: Padding(
@@ -145,7 +147,14 @@ class _SignupFormState extends State<SignUpForm> {
               if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                 try {
                   await registerUser();
-
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return LoginScreen();
+                    },
+                  ),
+              );
                   // Do Something once user registers successfully (Move on to home screen, save credentials etc)
                 } catch (err) {
                   // Do something when User register fails (Display message etc)
