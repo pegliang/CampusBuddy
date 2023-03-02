@@ -22,7 +22,10 @@ class ClubSignUpScreenTopImage extends StatelessWidget {
             const Spacer(),
             Expanded(
               flex: 8,
-              child: SvgPicture.asset("assets/icons/signup.svg"),
+              child: Image(
+                image: AssetImage('assets/campus.jpeg'),
+                height: 200 ,
+              ),
             ),
             const Spacer(),
           ],

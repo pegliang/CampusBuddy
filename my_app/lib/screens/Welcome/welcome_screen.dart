@@ -57,7 +57,7 @@ class MobileWelcomeScreen extends StatelessWidget {
             Spacer(),
             Expanded(
               flex: 8,
-              child: LoginAndSignupBtn(),
+              child: LoginAndSignupBtn(),  
             ),
             Spacer(),
           ],

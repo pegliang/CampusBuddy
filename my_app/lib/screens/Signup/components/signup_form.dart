@@ -30,21 +30,19 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
-
-           TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              cursorColor: kPrimaryColor,
-              onSaved: (email) {},
-              decoration: InputDecoration(
-                hintText: "School Email",
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.email),
-                ),
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            onSaved: (email) {},
+            decoration: InputDecoration(
+              hintText: "School Email",
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Icon(Icons.email),
               ),
             ),
-
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
@@ -61,16 +59,16 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
-
           TextFormField(
-            textInputAction: TextInputAction.done,
-            obscureText: true,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
+            onSaved: (email) {},
             decoration: InputDecoration(
-              hintText: "Enter Password",
+              hintText: "School",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.lock),
+                child: Icon(Icons.location_city),
               ),
             ),
           ),
@@ -81,7 +79,7 @@ class SignUpForm extends StatelessWidget {
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
-                hintText: "Re-enter Password",
+                hintText: "Enter Password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
@@ -89,7 +87,19 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: defaultPadding / 2),
+          TextFormField(
+            textInputAction: TextInputAction.done,
+            obscureText: true,
+            cursorColor: kPrimaryColor,
+            decoration: InputDecoration(
+              hintText: "Re-enter Password",
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Icon(Icons.lock),
+              ),
+            ),
+          ),
+          const SizedBox(height: defaultPadding / 1),
           ElevatedButton(
             onPressed: () {},
             child: Text("Sign Up".toUpperCase()),

@@ -21,7 +21,7 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );
@@ -38,7 +38,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return ClubLoginScreen(); // club login
+                  return const ClubLoginScreen(); // club login
                 },
               ),
             );
@@ -47,7 +47,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
             "Club".toUpperCase(),
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
         ),
       ],
