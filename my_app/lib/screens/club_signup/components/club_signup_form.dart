@@ -1,5 +1,3 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_club_account.dart';
@@ -22,7 +20,7 @@ class ClubSignUpForm extends StatelessWidget {
             cursorColor: kPrimaryColor,
             onSaved: (string) {},
             decoration: const InputDecoration(
-              hintText: "club Name",
+              hintText: "Club Name",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.local_activity),
@@ -50,7 +48,7 @@ class ClubSignUpForm extends StatelessWidget {
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
             decoration: const InputDecoration(
-              hintText: "club email",
+              hintText: "Club Email",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.email),
@@ -64,7 +62,7 @@ class ClubSignUpForm extends StatelessWidget {
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
-                hintText: "password",
+                hintText: "Password",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
@@ -76,9 +74,9 @@ class ClubSignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.done,
             obscureText: true,
             cursorColor: kPrimaryColor,
-            onSaved: (PasswordCredential) {}, ///// double check this
+            onSaved: (password) {}, ///// double check this
             decoration: const InputDecoration(
-              hintText: "Re-enter password",
+              hintText: "Re-enter Password",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),

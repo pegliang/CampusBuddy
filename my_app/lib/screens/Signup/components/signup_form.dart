@@ -47,10 +47,10 @@ class _SignupFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               controller: _fullNameTextFieldController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Full Name",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person),
                 ),
               ),
@@ -62,10 +62,10 @@ class _SignupFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               controller: _emailTextFieldController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "School Email",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.email),
                 ),
               ),
@@ -78,10 +78,10 @@ class _SignupFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               controller: _majorTextFieldController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Major",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.school),
                 ),
               ),
@@ -92,10 +92,10 @@ class _SignupFormState extends State<SignUpForm> {
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             controller: _schoolNameTextFieldController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "School",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.location_city),
               ),
             ),
@@ -113,10 +113,10 @@ class _SignupFormState extends State<SignUpForm> {
                 return null;
               },
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter Password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -133,10 +133,10 @@ class _SignupFormState extends State<SignUpForm> {
                 }
                 return null;
               },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Re-enter Password",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),
               ),
             ),
@@ -172,7 +172,7 @@ class _SignupFormState extends State<SignUpForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );

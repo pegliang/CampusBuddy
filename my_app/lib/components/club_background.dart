@@ -6,7 +6,7 @@ class Background extends StatelessWidget {
     Key? key,
     required this.child,
     this.topImage = "assets/bckgd.jpeg",
-    this.bottomImage = "assets/campus1.jpeg",
+    this.bottomImage = "assets/campus1.jpeg",  // don't need this
   }) : super(key: key);
 
   final String topImage, bottomImage;
@@ -15,13 +15,13 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Positioned(
+            const Positioned(
               top: 0,
               left: 0,
               child: Image(
@@ -29,7 +29,6 @@ class Background extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
             ),
-            //Spacer(),
             SafeArea(child: child),
           ],
         ),

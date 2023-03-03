@@ -10,7 +10,6 @@ class ClubLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Background(
       child: SingleChildScrollView(
         child: Responsive(

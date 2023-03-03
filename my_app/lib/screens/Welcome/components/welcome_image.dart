@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
@@ -12,13 +11,13 @@ class WelcomeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const Text(
           "WELCOME TO CAMPUSBUDDY",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
         Row(
-          children: [
+          children: const[
             Spacer(),
             Expanded(
               flex: 8,
@@ -30,7 +29,7 @@ class WelcomeImage extends StatelessWidget {
             Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
       ],
     );
   }
