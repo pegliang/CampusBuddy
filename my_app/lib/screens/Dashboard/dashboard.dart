@@ -71,17 +71,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Business',
+            label: 'Club',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'Chat',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Settings',
+            label: 'Profile',
             backgroundColor: Colors.pink,
           ),
         ],

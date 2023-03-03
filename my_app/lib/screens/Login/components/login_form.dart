@@ -6,7 +6,7 @@ import 'package:my_app/utils/requests/login.dart';
 import '../../../components/already_have_an_account.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
-import '../../../utils/requests/login.dart';
+// import '../../../utils/requests/login.dart'; // double import??
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                   return "Password must not be empty";
                 return null;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
