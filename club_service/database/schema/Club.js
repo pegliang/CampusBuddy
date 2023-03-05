@@ -53,6 +53,7 @@ const ClubSchema = new mongoose.Schema({
         type: [{
             userId: String,
             name: String,
+            title: String,
         }],
 
         required: true,
