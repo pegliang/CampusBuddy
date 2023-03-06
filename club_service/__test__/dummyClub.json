@@ -1,0 +1,40 @@
+{
+    "name": "Dummy Club",
+    "majors": [
+        "cs",
+        "cpe"
+    ],
+    "minors": [
+        "ce"
+    ],
+    "genders": [
+        "male",
+        "female"
+    ],
+    "races": [
+        "white",
+        "asian"
+    ],
+    "sexual_orientations": [
+        "straight"
+    ],
+    "profile_img": "https://img.random.com",
+    "eboard_members": [
+        {
+            "userId": "1234",
+            "name": "john doe",
+            "title": "president"
+        }
+    ],
+    "members": [
+        {
+            "userId": "1111",
+            "name": "joe mama"
+        },
+        {
+            "nameId": "2222",
+            "name": "jane mary"
+        }
+    ],
+    "desc": "dummy club"
+}

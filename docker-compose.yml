@@ -73,6 +73,23 @@ services:
       - "./user_service:/app"
       - "./user_service/node_modules:/app/node_modules"
 
+  club-service:
+    build: "./club_service"
+    depends_on:
+      - user-db
+    container_name: club-service-container
+    environment:
+      - DATABASE_URL=${MONGO_HOST_URL}
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - CLUB_SERVICE_PORT=${CLUB_SERVICE_PORT}
+    ports:
+      - ${CLUB_SERVICE_PORT}:${CLUB_SERVICE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - "./club_service:/app"
+      - "./club_service/node_modules:/app/node_modules"
+
   auth-service:
     build: "./auth_service"
     container_name: auth-service-container
