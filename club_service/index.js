@@ -20,6 +20,8 @@ app.use("/", insertRoutes);
 app.use("/", fetchRoutes);
 app.use("/", deleteRoutes);
 
+app.get("/", (req, res) => res.json({ "status": "OK" }));
+
 initDatabase().then(() => {
     app.listen(PORT, () => {
         console.log(`Club Service is listening on port ${PORT}`);
