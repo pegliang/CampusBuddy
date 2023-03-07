@@ -3,8 +3,9 @@ import 'package:my_app/constants.dart';
 import 'package:my_app/screens/Home/homeScreen.dart';
 import 'package:my_app/screens/Club/clubScreen.dart';
 import 'package:my_app/screens/chat/chatScreen.dart';
+import 'package:my_app/screens/Login/login_screen.dart';
 
-import 'package:my_app/screens/Profile/profileScreen.dart';
+//import 'package:my_app/screens/Profile/profileScreen.dart';
 
 //import 'screens/utils/requests/login.dart';
 
@@ -39,7 +40,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomeScreen(),
     ClubScreen(),
     ChatScreen(),
-    ProfileScreen()
+    LoginScreen()
   ];
 
   void _onItemTapped(int index) {
