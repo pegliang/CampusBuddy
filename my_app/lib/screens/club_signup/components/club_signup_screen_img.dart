@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
@@ -14,23 +13,23 @@ class ClubSignUpScreenTopImage extends StatelessWidget {
       children: [
         Text(
           "Sign Up".toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
         Row(
-          children: [
-            const Spacer(),
+          children: const [
+            Spacer(),
             Expanded(
               flex: 8,
               child: Image(
                 image: AssetImage('assets/campus.jpeg'),
-                height: 200 ,
+                height: 200,
               ),
             ),
-            const Spacer(),
+            Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
       ],
     );
   }

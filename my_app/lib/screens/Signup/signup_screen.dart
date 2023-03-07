@@ -4,7 +4,6 @@ import 'package:my_app/responsive.dart';
 import '../../components/background.dart';
 import 'components/signup_img.dart';
 import 'components/signup_form.dart';
-//import 'components/social_sign_up.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -62,7 +61,6 @@ class MobileSignupScreen extends StatelessWidget {
             Spacer(),
           ],
         ),
-        // const
       ],
     );
   }

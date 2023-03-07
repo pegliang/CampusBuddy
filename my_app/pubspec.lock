@@ -62,6 +62,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_image_stack:
+    dependency: "direct main"
+    description:
+      name: flutter_image_stack
+      sha256: "097afa4737074a8e5c16e2b0c87b9ab3b63aa05245c8c5d518bbf070c093a48f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   flutter_lints:
     dependency: "direct dev"
     description:

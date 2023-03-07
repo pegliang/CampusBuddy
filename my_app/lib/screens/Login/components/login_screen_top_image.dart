@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
@@ -12,25 +11,25 @@ class LoginScreenTopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const Text(
           "Student Login",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
         Row(
-          children: [
-            const Spacer(),
+          children: const [
+            Spacer(),
             Expanded(
               flex: 8,
               child: Image(
                 image: AssetImage('assets/campus.jpeg'),
-                height: 200 ,
+                height: 200,
               ),
             ),
-            const Spacer(),
+            Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
       ],
     );
   }
