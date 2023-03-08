@@ -6,3 +6,12 @@
 my_app/ios/Podfile
 *.lock
 *.pbxproj
+*/node_modules
+.env
+*/venv
+*/__pycache
+.DS_Store
+
+# ignore docker volumes
+/user_service/mongodb_data/
+*.pyc

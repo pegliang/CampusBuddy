@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  user-db:
+    image: mongo
+    restart: always
+    container_name: user-db-container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - "./user_service/mongodb_data:/data/db"
+
+  auth-db:
+    image: redis:alpine
+    restart: always
+    container_name: auth-db-container
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    ports:
+      - "6379:6379"
+    env_file:
+      - .env
+
+  gateway-service:
+    build: "./gateway"
+    depends_on:
+      - user-db
+      - auth-db
+    container_name: api-gatweay-service-container
+    environment:
+      - MATCHING_SERVICE_HOST=${MATCHING_SERVICE_HOST}
+      - MATCHING_SERVICE_PORT=${MATCHING_SERVICE_PORT}
+      - USER_SERVICE_HOST=${USER_SERVICE_HOST}
+      - USER_SERVICE_PORT=${USER_SERVICE_PORT}
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - GATEWAY_PORT=${GATEWAY_PORT}
+      - AUTH_SERVICE_HOST=${AUTH_SERVICE_HOST}
+      - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+    ports:
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+    env_file:
+      - .env
+    volumes:
+      - "./gateway:/app"
+      - "./gateway/node_modules:/app/node_modules"
+
+  user-service:
+    build: "./user_service"
+    depends_on:
+      - user-db
+    container_name: user-service-container
+    environment:
+      - DATABASE_URL=${MONGO_HOST_URL}
+      - USER_SERVICE_HOST=${USER_SERVICE_HOST}
+      - USER_SERVICE_PORT=${USER_SERVICE_PORT}
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+      - GENERATE_TEST_USERS=${GENERATE_TEST_USERS}
+    ports:
+      - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
+    env_file:
+      - .env
+    volumes:
+      - "./user_service:/app"
+      - "./user_service/node_modules:/app/node_modules"
+
+  club-service:
+    build: "./club_service"
+    depends_on:
+      - user-db
+    container_name: club-service-container
+    environment:
+      - DATABASE_URL=${MONGO_HOST_URL}
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - CLUB_SERVICE_PORT=${CLUB_SERVICE_PORT}
+    ports:
+      - ${CLUB_SERVICE_PORT}:${CLUB_SERVICE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - "./club_service:/app"
+      - "./club_service/node_modules:/app/node_modules"
+
+  auth-service:
+    build: "./auth_service"
+    container_name: auth-service-container
+    depends_on:
+      - auth-db
+    environment:
+      - GATEWAY_HOST=${GATEWAY_HOST}
+      - JWT_SECRET_ACCESS_TOKEN_KEY=${JWT_SECRET_ACCESS_TOKEN_KEY}
+      - JWT_SECRET_REFRESH_TOKEN_KEY=${JWT_SECRET_REFRESH_TOKEN_KEY}
+    ports:
+      - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - "./auth_service:/app"
+      - "./auth_service/node_modules:/app/node_modules"
+
+  matching-service:
+    build: "./matching_service"
+    depends_on:
+      - user-db
+    container_name: matching-service-container
+    environment:
+      - DATABASE_URL=${MONGO_HOST_URL}
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./matching_service:/app"
+      - "./matching_service/venv:/app/venv"
