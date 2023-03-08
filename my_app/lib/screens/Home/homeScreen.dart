@@ -7,16 +7,13 @@ import '../../components/background.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  
   @override
   Widget build(BuildContext context) {
     var heading = '\$2300 per month';
     var subheading = '2 bed, 1 bath, 1300 sqft';
     var cardImage = AssetImage('assets/ie.jpeg');
-    var supportingText =
-        'Beautiful home to rent, recently refurbished with modern appliances...';
+    var supportingText = 'Beautiful home to rent ...';
 
-    
     return Center(
         child: Card(
             elevation: 10.0,
