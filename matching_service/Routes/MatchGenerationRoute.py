@@ -2,10 +2,8 @@ from flask import request, jsonify
 from bson.objectid import ObjectId
 from Database.Models.User import User
 from Routes.Helpers.MatchGenerationHelpers import buildFilterObject, compare
-import sys
 
 def suggestedMatches():
-
     try:
         userID = request.get_json()["user_id"]
     except:
@@ -22,7 +20,6 @@ def suggestedMatches():
         if primaryUser == None:
             return jsonify({"message": f'Could not find user with id = {userID}.'}), 400
     except Exception as err:
-        print(err, file = sys.stderr)
         return jsonify({"message": f'Error finding user with id = {userID}.'}), 500
     
     filterObject = buildFilterObject(request.get_json(), primaryUser)

@@ -6,3 +6,4 @@ class Swipe(Document):
     targetUserID = StringField() # User who the primary user swiped for
     datetime = DateTimeField() # Datetime the user swiped
     like = BooleanField() # True if the primary user liked the target user, False otherwise
+    meta = {'collection': 'swipes', 'strict': False}
