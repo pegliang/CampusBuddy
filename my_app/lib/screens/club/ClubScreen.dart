@@ -9,6 +9,6 @@ class ClubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("hii, hiiiiiii");
+    return Text("hii, hello hiiiiiii");
   }
 }

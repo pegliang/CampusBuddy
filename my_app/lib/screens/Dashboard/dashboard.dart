@@ -40,7 +40,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomeScreen(),
     ClubScreen(),
     ChatScreen(),
-    LoginScreen()
+    ProfileScreen()
   ];
 
   void _onItemTapped(int index) {
