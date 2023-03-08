@@ -6,7 +6,7 @@ class Background extends StatelessWidget {
     Key? key,
     required this.child,
     this.topImage = "assets/bckgd.jpeg",
-    this.bottomImage = "assets/campus1.jpeg",  // don't need this
+    this.bottomImage = "assets/campus1.jpeg", // don't need this
   }) : super(key: key);
 
   final String topImage, bottomImage;
