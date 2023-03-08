@@ -1,23 +1,24 @@
-class User:
-    def __init__(self) -> None:
-        pass
-    def __init__(self, userObject) -> None:
-        self.id = None if userObject.get("_id") is None else str(userObject.get("_id"))
-        self.name = None if userObject.get("name") is None else str(userObject.get("name"))
-        self.college_name = None if userObject.get("college_name") is None else str(userObject.get("college_name"))
-        self.gender = None if userObject.get("gender") is None else str(userObject.get("gender"))
-        self.race = None if userObject.get("race") is None else str(userObject.get("race"))
-        self.sexual_orientation = None if userObject.get("sexual_orientation") is None else str(userObject.get("sexual_orientation"))
-        self.majors = [str(major) for major in userObject.get("majors")]
-        self.minors = [str(minor) for minor in userObject.get("minors")]
-        self.gpa = None if userObject.get("gpa") is None else int(userObject.get("gpa"))
-        self.year = None if userObject.get("year") is None else int(userObject.get("year"))
-        self.courses = [str(course) for course in userObject.get("courses")]
-        self.clubs = [str(club) for club in userObject.get("clubs")]
-        self.profile_img = None if userObject.get("profile_img") is None else str(userObject.get("profile_img"))
-        self.desc = None if userObject.get("desc") is None else str(userObject.get("desc"))
-        self.interests = [str(interest) for interest in userObject.get("interests")]
-        self.isPremiumMember = bool(userObject.get("isPremiumMember"))
+from mongoengine import Document, \
+StringField, ListField, FloatField, IntField, URLField, BooleanField
+
+class User(Document):
+    name = StringField()
+    college_name = StringField()
+    gender = StringField()
+    race = StringField()
+    sexual_orientation = StringField()
+    majors = ListField()
+    minors = ListField()
+    gpa = FloatField()
+    year = IntField()
+    courses = ListField()
+    clubs = ListField()
+    profile_img = URLField()
+    desc = StringField()
+    interests = ListField()
+    isPremiumMember = BooleanField()
+
+    meta = {'collection': 'users', 'strict': False}
     
     def __str__(self) -> str:
         res = ""
@@ -26,10 +27,9 @@ class User:
             res += key + ": " + str(userObject[key]) + ", "
         return res[:-2]
 
-
     def serialize(self) -> dict:
         return {
-            "id": self.id,
+            "id": str(self.pk),
             "name": self.name,
             "college_name": self.college_name,
             'gender': self.gender,
@@ -46,7 +46,19 @@ class User:
             "interests": self.interests,
             "isPremiumMember": self.isPremiumMember
         }
-    
+    @staticmethod
+    def aggregate(pipeline):
+        userList = []
+        for userDict in list(User.objects().aggregate(pipeline=pipeline)):
+            userDict.pop('__v')
+            userDict.pop('email')
+            userDict.pop('password')
+            userDict.pop('verifiedEmail')
+            userDict['pk'] = str(userDict['_id'])
+            userDict.pop('_id')
+            userList.append(User(**userDict))
+        return userList
+
     @staticmethod
     def list_serialize(users: list) -> list:
         return [user.serialize() for user in users]

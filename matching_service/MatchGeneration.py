@@ -5,7 +5,9 @@ import os
 from User import User
 import pandas as pd
 import numpy as np
+from mongoengine import *
 
+connect(host=os.getenv("DATABASE_URL"))
 client = MongoClient(os.getenv("DATABASE_URL"))
 db = client.campusbuddy
 users = db.users
@@ -61,7 +63,7 @@ def suggestedMatches():
     try:
         userID = request.get_json()["user_id"]
     except:
-        return Response(jsonify({"message": "Something went wrong parsing the 'user_id'."}), status=400, mimetype='application/json')
+        return jsonify({"message": "Something went wrong parsing the 'user_id'."}), 400
     try:
         num_of_users = request.get_json()["num_of_users"]
         if num_of_users > 40:
@@ -70,24 +72,19 @@ def suggestedMatches():
         num_of_users = 40
 
     try:
-        userDoc = users.find_one({"_id": ObjectId(userID)})
-
-        if userDoc == None:
-            return Response(jsonify({"message": f'Could not find user with id = {userID}.'}), status=400, mimetype='application/json')
-    except:
-        return Response(jsonify({"message": f'Error finding user with id = {userID}.'}), status=500, mimetype='application/json')
+        primaryUser = User.objects().get(pk = ObjectId(userID))
+        if primaryUser == None:
+            return jsonify({"message": f'Could not find user with id = {userID}.'}), 400
+    except Exception as err:
+        return jsonify({"message": f'Error finding user with id = {userID}.'}), 500
     
-    filterObject = buildFilterObject(request.get_json(), User(userDoc))
+    filterObject = buildFilterObject(request.get_json(), primaryUser)
     pipeline = [{"$match": filterObject}, {"$sample": { "size": 200 }}]
-    randUsers = users.aggregate(pipeline=pipeline)
-    randUsersDicts = []
+    randUsersDicts = User.list_serialize(User.aggregate(pipeline))
 
-    for doc in randUsers:
-        randUsersDicts.append(User(doc).serialize())
-    
     df = pd.DataFrame(randUsersDicts)
 
-    similarity_scores = compare(User(userDoc).serialize(), df).to_dict('records')
+    similarity_scores = compare(primaryUser.serialize(), df).to_dict('records')
     sortedUsers = sorted(similarity_scores, key=lambda x: x["similarity_score"], reverse=True)[:num_of_users]
 
     jsonUsers = jsonify(sortedUsers)
