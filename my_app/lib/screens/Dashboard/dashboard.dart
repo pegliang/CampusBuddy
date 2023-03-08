@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/constants.dart';
+import 'package:my_app/screens/Home/homeScreen.dart';
+import 'package:my_app/screens/Club/clubScreen.dart';
+import 'package:my_app/screens/chat/chatScreen.dart';
+import 'package:my_app/screens/Login/login_screen.dart';
+
+import 'package:my_app/screens/Profile/profile.dart';
+
 //import 'screens/utils/requests/login.dart';
 
 //void main() => runApp(const MyApp());
@@ -6,7 +14,7 @@ import 'package:flutter/material.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
-  static const String _title = 'Flutter Code Sample';
+  static const String _title = ' ';
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +37,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    HomeScreen(),
+    ClubScreen(),
+    ChatScreen(),
+    LoginScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -57,7 +53,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('CampusBuddy'),
+        backgroundColor: kPrimaryColor,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -65,28 +62,28 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, color: Colors.black, size: 30),
             label: 'Home',
-            backgroundColor: Colors.red,
+            backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
+            icon: Icon(Icons.business, color: Colors.black, size: 30),
+            label: 'Club',
+            backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
+            icon: Icon(Icons.chat, color: Colors.black, size: 30),
+            label: 'Chat',
+            backgroundColor: kPrimaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
+            icon: Icon(Icons.person, color: Colors.black, size: 30),
+            label: 'Profile',
+            backgroundColor: kPrimaryColor,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: kPrimaryLightColor,
         onTap: _onItemTapped,
       ),
     );

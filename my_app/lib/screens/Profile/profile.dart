@@ -5,6 +5,15 @@ import '../../components/background.dart';
 import 'components/profile_page.dart';
 import 'components/profile_screen_img.dart';
 
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("hii, hiiiiiii");
+  }
+}
+
 // class ProfileScreen extends StatelessWidget {
 //   const ProfileScreen({Key? key}) : super(key: key);
 
