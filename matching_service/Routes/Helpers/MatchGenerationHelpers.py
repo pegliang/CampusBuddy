@@ -1,16 +1,5 @@
-from flask import request, Response, jsonify
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-import os
-from User import User
 import pandas as pd
 import numpy as np
-from mongoengine import *
-
-connect(host=os.getenv("DATABASE_URL"))
-client = MongoClient(os.getenv("DATABASE_URL"))
-db = client.campusbuddy
-users = db.users
 
 def getArgument(name, body):
     value = None
@@ -58,39 +47,8 @@ def buildFilterObject(body, userObject):
     
     return fil
 
-def suggestedMatches():
-
-    try:
-        userID = request.get_json()["user_id"]
-    except:
-        return jsonify({"message": "Something went wrong parsing the 'user_id'."}), 400
-    try:
-        num_of_users = request.get_json()["num_of_users"]
-        if num_of_users > 40:
-            num_of_users = 40
-    except:
-        num_of_users = 40
-
-    try:
-        primaryUser = User.objects().get(pk = ObjectId(userID))
-        if primaryUser == None:
-            return jsonify({"message": f'Could not find user with id = {userID}.'}), 400
-    except Exception as err:
-        return jsonify({"message": f'Error finding user with id = {userID}.'}), 500
-    
-    filterObject = buildFilterObject(request.get_json(), primaryUser)
-    pipeline = [{"$match": filterObject}, {"$sample": { "size": 200 }}]
-    randUsersDicts = User.list_serialize(User.aggregate(pipeline))
-
-    df = pd.DataFrame(randUsersDicts)
-
-    similarity_scores = compare(primaryUser.serialize(), df).to_dict('records')
-    sortedUsers = sorted(similarity_scores, key=lambda x: x["similarity_score"], reverse=True)[:num_of_users]
-
-    jsonUsers = jsonify(sortedUsers)
-    return jsonUsers
-
-def compare(target, df):
+def compare(target, userDicts):
+    df = pd.DataFrame(userDicts)
 
     new_df = df.copy()
     new_df["club_similarity"] = df.apply(lambda x: len(np.intersect1d(x['clubs'], target['clubs'])), axis = 1)
@@ -121,4 +79,5 @@ def compare(target, df):
 
     new_df["similarity_score"] = (new_df["club_similarity"] + new_df["same_college"] + new_df["courses_similarity"] + new_df["interests_similarity"] + new_df["majors_similarity"] + new_df["minors_similarity"] + new_df["gpa_similarity"] + new_df["year_similarity"])/8.0
     new_df = new_df.drop(columns=["club_similarity", "same_college", "courses_similarity", "interests_similarity", "majors_similarity", "minors_similarity", "gpa_similarity", "year_similarity"])
-    return new_df
+    return new_df.to_dict('records')
+
