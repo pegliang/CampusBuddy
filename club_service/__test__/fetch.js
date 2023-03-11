@@ -29,11 +29,7 @@ async function fetchTest() {
                 }
 
                 // verify all members
-                for (let i = 0; i < dummyClub.members.length; i++) {
-                    assert.equal(dummyClub.members[i].name, data.members[i].name);
-                    assert.equal(dummyClub.members[i].userId, data.members[i].userId);
-                }
-
+                assert.deepEqual(data.members, []);
             } catch (err) {
                 return assert.fail(err);
             }

@@ -1,11 +1,13 @@
 const { initDatabase } = require("./init");
 const { insertClub } = require("./insert");
-const { fetchClubByName } = require("./fetch");
-const { deleteClubByName } = require("./delete");
+const { fetchClubById, fetchClubByName } = require("./fetch");
+const { deleteClubById, deleteClubByName } = require("./delete");
 
 module.exports = {
     initDatabase,
     insertClub,
+    fetchClubById,
     fetchClubByName,
     deleteClubByName,
+    deleteClubById,
 }

@@ -15,11 +15,15 @@ async function registerController(req, res) {
     const genders = req.body.genders || [];
     const races = req.body.races || [];
     const sexual_orientations = req.body.sexual_orientations || [];
-    const eboard_members = req.body.eboard_members;
-    const members = req.body.members || [];
+    const eboard_members = [req.body.eboard_members];
+    const members = [];
     const desc = req.body.desc;
 
     if (!name || !majors || !minors || !desc || !eboard_members) return res.status(400).send();
+
+    // make sure eboard members are parse correctly
+    if (!eboard_members || !eboard_members[0].userId || !eboard_members[0].name || !eboard_members[0].title)
+        return res.status(400).send();
 
     try {
         // make sure the club dne

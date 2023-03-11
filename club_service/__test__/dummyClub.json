@@ -19,22 +19,10 @@
         "straight"
     ],
     "profile_img": "https://img.random.com",
-    "eboard_members": [
-        {
-            "userId": "1234",
-            "name": "john doe",
-            "title": "president"
-        }
-    ],
-    "members": [
-        {
-            "userId": "1111",
-            "name": "joe mama"
-        },
-        {
-            "nameId": "2222",
-            "name": "jane mary"
-        }
-    ],
+    "eboard_members": {
+        "userId": "1234",
+        "name": "john doe",
+        "title": "president"
+    },
     "desc": "dummy club"
 }
