@@ -1,5 +1,14 @@
 const { Club } = require("./schema/Club");
 
+async function fetchClubById(id) {
+    try {
+        const club = await Club.findById(id);
+        return club;
+    } catch (err) {
+        throw err;
+    }
+}
+
 /**
  * Fetch a club by its name
  * @param {string} name 
@@ -16,5 +25,6 @@ async function fetchClubByName(name) {
 }
 
 module.exports = {
+    fetchClubById,
     fetchClubByName,
 }

@@ -111,6 +111,7 @@ async function removeRefreshTokenController(req, res) {
 
     try {
         await db.deleteRefreshTokenFromCache(userId, refreshToken);
+        return res.send();
     } catch (err) {
         return res.status(500).send();
     }

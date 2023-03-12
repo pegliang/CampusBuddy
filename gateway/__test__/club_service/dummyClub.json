@@ -1,0 +1,23 @@
+{
+    "clubName": "dummy club",
+    "majors": [
+        "CS",
+        "CPE"
+    ],
+    "minors": [
+        "CS",
+        "CPE"
+    ],
+    "genders": [
+        "male",
+        "female"
+    ],
+    "races": [
+        "white",
+        "black"
+    ],
+    "sexual_orientations": [
+        "straight"
+    ],
+    "desc": "A sample club"
+}

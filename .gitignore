@@ -8,6 +8,7 @@ my_app/ios/Podfile
 *.pbxproj
 */node_modules
 .env
+.vscode
 */venv
 */__pycache
 .DS_Store

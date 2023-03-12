@@ -10,6 +10,6 @@
   },
   "scripts": {
     "dev": "nodemon -L index.js",
-    "test": "mocha --timeout 15000 __test__/index.js"
+    "test": "mocha __test__/index.js"
   }
 }
