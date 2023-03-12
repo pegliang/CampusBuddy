@@ -13,6 +13,7 @@ async function deleteClubByIdController(req, res) {
 
     try {
         await db.deleteClubById(id);
+        return res.send();
     } catch (err) {
         console.error(err);
         return res.status(500).send();

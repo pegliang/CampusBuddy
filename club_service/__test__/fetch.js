@@ -8,7 +8,7 @@ async function fetchTest() {
     describe("Testing the fetch route", async () => {
         it("Fetch the dummy club using the /getClubByName route", async () => {
             try {
-                const res = await axios.get(process.env.CLUB_SERVICE_HOST + `/getClubByName?name=${dummyClub.name}`);
+                const res = await axios.get(process.env.CLUB_SERVICE_HOST + `/getClubByName?name=${dummyClub.name.replace(" ", "%20")}`);
                 const data = res.data;
 
                 if (!data) return assert.fail("No data was returned");
@@ -21,12 +21,10 @@ async function fetchTest() {
                 assert.equal(JSON.stringify(data.sexual_orientations), JSON.stringify(dummyClub.sexual_orientations));
                 assert.equal(data.desc, dummyClub.desc);
 
-                // verify all eboard members
-                for (let i = 0; i < dummyClub.eboard_members.length; i++) {
-                    assert.equal(dummyClub.eboard_members[i].name, data.eboard_members[i].name);
-                    assert.equal(dummyClub.eboard_members[i].title, data.eboard_members[i].title);
-                    assert.equal(dummyClub.eboard_members[i].userId, data.eboard_members[i].userId);
-                }
+                // verify the eboard member
+                assert.equal(dummyClub.eboard_member.name, data.eboard_members[0].name);
+                assert.equal(dummyClub.eboard_member.title, data.eboard_members[0].title);
+                assert.equal(dummyClub.eboard_member.userId, data.eboard_members[0].userId);
 
                 // verify all members
                 assert.deepEqual(data.members, []);

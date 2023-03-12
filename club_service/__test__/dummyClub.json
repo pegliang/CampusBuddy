@@ -19,7 +19,7 @@
         "straight"
     ],
     "profile_img": "https://img.random.com",
-    "eboard_members": {
+    "eboard_member": {
         "userId": "1234",
         "name": "john doe",
         "title": "president"

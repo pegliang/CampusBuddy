@@ -13,6 +13,7 @@ async function startUnitTest() {
 
     // club service test
     await clubServiceTest.registerClubTest();
+    await clubServiceTest.fetchAndDeleteClubTest();
 }
 
 startUnitTest();

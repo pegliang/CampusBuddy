@@ -15,14 +15,14 @@ async function registerController(req, res) {
     const genders = req.body.genders || [];
     const races = req.body.races || [];
     const sexual_orientations = req.body.sexual_orientations || [];
-    const eboard_members = [req.body.eboard_members];
+    const eboard_member = req.body.eboard_member;
     const members = [];
     const desc = req.body.desc;
 
-    if (!name || !majors || !minors || !desc || !eboard_members) return res.status(400).send();
+    if (!name || !majors || !minors || !desc || !eboard_member) return res.status(400).send();
 
     // make sure eboard members are parse correctly
-    if (!eboard_members || !eboard_members[0].userId || !eboard_members[0].name || !eboard_members[0].title)
+    if (!eboard_member.userId || !eboard_member.name || !eboard_member.title)
         return res.status(400).send();
 
     try {
@@ -32,7 +32,12 @@ async function registerController(req, res) {
 
         await db.insertClub({
             name, majors, minors, genders, races,
-            sexual_orientations, eboard_members, members, desc
+            sexual_orientations, members, desc,
+            eboard_members: [{
+                userId: eboard_member.userId,
+                name: eboard_member.name,
+                title: eboard_member.title,
+            }],
         });
 
         return res.send();

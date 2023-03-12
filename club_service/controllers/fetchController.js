@@ -14,7 +14,7 @@ async function getClubByIdController(req, res) {
     if (!id) return res.status(400).send();
 
     try {
-        const club = await db.fetchClubByName(id);
+        const club = await db.fetchClubById(id);
 
         if (!club) return res.status(404).send();
 
