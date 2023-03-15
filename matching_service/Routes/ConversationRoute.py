@@ -43,3 +43,25 @@ def getConversations():
     except Exception as err:
         print(err)
         return jsonify({"message": "Something went wrong retreiving the conversations."}), 500
+    
+
+def archiveConversation():
+    bodyJson = request.get_json()
+    
+    if (not ("userID" in bodyJson)) or (not ("conversationID" in bodyJson)):
+        return jsonify({"message": "Could not parse field."}), 400
+    try:
+        conv_id = getArgument("conversationID")
+        userID = getArgument("userID")
+        conversation = Match.objects().get(pk=ObjectId(conv_id))
+        if conversation.User_1_ID.pk == ObjectId(userID):
+            conversation.Conversation_Active_For_User_1 = False
+            conversation.save()
+            return jsonify({"message": "Success!"}), 200
+        if conversation.User_2_ID.pk == ObjectId(userID):
+            conversation.Conversation_Active_For_User_2 = False
+            conversation.save()
+            return jsonify({"message": "Success!"}), 200
+        return jsonify({"message": "Could not find user to archive conversation for"}), 404
+    except Exception as err:
+        print(err)
