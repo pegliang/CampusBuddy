@@ -183,198 +183,132 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     return Text("hii, hiiiiiii");
-//   }
-// }
-
-    return MaterialApp(
-      title: 'Profile Challenge 01',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red,
-          title: Center(
-            child: const Text('Profile Challenge 01'),
-          ),
-        ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              height: 250,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.red, Colors.deepOrange.shade300],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  stops: [0.5, 0.9],
+    return Background(
+      child: ListView(
+        children: <Widget>[
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.pinkAccent, Colors.pink.shade100],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                stops: [0.0, 0.0],
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.white70,
+                      minRadius: 60.0,
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundImage: NetworkImage(
+                            'https://avatars0.githubusercontent.com/u/28812093?s=460&u=06471c90e03cfd8ce2855d217d157c93060da490&v=4'),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.red.shade300,
-                        minRadius: 35.0,
-                        child: Icon(
-                          Icons.call,
-                          size: 30.0,
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.white70,
-                        minRadius: 60.0,
-                        child: CircleAvatar(
-                          radius: 50.0,
-                          backgroundImage: NetworkImage(
-                              'https://avatars0.githubusercontent.com/u/28812093?s=460&u=06471c90e03cfd8ce2855d217d157c93060da490&v=4'),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.red.shade300,
-                        minRadius: 35.0,
-                        child: Icon(
-                          Icons.message,
-                          size: 30.0,
-                        ),
-                      ),
-                    ],
+                SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  SizedBox(
-                    height: 10,
+                ),
+                Text(
+                  'Year',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
                   ),
-                  Text(
-                    'Leonardo Palmeiro',
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    'Email',
                     style: TextStyle(
-                      fontSize: 35,
+                      color: Colors.pink.shade300,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                   ),
-                  Text(
-                    'Flutter Developer',
+                  subtitle: Text(
+                    'email address',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 18,
                     ),
                   ),
-                ],
-              ),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'Friend',
+                    style: TextStyle(
+                      color: Colors.pink.shade300,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'your friend list',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'Clubs',
+                    style: TextStyle(
+                      color: Colors.pink.shade300,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'clubs you are part of',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'Classes',
+                    style: TextStyle(
+                      color: Colors.pink.shade300,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'classes taken',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepOrange.shade300,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Followers',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.red,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Following',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      'Email',
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'palmeiro.leonardo@gmail.com',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      'GitHub',
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'https://github.com/leopalmeiro',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      'Linkedin',
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'www.linkedin.com/in/leonardo-palmeiro-834a1755',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
