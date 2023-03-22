@@ -11,19 +11,16 @@ enum MessageType {
 }
 
 class ChatDetailPage extends StatefulWidget {
+  String chatID;
+
+  ChatDetailPage({required this.chatID});
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List<ChatMessage> chatMessage = [
-    ChatMessage(message: "Heyy bestie", type: MessageType.Receiver),
-    ChatMessage(message: "what's up?", type: MessageType.Receiver),
-    ChatMessage(message: "Hey, I'm chilling, wbu?", type: MessageType.Sender),
-    ChatMessage(message: "I'm good!", type: MessageType.Receiver),
-    ChatMessage(
-        message: "What class do you have rn?", type: MessageType.Sender),
-  ];
+  List<ChatMessage> chatMessage = [];
 
   List<SendMenuItems> menuItems = [
     SendMenuItems(
