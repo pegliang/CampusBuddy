@@ -6,17 +6,14 @@ from Database.Models.User import User
 import sys
 
 # Request Format
-# {
-#   userID: String
-# }
+# userID="USERID"
+# Send as queryParameter i.e. url.com/?userID=USERID
 
-def getConversations():
-    bodyJson = request.get_json()
-    
-    if not ("userID" in bodyJson):
+def getConversations():    
+    if not ("userID" in request.args):
         return jsonify({"message": "Could not parse field."}), 400
     try:
-        userID = getArgument("userID", bodyJson)
+        userID = request.args.get("userID")
         docs1 = Match.objects(User_1_ID = userID, Conversation_Active_For_User_1 = True)
         docs2 = Match.objects(User_2_ID = userID, Conversation_Active_For_User_2 = True)
         combinedDocs = list(docs1) + list(docs2)

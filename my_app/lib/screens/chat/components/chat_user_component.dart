@@ -5,6 +5,7 @@ import 'package:my_app/screens/chat/models/chat_user_component_model.dart';
 class ChatUserComponent extends StatelessWidget {
   final ChatUserComponentModel? model;
   const ChatUserComponent({super.key, this.model});
+  const ChatUserComponent.withModel(ChatUserComponentModel this.model);
 
   @override
   Widget build(BuildContext context) {
