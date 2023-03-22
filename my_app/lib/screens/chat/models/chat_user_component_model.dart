@@ -16,11 +16,21 @@ class ChatUserComponentModel {
       required this.isNewMatch});
 
   ChatUserComponentModel.fromJSON(Map<String, dynamic> json) {
-    name = json["conversation_user"]["name"]
+    name = json["conversation_user"]["name"];
     secondaryText = "";
     image = json["conversation_user"]["profile_img"];
     userID = json["conversation_user"]["id"];
     conversationID = json["conversation_id"];
     isNewMatch = json["newly_matched"];
+  }
+
+  static List<ChatUserComponentModel> fromJSONList(List<dynamic> jsonList) {
+    List<ChatUserComponentModel> res = [];
+
+    for (int i = 0; i < jsonList.length; i++) {
+      res.add(ChatUserComponentModel.fromJSON(jsonList[i]));
+    }
+
+    return res;
   }
 }

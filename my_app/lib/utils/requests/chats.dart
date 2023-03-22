@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'request_url.dart';
 import 'package:http/http.dart' as http;
 
-Future<Map<String, dynamic>> getConversations(String userID) async {
+Future<List<dynamic>> getConversations(String userID) async {
+  final queryParameters = {"userID": userID};
+  final uri = Uri.http(
+      RequestURL.getConversations, '/getConversations', queryParameters);
   try {
-    final res = await http.post(Uri.parse(RequestURL.login),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"userID": userID}));
+    final res =
+        await http.get(uri, headers: {'Content-Type': 'application/json'});
 
     final statusCode = res.statusCode;
 

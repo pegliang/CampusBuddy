@@ -4,23 +4,19 @@ import 'package:my_app/screens/chat/models/chat_message.dart';
 import 'package:my_app/screens/chat/models/send_menu_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-enum MessageType {
-  Sender,
-  Receiver,
-}
+import '../models/chat_user_component_model.dart';
 
 class ChatDetailPage extends StatefulWidget {
-  String chatID;
+  ChatUserComponentModel? model;
 
-  ChatDetailPage({required this.chatID});
+  ChatDetailPage({required this.model});
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List<ChatMessage> chatMessage = [];
+  List<ChatMessage> chatMessages = [];
 
   List<SendMenuItems> menuItems = [
     SendMenuItems(
@@ -102,13 +98,13 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       body: Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: chatMessage.length,
+            itemCount: chatMessages.length,
             shrinkWrap: true,
             padding: EdgeInsets.only(top: 10, bottom: 10),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ChatBubble(
-                chatMessage: chatMessage[index],
+                chatMessage: chatMessages[index],
               );
             },
           ),
