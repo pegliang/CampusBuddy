@@ -122,6 +122,18 @@ services:
       - DATABASE_URL=${MONGO_HOST_URL}
     ports:
       - "8080:8080"
-    # volumes:
-    #   - "./matching_service:/app"
-    #   - "./matching_service/venv:/app/venv"
+    volumes:
+      - "./matching_service:/app"
+      - "./matching_service/venv:/app/venv"
+
+  message-service:
+    build: "./message_service"
+    container_name: message-service-container
+    environment:
+      - MESSAGE_SERVICE_HOST=${MESSAGE_SERVICE_HOST}
+      - MESSAGE_SERVICE_PORT=${MESSAGE_SERVICE_PORT}
+    ports:
+      - "${MESSAGE_SERVICE_PORT}:${MESSAGE_SERVICE_PORT}"
+    volumes:
+      - "./message_service:/app"
+      - "./message_service/node_modules:/app/node_modules"
