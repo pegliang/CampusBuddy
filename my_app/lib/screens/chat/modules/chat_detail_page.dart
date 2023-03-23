@@ -5,6 +5,7 @@ import 'package:my_app/screens/chat/models/send_menu_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/chat_user_component_model.dart';
+import '../../../utils/ChatService/ChatService.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -17,6 +18,23 @@ class ChatDetailPage extends StatefulWidget {
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
   List<ChatMessage> chatMessages = [];
+  late ChatService chatService;
+  final TextEditingController _messageTextEditingController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    String userID = "641a5eb30c30c5d96bcc75f9";
+    if (widget.model != null) {
+      chatService =
+          ChatService(widget.model!.conversationID, userID, (message) {
+        setState(() {
+          chatMessages
+              .add(ChatMessage(message: message, type: MessageType.Receiver));
+        });
+      });
+    }
+  }
 
   List<SendMenuItems> menuItems = [
     SendMenuItems(
@@ -144,6 +162,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                           hintText: "Type message...",
                           hintStyle: TextStyle(color: Colors.grey.shade500),
                           border: InputBorder.none),
+                      controller: _messageTextEditingController,
                     ),
                   ),
                 ],
@@ -155,8 +174,16 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             child: Container(
               padding: EdgeInsets.only(right: 30, bottom: 50),
               child: FloatingActionButton(
-                onPressed: () {},
-                child: Icon(
+                onPressed: () {
+                  chatService.sendMessage(_messageTextEditingController.text);
+                  setState(() {
+                    chatMessages.add(ChatMessage(
+                        message: _messageTextEditingController.text,
+                        type: MessageType.Sender));
+                    _messageTextEditingController.text = "";
+                  });
+                },
+                child: const Icon(
                   Icons.send,
                   color: Color.fromARGB(238, 236, 20, 200),
                 ),

@@ -12,7 +12,7 @@ class ChatUserComponent extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatDetailPage(chatID: model?.conversationID ?? "");
+          return ChatDetailPage(model: model);
         }));
       },
       child: Container(
