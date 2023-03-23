@@ -24,10 +24,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   @override
   void initState() {
-    String userID = "641a5eb30c30c5d96bcc75f9";
     if (widget.model != null) {
-      chatService =
-          ChatService(widget.model!.conversationID, userID, (message) {
+      chatService = ChatService(widget.model!.conversationID, (message) {
         setState(() {
           chatMessages
               .add(ChatMessage(message: message, type: MessageType.Receiver));
