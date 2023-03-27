@@ -8,6 +8,7 @@ import 'package:my_app/screens/chat/modules/chat_page.dart';
 //import 'package:my_app/screens/Login/login_screen.dart';
 // import 'chat_page.dart';
 import 'package:my_app/screens/Profile/profile.dart';
+import 'package:my_app/screens/match/widgets/cards_stack_widget.dart';
 
 //import 'screens/utils/requests/login.dart';
 
@@ -39,11 +40,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+    CardsStackWidget(),
+    //HomeScreen(),
     ClubScreen(),
     //LoginScreen(),
     ChatPage(),
     ProfileScreen()
+
   ];
 
   void _onItemTapped(int index) {
