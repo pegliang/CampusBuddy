@@ -1,23 +1,6 @@
 const { User } = require("./schema/User");
 
 /**
- * Fetch all users that is in the user database
- * 
- * @access FOR TESTING ONLY
- */
-async function _fetchAllUsers() {
-    try {
-        const users = await User.find({});
-
-        users.forEach(user => {
-            console.log(user);
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-/**
  * Fetch user with the given email
  * @param {string} email the given email 
  * @returns the user if the email exists, null otherwise
@@ -48,8 +31,19 @@ async function fetchUserById(id) {
     }
 }
 
+async function fetchVerifiedEmailToken(email) {
+    try {
+        const user = await User.findOne({ email: email });
+        if (user === null) throw new Error("Cannot find user");
+
+        return user.verifyEmailToken;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     fetchUserByEmail,
     fetchUserById,
-    _fetchAllUsers,
+    fetchVerifiedEmailToken,
 }

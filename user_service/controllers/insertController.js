@@ -1,5 +1,6 @@
 const db = require("../database");
 const { encryptPassword } = require("../encryption");
+const sendVerificationEmail = require("./utils/sendVerificationEmail");
 
 /**
  * Controller for getting attributes to create a new user into the database
@@ -53,6 +54,8 @@ async function registerController(req, res) {
             name, email, password: encryptedPassword, college_name, gender, race, sexual_orientation,
             majors, minors, gpa, year, courses, clubs, profile_img, desc, interests,
         });
+
+        await sendVerificationEmail(email);
 
         return res.send();
     } catch (err) {

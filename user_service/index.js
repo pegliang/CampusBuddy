@@ -1,13 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const { initDatabase } = require('./database');
-const {insertNRandomUsers} = require("./dev/populateUserDatabase.js")
+const { insertNRandomUsers } = require("./dev/populateUserDatabase.js")
 require("dotenv").config();
 
 const fetchRoutes = require("./routes/fetchRoutes");
 const insertRoutes = require("./routes/insertRoutes");
 const deleteRoutes = require("./routes/deleteRoutes");
 const loginRoute = require("./routes/loginRoute");
+const verifyRoute = require("./routes/verifyRoutes");
+
 
 const app = express();
 const PORT = process.env.USER_SERVICE_PORT || 4001;
@@ -23,6 +25,8 @@ app.use("/", fetchRoutes);
 app.use("/", insertRoutes);
 app.use("/", deleteRoutes);
 app.use("/", loginRoute);
+app.use("/", verifyRoute);
+
 
 // home route
 app.get("/", (req, res) => res.send());

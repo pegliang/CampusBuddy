@@ -106,6 +106,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
 
+    verifyEmailToken: {
+        type: String,
+        required: false,
+    },
+
     isPremiumMember: {
         type: Boolean,
         required: true,
