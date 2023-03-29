@@ -7,8 +7,7 @@ const logoutController = require("../controllers/user_service/logoutController")
 const insertController = require("../controllers/user_service/insertController");
 const fetchController = require("../controllers/user_service/fetchController");
 const deleteController = require("../controllers/user_service/deleteController");
-const verifyController = require("../controllers/club_service/verifyController");
-
+const verifyController = require("../controllers/user_service/verifyController");
 
 router.post("/register", insertController.registerController);
 router.post("/login", loginController.loginController);
