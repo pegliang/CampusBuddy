@@ -1,4 +1,6 @@
-const { verifyEmailToken } = require("../database");
+const axios = require('axios');
+require("dotenv").config();
+const getHTTPErrorCode = require("../utils/getHTTPErrorCode");
 
 async function verifyEmailController(req, res) {
     const email = req.query.email;
@@ -8,12 +10,12 @@ async function verifyEmailController(req, res) {
 
     // if token matches what is presented in the db, then set verify email check to true
     try {
-        const result = await verifyEmailToken(email, token);
-        return result ? res.json({ status: "Email has been verified" }) : res.status(401).send();
+        await axios.get(process.env.USER_SERVICE_HOST + `/verifyEmail?email=${email}&token=${token}`);
+        return res.json({ status: "Email has been verified" });
 
     } catch (err) {
         console.log(err);
-        return res.status(500).send();
+        return res.status(getHTTPErrorCode(err)).send();
     }
 }
 

@@ -23,9 +23,9 @@ async function sendVerificationEmail(email) {
             }
         });
 
-        const gatewayHost = process.env.NODE_ENV !== 'production' ? "http://localhost:4000" : process.env.GATEWAY_HOST;
+        const gatewayHost = process.env.NODE_ENV !== 'production' ? `http://localhost:${process.env.GATEWAY_PORT}` : process.env.GATEWAY_HOST;
 
-        const verifyTokenURL = `${gatewayHost}/verifyEmail?email=${email}&token=${token}`;
+        const verifyTokenURL = `${gatewayHost}/user/verifyEmail?email=${email}&token=${token}`;
 
         const mailOptions = {
             from: process.env.EMAIL_SENDER,
