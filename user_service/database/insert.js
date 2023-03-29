@@ -1,4 +1,5 @@
 const { User } = require("./schema/User");
+const crypto = require("crypto");
 
 /**
  * Add a new user to the user database
@@ -33,8 +34,10 @@ async function insertUser(registerRequest) {
             name, email, password, college_name, gender, race, sexual_orientation, majors, minors,
             gpa, year, courses, clubs, profile_img, desc, interests,
             verifiedEmail: false,
+            verifyEmailToken: crypto.randomBytes(10).toString("hex"),
             isPremiumMember: false,
         });
+
     } catch (err) {
         throw err;
     }
