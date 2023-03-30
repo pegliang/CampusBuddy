@@ -128,6 +128,7 @@ services:
     environment:
       - MESSAGE_SERVICE_HOST=${MESSAGE_SERVICE_HOST}
       - PORT=${MESSAGE_SERVICE_PORT}
+      - DATABASE_URL=${MONGO_HOST_URL}
     ports:
       - "${MESSAGE_SERVICE_PORT}:${MESSAGE_SERVICE_PORT}"
     volumes:
