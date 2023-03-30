@@ -1,3 +1,4 @@
+import 'package:my_app/models/user_provider.dart';
 import 'package:my_app/screens/chat/components/chat_bubble.dart';
 import 'package:my_app/screens/chat/components/chat_detail_page_appbar.dart';
 import 'package:my_app/screens/chat/models/chat_message.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../models/chat_user_component_model.dart';
 import '../../../utils/ChatService/ChatService.dart';
 import '../../../utils/ChatService/Message.dart';
+import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -27,8 +29,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   void initState() {
     super.initState();
     if (widget.model != null) {
-      chatService = ChatService("TEMP USER ID", widget.model!.conversationID,
-          handleMessage, handleInitialMessages);
+      chatService = ChatService(
+          Provider.of<UserProvider>(context).user?.id ?? "",
+          widget.model!.conversationID,
+          handleMessage,
+          handleInitialMessages);
     }
   }
 
@@ -41,7 +46,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   void handleInitialMessages(List<Message> messages) {
     setState(() {
       for (int i = messages.length - 1; i >= 0; i--) {
-        MessageType mType = "CURRENT USER ID" == messages[i].recipient_id
+        MessageType mType = Provider.of<UserProvider>(context).user?.id ==
+                messages[i].recipient_id
             ? MessageType.Receiver
             : MessageType.Sender;
         chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
