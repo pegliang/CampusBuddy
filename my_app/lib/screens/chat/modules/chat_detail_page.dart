@@ -9,6 +9,7 @@ import '../models/chat_user_component_model.dart';
 import '../../../utils/ChatService/ChatService.dart';
 import '../../../utils/ChatService/Message.dart';
 import 'package:provider/provider.dart';
+import '../../../models/user_provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -28,13 +29,17 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.model != null) {
-      chatService = ChatService(
-          Provider.of<UserProvider>(context).user?.id ?? "",
-          widget.model!.conversationID,
-          handleMessage,
-          handleInitialMessages);
-    }
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.model != null) {
+        print(Provider.of<UserProvider>(context).user?.id);
+        chatService = ChatService(
+            Provider.of<UserProvider>(context).user?.id ?? "",
+            widget.model!.conversationID,
+            handleMessage,
+            handleInitialMessages);
+      }
+    });
   }
 
   void handleMessage(Message message) {
