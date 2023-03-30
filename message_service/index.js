@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
         } else if (sender_id == user2) {
             recipient_id = user1;
         } else {
-            socket.emit("error", "User is not apart of this conversation."):
+            socket.emit("error", "User is not apart of this conversation.");
             socket.close();
             return;
         }
