@@ -102,6 +102,9 @@ import '../../../components/already_have_an_account.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
 // import '../../../utils/requests/login.dart'; // double import??
+import '../../../models/user.dart';
+import '../../../models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -174,6 +177,18 @@ class _LoginFormState extends State<LoginForm> {
                         _passwordTextFieldController.text);
                     // Do Something with Body Response which will contain: (Save in application global state)
                     print(res);
+                    Consumer<UserProvider>(
+                      builder: (context, userProvider, child) {
+                        if (userProvider.user != null) {
+                          return Text('Welcome, ${userProvider.user!.name}!');
+                        } else {
+                          return Text('No user data found');
+                        }
+                      },
+                    );
+
+                    Provider.of<UserProvider>(context, listen: false)
+                        .setUser(User.fromJson(res));
                     Navigator.push(
                       context,
                       MaterialPageRoute(
