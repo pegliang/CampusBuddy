@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/chat_user_component_model.dart';
 import '../../../utils/ChatService/ChatService.dart';
+import '../../../utils/ChatService/Message.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -24,14 +25,28 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.model != null) {
-      chatService = ChatService(widget.model!.conversationID, (message) {
-        setState(() {
-          chatMessages
-              .add(ChatMessage(message: message, type: MessageType.Receiver));
-        });
-      });
+      chatService = ChatService("TEMP USER ID", widget.model!.conversationID,
+          handleMessage, handleInitialMessages);
     }
+  }
+
+  void handleMessage(Message message) {
+    setState(() {
+      chatMessages.add(ChatMessage.fromMessage(message, MessageType.Receiver));
+    });
+  }
+
+  void handleInitialMessages(List<Message> messages) {
+    setState(() {
+      for (int i = messages.length - 1; i >= 0; i--) {
+        MessageType mType = "CURRENT USER ID" == messages[i].recipient_id
+            ? MessageType.Receiver
+            : MessageType.Sender;
+        chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
+      }
+    });
   }
 
   List<SendMenuItems> menuItems = [
@@ -177,7 +192,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   setState(() {
                     chatMessages.add(ChatMessage(
                         message: _messageTextEditingController.text,
-                        type: MessageType.Sender));
+                        type: MessageType.Sender,
+                        timeSent: DateTime.now()));
                     _messageTextEditingController.text = "";
                   });
                 },

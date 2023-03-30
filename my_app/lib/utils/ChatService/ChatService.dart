@@ -1,11 +1,15 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'Message.dart';
 
 class ChatService {
   late IO.Socket socket;
   String chatID;
-  void Function(String)? onRecieveHandler;
+  String clientID;
+  void Function(Message)? onRecieveHandler;
+  void Function(List<Message>)? initialMessageHandler;
 
-  ChatService(this.chatID, this.onRecieveHandler) {
+  ChatService(this.clientID, this.chatID, this.onRecieveHandler,
+      this.initialMessageHandler) {
     socket = IO.io("http://localhost:4004", <String, dynamic>{
       'autoConnect': false,
       'transports': ['websocket'],
@@ -14,13 +18,20 @@ class ChatService {
     socket.onConnect((_) {
       print('Connection established');
     });
-    socket.emit("joinedRoom", {"id": chatID});
+    socket.emit("joinedRoom", {"chat_id": chatID, "sender_id": clientID});
+
     socket.on("incomingMessage", (data) {
-      print("recieve message");
       if (onRecieveHandler != null) {
-        onRecieveHandler!(data);
+        onRecieveHandler!(Message.fromJSON(data));
       }
     });
+
+    socket.on("initialMessages", (data) {
+      if (initialMessageHandler != null) {
+        initialMessageHandler!(Message.JsonToList(data));
+      }
+    });
+
     socket.onConnectError((err) => print("Connection Error: " + err));
     socket.onError((err) => print("Socket Error: " + err));
   }
