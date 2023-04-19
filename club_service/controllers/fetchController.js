@@ -50,7 +50,36 @@ async function getClubByNameController(req, res) {
     }
 }
 
+async function fetchAllClubsController(req, res) {
+    try {
+        const clubs = await db.fetchAllClubs();
+
+        return res.json({ clubs });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
+async function checkIfUserIsMemberOfClubController(req, res) {
+    const userId = req.body.userId;
+    const clubId = req.body.clubId;
+
+    if (!userId || !clubId) return res.status(400).send();
+
+    try {
+        const exist = await db.checkIfUserIsMemberOfClub(clubId, userId);
+
+        return exist ? res.send() : res.status(404).send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
 module.exports = {
     getClubByIdController,
     getClubByNameController,
+    fetchAllClubsController,
+    checkIfUserIsMemberOfClubController,
 }

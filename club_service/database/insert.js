@@ -68,8 +68,8 @@ async function createEvent(clubId, eventObj) {
         club.events.append({
             name: eventObj.name,
             desc: eventObj.desc,
-            startDate: eventObj.startDate,
-            endDate: eventObj.endDate,
+            startDate: new Date(eventObj.startDate),
+            endDate: new Date(eventObj.endDate),
         });
 
         await club.save();
