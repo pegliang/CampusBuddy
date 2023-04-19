@@ -65,6 +65,11 @@ REDIS_PASSWORD=your-password-here
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=your-key-here
 JWT_SECRET_REFRESH_TOKEN_KEY=your-key-here
+
+# Email
+EMAIL_HOST=email-host
+EMAIL_SENDER=sender-email
+EMAIL_SENDER_PASSWORD=sender-email-password-or-api-key
 ```
 
 Although you can customize the .env file to your liking, here is an example of how it should look
@@ -97,6 +102,11 @@ REDIS_PASSWORD=abc123
 # Secret keys
 JWT_SECRET_ACCESS_TOKEN_KEY=abc123
 JWT_SECRET_REFRESH_TOKEN_KEY=123abc
+
+# Email
+EMAIL_HOST=smtp.gmail.com
+EMAIL_SENDER=campusbuddynoreply@gmail.com
+EMAIL_SENDER_PASSWORD=abc123
 
 # Dev Environment
 GENERATE_TEST_USERS=0

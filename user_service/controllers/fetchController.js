@@ -37,6 +37,7 @@ async function fetchUserByEmailController(req, res) {
             desc: user.desc,
             interests: user.interests,
             verifiedEmail: user.verifiedEmail,
+            verifyEmailToken: user.verifyEmailToken,
             isPremiumMember: user.isPremiumMember
         });
 
