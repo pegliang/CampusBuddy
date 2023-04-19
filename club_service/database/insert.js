@@ -33,6 +33,53 @@ async function insertClub(registerRequest) {
 
 }
 
+/**
+ * Allow the user to join a club
+ * @param {string} clubId 
+ * @param {string} userId 
+ * @param {string} username 
+ */
+async function joinClub(clubId, userId, username) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        club.members.append({
+            userId,
+            name: username,
+        });
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * Create a new event for a club
+ * @param {string} clubId 
+ * @param {string} eventObj 
+ */
+async function createEvent(clubId, eventObj) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        club.events.append({
+            name: eventObj.name,
+            desc: eventObj.desc,
+            startDate: eventObj.startDate,
+            endDate: eventObj.endDate,
+        });
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     insertClub,
+    joinClub,
+    createEvent,
 }

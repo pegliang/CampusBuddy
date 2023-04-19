@@ -20,7 +20,23 @@ async function deleteClubByName(name) {
     }
 }
 
+async function leaveClub(clubId, userId) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        const newMembersList = club.members.filter((user) => user.userId !== userId);
+
+        club.members = newMembersList;
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     deleteClubById,
     deleteClubByName,
+    leaveClub,
 }
