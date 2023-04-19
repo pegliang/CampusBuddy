@@ -73,6 +73,17 @@ const ClubSchema = new mongoose.Schema({
         required: false,
     },
 
+    events: {
+        type: [{
+            name: String,
+            desc: String,
+            startDate: Date,
+            endDate: Date,
+        }],
+
+        required: false,
+    },
+
     isVerified: {
         type: Boolean,
         required: true,
