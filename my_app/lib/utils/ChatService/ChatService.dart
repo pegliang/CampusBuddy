@@ -32,11 +32,25 @@ class ChatService {
       }
     });
 
-    socket.onConnectError((err) => print("Connection Error: " + err));
-    socket.onError((err) => print("Socket Error: " + err));
+    socket.onConnectError((err) {
+      print("Connection Error: " + err.toString());
+      socket.disconnect();
+    });
+    socket.onError((err) {
+      print("Socket Error: " + err.toString());
+      socket.disconnect();
+    });
+    socket.on('error', (data) {
+      print(data);
+      socket.disconnect();
+    });
   }
 
   sendMessage(String message) {
-    socket.emit("onMessage", {"message": message});
+    socket.emit("onMessage", {"message": message, "chat_id": chatID});
+  }
+
+  disconnect() {
+    socket.disconnect();
   }
 }

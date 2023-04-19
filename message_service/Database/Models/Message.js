@@ -26,12 +26,13 @@ const MessageSchema = new mongoose.Schema({
     sender_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false,
+        required: true,
     },
 
     recipient_id: {
-        type: String,
-        required: false,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
 
     content: {

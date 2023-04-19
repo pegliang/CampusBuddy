@@ -13,17 +13,17 @@ class Message {
       required this.time_sent});
 
   Message.fromJSON(Map<String, dynamic> json) {
-    content = json["message"];
+    content = json["content"];
     sender_id = json["sender_id"];
     recipient_id = json["recipient_id"];
-    chat_id = json["chat_id"];
-    time_sent = json["timestamp"];
+    chat_id = json["chatID"];
+    time_sent = DateTime.parse(json["timestamp"]);
   }
 
-  static JsonToList(List<Map<String, dynamic>> jsonList) {
+  static JsonToList(List<dynamic> data) {
     List<Message> messages = [];
-    for (int i = 0; i < jsonList.length; i++) {
-      messages.add(Message.fromJSON(jsonList[i]));
+    for (int i = 0; i < data.length; i++) {
+      messages.add(Message.fromJSON(data[i]));
     }
     return messages;
   }

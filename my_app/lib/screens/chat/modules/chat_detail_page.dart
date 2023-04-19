@@ -9,7 +9,6 @@ import '../models/chat_user_component_model.dart';
 import '../../../utils/ChatService/ChatService.dart';
 import '../../../utils/ChatService/Message.dart';
 import 'package:provider/provider.dart';
-import '../../../models/user_provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -22,7 +21,7 @@ class ChatDetailPage extends StatefulWidget {
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
   List<ChatMessage> chatMessages = [];
-  late ChatService chatService;
+  late ChatService? chatService;
   final TextEditingController _messageTextEditingController =
       TextEditingController();
 
@@ -32,14 +31,23 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.model != null) {
-        print(Provider.of<UserProvider>(context).user?.id);
         chatService = ChatService(
-            Provider.of<UserProvider>(context).user?.id ?? "",
+            Provider.of<UserProvider>(context, listen: false).user?.id ?? "",
             widget.model!.conversationID,
             handleMessage,
             handleInitialMessages);
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // Perform any cleanup tasks here before the widget is unmounted
+    chatService?.disconnect();
+    chatService?.initialMessageHandler = null;
+    chatService?.onRecieveHandler = null;
+    chatService = null;
+    super.dispose();
   }
 
   void handleMessage(Message message) {
@@ -51,10 +59,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   void handleInitialMessages(List<Message> messages) {
     setState(() {
       for (int i = messages.length - 1; i >= 0; i--) {
-        MessageType mType = Provider.of<UserProvider>(context).user?.id ==
-                messages[i].recipient_id
-            ? MessageType.Receiver
-            : MessageType.Sender;
+        MessageType mType =
+            Provider.of<UserProvider>(context, listen: false).user?.id ==
+                    messages[i].recipient_id
+                ? MessageType.Receiver
+                : MessageType.Sender;
         chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
       }
     });
@@ -136,7 +145,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChatDetailPageAppBar(),
+      appBar: ChatDetailPageAppBar(
+        username: widget.model?.name,
+        profile_url: widget.model?.image,
+      ),
       body: Stack(
         children: <Widget>[
           ListView.builder(
@@ -199,7 +211,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               padding: EdgeInsets.only(right: 30, bottom: 50),
               child: FloatingActionButton(
                 onPressed: () {
-                  chatService.sendMessage(_messageTextEditingController.text);
+                  chatService?.sendMessage(_messageTextEditingController.text);
                   setState(() {
                     chatMessages.add(ChatMessage(
                         message: _messageTextEditingController.text,
