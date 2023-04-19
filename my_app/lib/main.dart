@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Screens/Welcome/welcome_screen.dart';
 import 'package:my_app/constants.dart';
+import 'package:provider/provider.dart';
+import '../models/user_provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      ChangeNotifierProvider(
+        create: (context) => UserProvider(),
+        child: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -41,4 +48,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 enum Swipe { left, right, none }

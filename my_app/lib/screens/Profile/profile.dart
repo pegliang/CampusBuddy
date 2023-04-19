@@ -177,6 +177,10 @@ import 'package:my_app/responsive.dart';
 import '../../components/background.dart';
 import 'components/profile_page.dart';
 import 'components/profile_screen_img.dart';
+import '../../models/user.dart';
+import '../Login/components/login_form.dart';
+import '../../models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -218,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  'Name',
+                  '${Provider.of<UserProvider>(context).user?.name}',
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
