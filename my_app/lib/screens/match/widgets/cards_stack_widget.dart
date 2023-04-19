@@ -4,7 +4,6 @@ import 'package:my_app/screens/match/widgets/action_button_widget.dart';
 import 'package:my_app/screens/match/widgets/drag_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class CardsStackWidget extends StatefulWidget {
   const CardsStackWidget({Key? key}) : super(key: key);
 
@@ -16,21 +15,15 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
   List<Profile> draggableItems = [
     const Profile(
-        name: 'Bob',
-        distance: 'CCNY',
-        imageAsset: 'assets/images/avatar_6.png'),
-     const Profile(
-        name: 'Lisa',
-       distance: 'Columbia',
-       imageAsset: 'assets/images/C2.png'),
+        name: 'Bob', distance: 'CCNY', imageAsset: 'assets/avatar_6.png'),
+    const Profile(
+        name: 'Lisa', distance: 'Columbia', imageAsset: 'assets/C2.png'),
     const Profile(
         name: 'Rohini',
-         distance: '10 miles away',
-         imageAsset: 'assets/images/avatar_3.png'),
-     const Profile(
-         name: 'Rohini',
-         distance: '10 miles away',
-        imageAsset: 'assets/images/c5.png'),
+        distance: '10 miles away',
+        imageAsset: 'assets/avatar_3.jpeg'),
+    const Profile(
+        name: 'Rohini', distance: '10 miles away', imageAsset: 'assets/c5.png'),
     // const Profile(
     //     name: 'Rohini',
     //     distance: '10 miles away',
