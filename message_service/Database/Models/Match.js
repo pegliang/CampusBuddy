@@ -12,33 +12,36 @@ const mongoose = require("mongoose");
  */
 
 const MatchSchema = new mongoose.Schema({
-    user_1_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Conversation',
-        required: true
-    },
-
-    user_2_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Conversation',
-        required: true
-    },
-
-    sender_id: {
+    User_1_ID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
+    },
+
+    User_2_ID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+
+    Conversation_Active_For_User_1: {
+        type: mongoose.Schema.Types.Boolean,
         required: false,
     },
 
-    recipient_id: {
-        type: String,
+    Conversation_Active_For_User_2: {
+        type: mongoose.Schema.Types.Boolean,
         required: false,
     },
 
-    content: {
-        type: String,
-        required: true,
-    }
+    seen_by_user_1: {
+        type: mongoose.Schema.Types.Boolean,
+        required: false,
+    },
+    seen_by_user_2: {
+        type: mongoose.Schema.Types.Boolean,
+        required: false,
+    },
 });
 
 module.exports = {

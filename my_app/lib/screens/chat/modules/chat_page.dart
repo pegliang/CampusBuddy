@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:my_app/screens/chat/components/chat_user_component.dart';
 import 'package:my_app/screens/chat/models/chat_user_component_model.dart';
 import 'package:my_app/utils/requests/chats.dart';
+import 'package:provider/provider.dart';
+import 'package:my_app/models/user_provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -20,7 +22,8 @@ class ChatPageState extends State<ChatPage> {
 
   Future<void> _loadUsers() async {
     String userID =
-        "641a5eb30c30c5d96bcc75f9"; // Replace with actual user ID when Uzma implements it
+        Provider.of<UserProvider>(context, listen: false).user?.id ??
+            ""; // Replace with actual user ID when Uzma implements it
     List<dynamic> conversations = await getConversations(userID);
     setState(() {
       chatUsers = ChatUserComponentModel.fromJSONList(conversations);
@@ -31,6 +34,9 @@ class ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     _loadUsers();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadUsers();
+    });
   }
 
   @override
