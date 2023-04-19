@@ -26,6 +26,11 @@ async function deleteClubByIdController(req, res) {
     }
 }
 
+async function leaveClubController(req, res) {
+
+}
+
 module.exports = {
     deleteClubByIdController,
+    leaveClubController,
 }

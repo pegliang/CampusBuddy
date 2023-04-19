@@ -31,7 +31,30 @@ async function getClubByNameController(req, res) {
     }
 }
 
+async function fetchAllClubsController(req, res) {
+    try {
+        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `getAllClubs`);
+
+        if (!response || !response.data) return res.status(500).send();
+
+        return res.json({ clubs: response.data.clubs });
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
+}
+
+async function checkIfUserIsMemberOfClubController(req, res) {
+    try {
+
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+
+    }
+}
+
 module.exports = {
     getClubByIdController,
     getClubByNameController,
+    fetchAllClubsController,
+    checkIfUserIsMemberOfClubController,
 }
