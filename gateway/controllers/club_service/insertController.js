@@ -36,6 +36,16 @@ async function registerController(req, res) {
     }
 }
 
+async function joinClubController(req, res) {
+
+}
+
+async function createEventController(req, res) {
+
+}
+
 module.exports = {
     registerController,
+    joinClubController,
+    createEventController,
 }
