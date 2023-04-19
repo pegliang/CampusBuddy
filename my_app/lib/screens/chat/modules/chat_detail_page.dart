@@ -1,29 +1,73 @@
+import 'package:my_app/models/user_provider.dart';
 import 'package:my_app/screens/chat/components/chat_bubble.dart';
 import 'package:my_app/screens/chat/components/chat_detail_page_appbar.dart';
 import 'package:my_app/screens/chat/models/chat_message.dart';
 import 'package:my_app/screens/chat/models/send_menu_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-enum MessageType {
-  Sender,
-  Receiver,
-}
+import '../models/chat_user_component_model.dart';
+import '../../../utils/ChatService/ChatService.dart';
+import '../../../utils/ChatService/Message.dart';
+import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
+  ChatUserComponentModel? model;
+
+  ChatDetailPage({required this.model});
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List<ChatMessage> chatMessage = [
-    ChatMessage(message: "Heyy bestie", type: MessageType.Receiver),
-    ChatMessage(message: "what's up?", type: MessageType.Receiver),
-    ChatMessage(message: "Hey, I'm chilling, wbu?", type: MessageType.Sender),
-    ChatMessage(message: "I'm good!", type: MessageType.Receiver),
-    ChatMessage(
-        message: "What class do you have rn?", type: MessageType.Sender),
-  ];
+  List<ChatMessage> chatMessages = [];
+  late ChatService? chatService;
+  final TextEditingController _messageTextEditingController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.model != null) {
+        chatService = ChatService(
+            Provider.of<UserProvider>(context, listen: false).user?.id ?? "",
+            widget.model!.conversationID,
+            handleMessage,
+            handleInitialMessages);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Perform any cleanup tasks here before the widget is unmounted
+    chatService?.disconnect();
+    chatService?.initialMessageHandler = null;
+    chatService?.onRecieveHandler = null;
+    chatService = null;
+    super.dispose();
+  }
+
+  void handleMessage(Message message) {
+    setState(() {
+      chatMessages.add(ChatMessage.fromMessage(message, MessageType.Receiver));
+    });
+  }
+
+  void handleInitialMessages(List<Message> messages) {
+    setState(() {
+      for (int i = messages.length - 1; i >= 0; i--) {
+        MessageType mType =
+            Provider.of<UserProvider>(context, listen: false).user?.id ==
+                    messages[i].recipient_id
+                ? MessageType.Receiver
+                : MessageType.Sender;
+        chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
+      }
+    });
+  }
 
   List<SendMenuItems> menuItems = [
     SendMenuItems(
@@ -101,17 +145,20 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChatDetailPageAppBar(),
+      appBar: ChatDetailPageAppBar(
+        username: widget.model?.name,
+        profile_url: widget.model?.image,
+      ),
       body: Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: chatMessage.length,
+            itemCount: chatMessages.length,
             shrinkWrap: true,
             padding: EdgeInsets.only(top: 10, bottom: 10),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ChatBubble(
-                chatMessage: chatMessage[index],
+                chatMessage: chatMessages[index],
               );
             },
           ),
@@ -151,6 +198,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                           hintText: "Type message...",
                           hintStyle: TextStyle(color: Colors.grey.shade500),
                           border: InputBorder.none),
+                      controller: _messageTextEditingController,
                     ),
                   ),
                 ],
@@ -162,8 +210,17 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             child: Container(
               padding: EdgeInsets.only(right: 30, bottom: 50),
               child: FloatingActionButton(
-                onPressed: () {},
-                child: Icon(
+                onPressed: () {
+                  chatService?.sendMessage(_messageTextEditingController.text);
+                  setState(() {
+                    chatMessages.add(ChatMessage(
+                        message: _messageTextEditingController.text,
+                        type: MessageType.Sender,
+                        timeSent: DateTime.now()));
+                    _messageTextEditingController.text = "";
+                  });
+                },
+                child: const Icon(
                   Icons.send,
                   color: Color.fromARGB(238, 236, 20, 200),
                 ),
