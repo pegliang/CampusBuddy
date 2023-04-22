@@ -77,9 +77,28 @@ async function checkIfUserIsMemberOfClubController(req, res) {
     }
 }
 
+async function getEventByNameController(req, res) {
+    const name = req.query.event_name;
+    const clubId = req.query.club_id;
+
+    if (!name || !clubId) return res.status(400).send();
+
+    try {
+        const event = await db.fetchEventByName(clubId, name);
+        if (event === null) return res.status(404).send();
+
+        return res.json(event);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+
+}
+
 module.exports = {
     getClubByIdController,
     getClubByNameController,
     fetchAllClubsController,
     checkIfUserIsMemberOfClubController,
+    getEventByNameController,
 }

@@ -96,8 +96,25 @@ async function createEventController(req, res) {
     }
 }
 
+async function rsvpEventController(req, res) {
+    const clubId = req.body.clubId;
+    const userId = req.body.userId;
+    const eventId = req.body.eventId;
+
+    if (!clubId || !userId || !eventId) return res.status(400).send();
+
+    try {
+        await db.rsvpEvent(clubId, eventId, userId);
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
 module.exports = {
     registerController,
     joinClubController,
     createEventController,
+    rsvpEventController,
 }

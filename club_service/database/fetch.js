@@ -60,9 +60,25 @@ async function checkIfUserIsMemberOfClub(clubId, userId) {
     }
 }
 
+
+async function fetchEventByName(clubId, eventName) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find club");
+
+        for (const event of club.events) {
+            if (event.name === eventName) return event;
+        }
+
+        return null;
+    } catch (err) {
+        throw err;
+    }
+}
 module.exports = {
     fetchClubById,
     fetchClubByName,
     fetchAllClubs,
+    fetchEventByName,
     checkIfUserIsMemberOfClub,
 }

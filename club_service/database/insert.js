@@ -44,7 +44,7 @@ async function joinClub(clubId, userId, username) {
         const club = await Club.findById(clubId);
         if (club === null) throw new Error("Cannot find the club");
 
-        club.members.append({
+        club.members.push({
             userId,
             name: username,
         });
@@ -65,12 +65,36 @@ async function createEvent(clubId, eventObj) {
         const club = await Club.findById(clubId);
         if (club === null) throw new Error("Cannot find the club");
 
-        club.events.append({
+        for (const event of club.events) {
+            if (event.name === eventObj.name) return;
+        }
+
+        club.events.push({
             name: eventObj.name,
             desc: eventObj.desc,
             startDate: new Date(eventObj.startDate),
             endDate: new Date(eventObj.endDate),
+            members: [],
         });
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function rsvpEvent(clubId, eventId, userId) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        // find the event
+        for (const event of club.events) {
+            if (event._id.toString() === eventId) {
+                event.members.push(userId);
+                break;
+            }
+        }
 
         await club.save();
     } catch (err) {
@@ -82,4 +106,5 @@ module.exports = {
     insertClub,
     joinClub,
     createEvent,
+    rsvpEvent,
 }

@@ -26,8 +26,7 @@ async function fetchTest() {
                 assert.equal(dummyClub.eboard_member.title, data.eboard_members[0].title);
                 assert.equal(dummyClub.eboard_member.userId, data.eboard_members[0].userId);
 
-                // verify all members
-                assert.deepEqual(data.members, []);
+                assert.equal(data.members.length, 1);
             } catch (err) {
                 return assert.fail(err);
             }
