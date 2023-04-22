@@ -79,6 +79,7 @@ const ClubSchema = new mongoose.Schema({
             desc: String,
             startDate: Date,
             endDate: Date,
+            members: [String]
         }],
 
         required: false,
