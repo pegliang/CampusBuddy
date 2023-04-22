@@ -25,9 +25,7 @@ async function verifyTokens(req, res, next) {
     const accessToken = line[1];
 
     // get current refresh token
-    // during testing, refresh token will be in the header
-    const refreshToken = process.env.NODE_ENV !== 'production' ?
-        req.headers.refreshtoken : req.cookies.refreshToken;
+    const refreshToken = req.headers.refreshtoken
 
     if (!refreshToken) {
         return res.status(401).send();
