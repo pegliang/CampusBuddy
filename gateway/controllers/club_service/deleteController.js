@@ -27,7 +27,17 @@ async function deleteClubByIdController(req, res) {
 }
 
 async function leaveClubController(req, res) {
+    const userId = req.body.userId;
+    const clubId = req.body.clubId;
 
+    if (!userId || !clubId) return res.status(400).send();
+
+    try {
+        await axios.delete(process.env.CLUB_SERVICE_HOST + `/leaveClub?userId=${userId}&clubId=${clubId}`);
+        return res.send();
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
 }
 
 module.exports = {

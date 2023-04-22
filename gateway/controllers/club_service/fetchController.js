@@ -44,11 +44,37 @@ async function fetchAllClubsController(req, res) {
 }
 
 async function checkIfUserIsMemberOfClubController(req, res) {
-    try {
+    const userId = req.body.userId;
+    const clubId = req.body.clubId;
 
+    if (!userId || !clubId) return res.status(400).send();
+
+    try {
+        await axios.post(process.env.CLUB_SERVICE_HOST + "/checkUserOfMember", {
+            userId, clubId
+        });
+
+        return res.json({ status: "The club exists" });
     } catch (err) {
         return res.status(getHTTPErrorCode(err)).send();
 
+    }
+}
+
+async function getEventByNameController(req, res) {
+    const name = req.query.name;
+    const clubId = req.query.clubId;
+
+    if (!name || !clubId) return res.status(400).send();
+
+    try {
+        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `/getEventByName?event_name=${name}&clubId=${clubId}`);
+
+        if (!response || !response.data) return res.status(404).send();
+
+        return res.json(response.data);
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
     }
 }
 
@@ -57,4 +83,5 @@ module.exports = {
     getClubByNameController,
     fetchAllClubsController,
     checkIfUserIsMemberOfClubController,
+    getEventByNameController,
 }
