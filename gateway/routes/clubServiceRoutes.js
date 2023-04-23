@@ -7,9 +7,9 @@ const fetchController = require("../controllers/club_service/fetchController");
 const deleteController = require("../controllers/club_service/deleteController");
 
 router.post("/register", middlewares.verifyTokens, insertController.registerController);
-router.post("/joinClub", insertController.joinClubController);
-router.post("/createEvent", insertController.createEventController);
-router.post("/rsvpEvent", insertController.rsvpEventController);
+router.post("/joinClub", middlewares.verifyTokens, insertController.joinClubController);
+router.post("/createEvent", middlewares.verifyTokens, insertController.createEventController);
+router.post("/rsvpEvent", middlewares.verifyTokens, insertController.rsvpEventController);
 
 router.get("/getClubById", fetchController.getClubByIdController);
 router.get("/getClubByName", fetchController.getClubByNameController);
