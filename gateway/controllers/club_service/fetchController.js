@@ -68,7 +68,7 @@ async function getEventByNameController(req, res) {
     if (!name || !clubId) return res.status(400).send();
 
     try {
-        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `/getEventByName?event_name=${name}&clubId=${clubId}`);
+        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `/getEventByName?event_name=${name}&club_id=${clubId}`);
 
         if (!response || !response.data) return res.status(404).send();
 

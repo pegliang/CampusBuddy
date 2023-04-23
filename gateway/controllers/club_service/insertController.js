@@ -44,7 +44,7 @@ async function joinClubController(req, res) {
     if (!userId || !username || !clubId) return res.status(400).send();
 
     try {
-        await axios.post(process.env.CLUB_SERVICE_HOST, "/joinClub", {
+        await axios.post(process.env.CLUB_SERVICE_HOST + "/joinClub", {
             userId, username, clubId
         });
 

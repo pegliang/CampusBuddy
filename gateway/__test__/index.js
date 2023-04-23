@@ -7,13 +7,15 @@ async function startUnitTest() {
     await initializationTest();
 
     // user service test
-    // await userServiceTest.userServiceRegisterTest();
-    // await userServiceTest.userServiceFetchUserTest();
-    // await userServiceTest.userServiceLoginAndDeleteTest();
+    await userServiceTest.userServiceRegisterTest();
+    await userServiceTest.userServiceFetchUserTest();
+    await userServiceTest.userServiceLoginAndDeleteTest();
 
     // club service test
     await clubServiceTest.registerClubTest();
     await clubServiceTest.fetchAndDeleteClubTest();
+    await clubServiceTest.eventsClubTest();
+    await clubServiceTest.deletionClubTest();
 }
 
 startUnitTest();

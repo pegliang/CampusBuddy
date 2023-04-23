@@ -1,0 +1,7 @@
+{
+    "name": "john member",
+    "email": "johnDummyMember@sample.university.edu",
+    "password": "dummyPassword123",
+    "college_name": "Sample University",
+    "profile_img": "https://google.com"
+}
