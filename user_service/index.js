@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { initDatabase } = require('./database');
+const { initDatabase, importFromJSONIfNeeded } = require('./database');
 const { insertNRandomUsers } = require("./dev/populateUserDatabase.js")
 require("dotenv").config();
 
@@ -9,6 +9,7 @@ const insertRoutes = require("./routes/insertRoutes");
 const deleteRoutes = require("./routes/deleteRoutes");
 const loginRoute = require("./routes/loginRoute");
 const verifyRoute = require("./routes/verifyRoutes");
+const collegeRoutes = require("./routes/collegeRoutes");
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/", insertRoutes);
 app.use("/", deleteRoutes);
 app.use("/", loginRoute);
 app.use("/", verifyRoute);
+app.use("/", collegeRoutes);
 
 
 // home route
@@ -38,6 +40,12 @@ initDatabase().then(() => {
     // While in development generate process.env.GENERATE_TEST_USERS users (Default is 0 test users)
     if (process.env.NODE_ENV == "development") {
         insertNRandomUsers(process.env.GENERATE_TEST_USERS || 0)
+    }
+    // Check if colleges are imported from json, if not populate it
+    try {
+        importFromJSONIfNeeded()
+    } catch (err) {
+        console.error(err)
     }
 }).catch(err => {
     console.error(`Failed to start user service due to a database connection error`);
