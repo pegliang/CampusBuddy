@@ -16,3 +16,4 @@ my_app/ios/Podfile
 # ignore docker volumes
 /user_service/mongodb_data/
 *.pyc
+.DS_Store
