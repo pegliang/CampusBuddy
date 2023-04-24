@@ -31,6 +31,7 @@ class User {
   String? email;
   String? collegeName;
   String? id;
+  String? profileUrl;
   static String? statName;
   static String? statEmail;
   static String? statCollegeName;
@@ -39,7 +40,9 @@ class User {
       {required this.name,
       required this.email,
       required this.collegeName,
+      required this.profileUrl,
       this.id});
+
 
   // User.fromJSON(Map<String, dynamic> json) {
   //   name = json["name"];
@@ -51,6 +54,7 @@ class User {
         name: json['name'] as String,
         email: json['email'] as String,
         collegeName: json['college_name'] as String,
+        profileUrl: json['profile_img'] as String,
         id: json["id"]);
   }
 
@@ -59,6 +63,7 @@ class User {
       'name': name,
       'email': email,
       'college_name': collegeName,
+      'profile_img': profileUrl,
       'id': id
     };
   }
