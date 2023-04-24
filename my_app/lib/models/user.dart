@@ -34,7 +34,11 @@ class User {
   static String? statEmail;
   static String? statCollegeName;
 
-  User({required this.name, required this.email, required this.collegeName});
+  User({
+    required this.name,
+    required this.email,
+    required this.collegeName,
+  });
 
   // User.fromJSON(Map<String, dynamic> json) {
   //   name = json["name"];
@@ -43,10 +47,9 @@ class User {
   // }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      name: json['name'] as String,
-      email: json['email'] as String,
-      collegeName: json['college_name'] as String,
-    );
+        name: json['name'] as String,
+        email: json['email'] as String,
+        collegeName: json['college_name'] as String);
   }
 
   Map<String, dynamic> toJson() {

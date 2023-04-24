@@ -212,8 +212,7 @@ class ProfileScreen extends StatelessWidget {
                       minRadius: 60.0,
                       child: CircleAvatar(
                         radius: 50.0,
-                        backgroundImage: NetworkImage(
-                            'https://avatars0.githubusercontent.com/u/28812093?s=460&u=06471c90e03cfd8ce2855d217d157c93060da490&v=4'),
+                        backgroundImage: NetworkImage(''),
                       ),
                     ),
                   ],
@@ -252,7 +251,24 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    'email address',
+                    '${Provider.of<UserProvider>(context).user?.email}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'College Name',
+                    style: TextStyle(
+                      color: Colors.pink.shade300,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.collegeName}',
                     style: TextStyle(
                       fontSize: 18,
                     ),
