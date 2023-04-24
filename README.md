@@ -85,6 +85,8 @@ USER_SERVICE_HOST=http://user-service-container:4001
 CLUB_SERVICE_HOST=http://club-service-container:4002
 AUTH_SERVICE_HOST=http://auth-service-container:4003
 MATCHING_SERVICE_HOST=http://matching-service-container:8080
+MESSAGE_SERVICE_HOST=http://messaging-service-container:4004
+
 
 # Ports
 GATEWAY_PORT=4000
@@ -92,6 +94,7 @@ USER_SERVICE_PORT=4001
 CLUB_SERVICE_PORT=4002
 AUTH_SERVICE_PORT=4003
 MATCHING_SERVICE_PORT=8080
+MESSAGE_SERVICE_PORT=4004
 
 # Databases
 MONGO_DB_PASSWORD=abc123
