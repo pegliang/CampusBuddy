@@ -3,6 +3,6 @@ const router = express.Router();
 const {getCollegeByID, getCollegeBySearch} = require("../controllers/collegeController")
 
 router.get("/getCollegeByID", getCollegeByID);
-router.get("/getCollegeBySearch", getCollegeBySearch)
+router.get("/getCollegesBySearch", getCollegeBySearch)
 
 module.exports = router;

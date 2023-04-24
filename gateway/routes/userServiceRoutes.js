@@ -8,6 +8,7 @@ const insertController = require("../controllers/user_service/insertController")
 const fetchController = require("../controllers/user_service/fetchController");
 const deleteController = require("../controllers/user_service/deleteController");
 const verifyController = require("../controllers/user_service/verifyController");
+const collegeController = require("../controllers/user_service/collegeController")
 
 router.post("/register", insertController.registerController);
 router.post("/login", loginController.loginController);
@@ -20,6 +21,9 @@ router.delete("/deleteUserByEmail", middlewares.verifyTokens, deleteController.d
 router.post("/logout", logoutController.logoutController);
 
 router.get("/verifyEmail", verifyController.verifyEmailController);
+
+router.get("/getCollegeByID", collegeController.getCollegeByID)
+router.get("/getCollegesBySearch", collegeController.getCollegesBySearch)
 
 // for testing purposes only
 router.post("/test_auth", middlewares.verifyTokens);
