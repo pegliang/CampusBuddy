@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import './request_url.dart';
+import '../../models/user.dart';
 
-Future<Map<String, dynamic>> getSuggestedMatches(String userid) async {
+Future<List<User>> getSuggestedMatches(String userid) async {
 
  try {
     final res = await http.post(Uri.parse(RequestURL.getSuggestedMatches),
@@ -16,9 +17,9 @@ Future<Map<String, dynamic>> getSuggestedMatches(String userid) async {
     }
 
     final bodyContent = jsonDecode(res.body);
-
+    List<User> Users = List<User>.from(bodyContent.map((user)=> User.fromJson(user)));
   
-    return bodyContent;
+    return Users;
   } catch (err) {
     rethrow;
   }
