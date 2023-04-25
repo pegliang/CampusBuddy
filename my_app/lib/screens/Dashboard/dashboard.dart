@@ -3,6 +3,7 @@ import 'package:my_app/constants.dart';
 import 'package:my_app/screens/Home/homeScreen.dart';
 import 'package:my_app/screens/Club/clubScreen.dart';
 import 'package:my_app/screens/Login/login_Screen.dart';
+import 'package:my_app/screens/Profile/profile_page.dart';
 
 import 'package:my_app/screens/chat/modules/chat_page.dart';
 //import 'package:my_app/screens/Login/login_screen.dart';
@@ -41,12 +42,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     CardsStackWidget(),
-    //HomeScreen(),
     ClubScreen(),
-    //LoginScreen(),
     ChatPage(),
-    ProfileScreen()
-
+    ProfilePage()
   ];
 
   void _onItemTapped(int index) {
