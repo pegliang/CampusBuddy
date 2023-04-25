@@ -12,8 +12,8 @@ services:
       - "27017:27017"
     env_file:
       - .env
-    volumes:
-      - "./user_service/mongodb_data:/data/db"
+    # volumes:
+    #   - "./user_service/mongodb_data:/data/db"
 
   auth-db:
     image: redis:alpine
@@ -50,9 +50,9 @@ services:
       - "${GATEWAY_PORT}:${GATEWAY_PORT}"
     env_file:
       - .env
-    volumes:
-      - "./gateway:/app"
-      - "./gateway/node_modules:/app/node_modules"
+    # volumes:
+    #   - "./gateway:/app"
+    #   - "./gateway/node_modules:/app/node_modules"
 
   user-service:
     build: "./user_service"
@@ -71,9 +71,9 @@ services:
       - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     env_file:
       - .env
-    volumes:
-      - "./user_service:/app"
-      - "./user_service/node_modules:/app/node_modules"
+    # volumes:
+    #   - "./user_service:/app"
+    #   - "./user_service/node_modules:/app/node_modules"
 
   club-service:
     build: "./club_service"
@@ -88,9 +88,9 @@ services:
       - ${CLUB_SERVICE_PORT}:${CLUB_SERVICE_PORT}
     env_file:
       - .env
-    volumes:
-      - "./club_service:/app"
-      - "./club_service/node_modules:/app/node_modules"
+    # volumes:
+    #   - "./club_service:/app"
+    #   - "./club_service/node_modules:/app/node_modules"
 
   auth-service:
     build: "./auth_service"
@@ -105,9 +105,9 @@ services:
       - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
     env_file:
       - .env
-    volumes:
-      - "./auth_service:/app"
-      - "./auth_service/node_modules:/app/node_modules"
+    # volumes:
+    #   - "./auth_service:/app"
+    #   - "./auth_service/node_modules:/app/node_modules"
 
   matching-service:
     build: "./matching_service"
@@ -118,6 +118,6 @@ services:
       - DATABASE_URL=${MONGO_HOST_URL}
     ports:
       - "8080:8080"
-    volumes:
-      - "./matching_service:/app"
-      - "./matching_service/venv:/app/venv"
+    # volumes:
+    #   - "./matching_service:/app"
+    #   - "./matching_service/venv:/app/venv"
