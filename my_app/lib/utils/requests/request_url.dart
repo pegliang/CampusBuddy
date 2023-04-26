@@ -4,4 +4,5 @@ class RequestURL {
   static const deleteUser = "http://localhost:4000/user/deleteUserByEmail";
   static const getConversations = "localhost:8080";
   static const gatewayHost = "localhost:4000";
+  static const swipe = "http://localhost:4000/matching/swipe";
 }
