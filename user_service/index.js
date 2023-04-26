@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { initDatabase, importFromJSONIfNeeded } = require('./database');
+const { initDatabase, importFromJSONIfNeeded, importCoursesFromJSONIfNeeded } = require('./database');
 const { insertNRandomUsers } = require("./dev/populateUserDatabase.js")
 require("dotenv").config();
 
@@ -10,6 +10,7 @@ const deleteRoutes = require("./routes/deleteRoutes");
 const loginRoute = require("./routes/loginRoute");
 const verifyRoute = require("./routes/verifyRoutes");
 const collegeRoutes = require("./routes/collegeRoutes");
+const courseRoutes = require("./routes/courseRoutes");
 
 
 const app = express();
@@ -28,7 +29,7 @@ app.use("/", deleteRoutes);
 app.use("/", loginRoute);
 app.use("/", verifyRoute);
 app.use("/", collegeRoutes);
-
+app.use("/", courseRoutes);
 
 // home route
 app.get("/", (req, res) => res.send());
@@ -43,7 +44,9 @@ initDatabase().then(() => {
     }
     // Check if colleges are imported from json, if not populate it
     try {
-        importFromJSONIfNeeded()
+        importFromJSONIfNeeded().then(()=> {
+            importCoursesFromJSONIfNeeded();
+        })
     } catch (err) {
         console.error(err)
     }
