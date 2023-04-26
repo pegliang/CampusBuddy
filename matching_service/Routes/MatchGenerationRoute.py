@@ -17,7 +17,9 @@ def suggestedMatches():
             num_of_users = 40
     except:
         num_of_users = 40
-
+    # Ignore users where the following is true:
+    # If there exists a row in the swipes database where primaryUser = user requesting and 
+    # targetUser = user
     try:
         primaryUser = User.objects().get(pk = ObjectId(userID))
         if primaryUser == None:
@@ -26,7 +28,30 @@ def suggestedMatches():
         return jsonify({"message": f'Error finding user with id = {userID}.'}), 500
     
     filterObject = buildFilterObject(request.args, primaryUser)
-    pipeline = [{"$match": filterObject}, {"$sample": { "size": 200 }}]
+    ignoreSeenUsers = {
+        "$lookup": {
+        "from": "swipes",
+        "let": { "targetUser": "$_id" },
+        "pipeline": [
+            {
+            "$match": {
+                "$expr": {
+                "$and": [
+                    { "$eq": ["$primaryUserID", primaryUser.pk] },
+                    { "$eq": ["$targetUserID", "$targetUser"] },
+                ],
+                },
+            },
+            },
+        ],
+        "as": "matchedSwipes",
+        },
+    }
+    pipeline = [ignoreSeenUsers ,{"$match": filterObject}, {"$sample": { "size": 200 }}, {
+    "$project": {
+      "matchedSwipes": 0,
+    },
+  },]
     randUsersDicts = User.list_serialize(User.aggregate(pipeline))
 
     similarity_scores = compare(primaryUser.serialize(), randUsersDicts)

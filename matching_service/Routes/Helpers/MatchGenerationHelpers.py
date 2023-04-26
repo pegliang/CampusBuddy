@@ -47,6 +47,7 @@ def buildFilterObject(body, userObject):
 
     fil["_id"] = {"$ne": userObject.pk}
     
+    fil["matchedSwipes"] = { "$eq": [] }
     return fil
 
 def compare(target, userDicts):
