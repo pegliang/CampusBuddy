@@ -11,7 +11,8 @@ import sys
 # }
 
 def swipe():
-    bodyJson = request.get_json()
+    bodyJson = request.get_json()["data"]
+    print(bodyJson, file=sys.stderr)
     saved_swipe = None
     if not ("primaryUserID" in bodyJson and "targetUserID" in bodyJson and "like" in bodyJson):
         return jsonify({"message": "Could not parse field."}), 400
@@ -26,4 +27,4 @@ def swipe():
     except Exception as err:
         print(err, file=sys.stderr)
         return jsonify({"message": "Something went wrong saving the Match."}), 500
-    return Response("Success!", status=200)
+    return jsonify({"message": "Success!"}), 200
