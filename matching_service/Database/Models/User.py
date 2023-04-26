@@ -17,6 +17,7 @@ class User(Document):
     desc = StringField()
     interests = ListField()
     isPremiumMember = BooleanField()
+    verifyEmailToken = StringField()
 
     meta = {'collection': 'users', 'strict': False}
     

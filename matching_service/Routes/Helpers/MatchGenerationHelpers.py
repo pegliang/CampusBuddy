@@ -44,6 +44,8 @@ def buildFilterObject(body, userObject):
         yearLimiter["$gte"] = getArgument("filter_by_min_year", body)
     if len(yearLimiter) > 0:
         fil["year"] = yearLimiter
+
+    fil["_id"] = {"$ne": userObject.pk}
     
     return fil
 
