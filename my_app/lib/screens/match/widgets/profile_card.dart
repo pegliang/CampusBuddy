@@ -1,9 +1,9 @@
-import 'package:my_app/screens/match/model/profile.dart';
 import 'package:flutter/material.dart';
+import '../../../models/user.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({Key? key, required this.profile}) : super(key: key);
-  final Profile profile;
+  final User profile;
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,8 @@ class ProfileCard extends StatelessWidget {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                profile.imageAsset,
-                fit: BoxFit.fitHeight,
-              ),
+              child:
+               Image.network(this.profile.profileUrl ?? ""),
             ),
           ),
           Positioned(
@@ -46,7 +44,7 @@ class ProfileCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      profile.name,
+                      profile.name ?? "",
                       style: const TextStyle(
                         fontFamily: 'Nunito',
                         fontWeight: FontWeight.w800,
@@ -54,7 +52,7 @@ class ProfileCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      profile.distance,
+                      profile.collegeName ?? "",
                       style: const TextStyle(
                         fontFamily: 'Nunito',
                         fontWeight: FontWeight.w400,
