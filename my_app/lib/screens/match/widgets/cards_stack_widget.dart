@@ -1,10 +1,11 @@
 import 'package:my_app/main.dart';
-import 'package:my_app/screens/match/model/profile.dart';
 import 'package:my_app/screens/match/widgets/action_button_widget.dart';
 import 'package:my_app/screens/match/widgets/drag_widget.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:my_app/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:my_app/models/user_provider.dart';
+import 'package:my_app/utils/requests/matching.dart';
 class CardsStackWidget extends StatefulWidget {
   const CardsStackWidget({Key? key}) : super(key: key);
 
@@ -14,32 +15,21 @@ class CardsStackWidget extends StatefulWidget {
 
 class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
-  List<Profile> draggableItems = [
-    const Profile(
-        name: 'Bob',
-        distance: 'CCNY',
-        imageAsset: 'assets/images/avatar_6.png'),
-     const Profile(
-        name: 'Lisa',
-       distance: 'Columbia',
-       imageAsset: 'assets/images/C2.png'),
-    const Profile(
-        name: 'Rohini',
-         distance: '10 miles away',
-         imageAsset: 'assets/images/avatar_3.png'),
-     const Profile(
-         name: 'Rohini',
-         distance: '10 miles away',
-        imageAsset: 'assets/images/c5.png'),
-    // const Profile(
-    //     name: 'Rohini',
-    //     distance: '10 miles away',
-    //     imageAsset: 'assets/images/avatar_5.png'),
-  ];
+  List<User> draggableItems = [];
 
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
   late final AnimationController _animationController;
+  Future <void> _loadMatches() async {
+    String userID =
+        Provider.of<UserProvider>(context, listen: false).user?.id ??
+            ""; 
+    List<User> users = await getSuggestedMatches(userID);
+    setState(() {
+      draggableItems = users;
+    });
+  }
 
+ 
   @override
   void initState() {
     super.initState();

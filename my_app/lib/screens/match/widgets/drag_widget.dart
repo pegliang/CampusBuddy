@@ -1,9 +1,8 @@
 import 'package:my_app/main.dart';
-import 'package:my_app/screens/match/model/profile.dart';
 import 'package:my_app/screens/match/widgets/profile_card.dart';
 import 'package:my_app/screens/match/widgets/tag_widget.dart';
 import 'package:flutter/material.dart';
-//import 'package:my_app/screens/match/model/profile.dart';
+import '../../../models/user.dart';
 
 class DragWidget extends StatefulWidget {
   const DragWidget({
@@ -13,7 +12,7 @@ class DragWidget extends StatefulWidget {
     required this.swipeNotifier,
     this.isLastCard = false,
   }) : super(key: key);
-  final Profile profile;
+  final User profile;
   final int index;
   final ValueNotifier<Swipe> swipeNotifier;
   final bool isLastCard;
