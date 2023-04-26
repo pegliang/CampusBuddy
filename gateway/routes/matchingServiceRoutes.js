@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const routes = require("../controllers/matching_service/MatchGenerationRoutes")
+const matchGenerationRoutes = require("../controllers/matching_service/MatchGenerationRoutes")
+const swipeRoutes = require("../controllers/matching_service/SwipeRoutes")
 
-router.get("/getSuggestedMatches", routes.getSuggestedMatches)
+router.get("/getSuggestedMatches", matchGenerationRoutes.getSuggestedMatches)
+router.post("/swipe", swipeRoutes.swipe)
 
 module.exports = router
