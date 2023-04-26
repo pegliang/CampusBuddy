@@ -13,4 +13,5 @@ class RequestURL {
   static const rsvpEvent = "http://localhost:4000/club/rsvpEvent";
   static const getConversations = "localhost:8080";
   static const gatewayHost = "localhost:4000";
+  static const swipe = "http://localhost:4000/matching/swipe";
 }

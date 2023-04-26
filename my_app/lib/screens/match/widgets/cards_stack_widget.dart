@@ -30,6 +30,14 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     });
   }
 
+  void swipeUser(bool like) {
+    User targetUser = draggableItems.last;
+    String targetUserID = targetUser.id ?? "";
+    String userID =
+        Provider.of<UserProvider>(context, listen: false).user?.id ?? "";
+    swipe(userID, targetUserID, like);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -129,6 +137,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                   onPressed: () {
                     swipeNotifier.value = Swipe.left;
                     _animationController.forward();
+                    swipeUser(false);
                   },
                   icon: const Icon(
                     Icons.close,
@@ -140,6 +149,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                   onPressed: () {
                     swipeNotifier.value = Swipe.right;
                     _animationController.forward();
+                    swipeUser(true);
                   },
                   icon: const Icon(
                     Icons.favorite,
