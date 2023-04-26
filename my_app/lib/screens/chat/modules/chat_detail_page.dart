@@ -24,6 +24,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   late ChatService? chatService;
   final TextEditingController _messageTextEditingController =
       TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -54,6 +55,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     setState(() {
       chatMessages.add(ChatMessage.fromMessage(message, MessageType.Receiver));
     });
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
   }
 
   void handleInitialMessages(List<Message> messages) {
@@ -66,6 +72,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 : MessageType.Sender;
         chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
       }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     });
   }
 
@@ -149,86 +158,86 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         username: widget.model?.name,
         profile_url: widget.model?.image,
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          ListView.builder(
-            itemCount: chatMessages.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ChatBubble(
-                chatMessage: chatMessages[index],
-              );
-            },
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: 16, bottom: 10),
-              height: 80,
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      showModal();
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 21,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Type message...",
-                          hintStyle: TextStyle(color: Colors.grey.shade500),
-                          border: InputBorder.none),
-                      controller: _messageTextEditingController,
-                    ),
-                  ),
-                ],
-              ),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: chatMessages.length,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              itemBuilder: (context, index) {
+                return ChatBubble(
+                  chatMessage: chatMessages[index],
+                );
+              },
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              padding: EdgeInsets.only(right: 30, bottom: 50),
-              child: FloatingActionButton(
-                onPressed: () {
-                  chatService?.sendMessage(_messageTextEditingController.text);
-                  setState(() {
-                    chatMessages.add(ChatMessage(
-                        message: _messageTextEditingController.text,
-                        type: MessageType.Sender,
-                        timeSent: DateTime.now()));
-                    _messageTextEditingController.text = "";
-                  });
-                },
-                child: const Icon(
-                  Icons.send,
-                  color: Color.fromARGB(238, 236, 20, 200),
+          Container(
+            padding: EdgeInsets.only(left: 16, bottom: 10),
+            height: 80,
+            width: double.infinity,
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    showModal();
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 21,
+                    ),
+                  ),
                 ),
-                backgroundColor: Color.fromARGB(255, 235, 20, 92),
-                elevation: 0,
-              ),
+                SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "Type message...",
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                        border: InputBorder.none),
+                    controller: _messageTextEditingController,
+                  ),
+                ),
+              ],
             ),
-          )
+          ),
+          Container(
+            padding: EdgeInsets.only(right: 30, bottom: 10),
+            child: FloatingActionButton(
+              onPressed: () {
+                chatService?.sendMessage(_messageTextEditingController.text);
+                setState(() {
+                  chatMessages.add(ChatMessage(
+                      message: _messageTextEditingController.text,
+                      type: MessageType.Sender,
+                      timeSent: DateTime.now()));
+                  _messageTextEditingController.text = "";
+                });
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeOut,
+                );
+              },
+              child: const Icon(
+                Icons.send,
+                color: Color.fromARGB(238, 236, 20, 200),
+              ),
+              backgroundColor: Color.fromARGB(255, 235, 20, 92),
+              elevation: 0,
+            ),
+          ),
         ],
       ),
     );
