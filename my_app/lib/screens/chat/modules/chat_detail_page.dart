@@ -9,6 +9,7 @@ import '../models/chat_user_component_model.dart';
 import '../../../utils/ChatService/ChatService.dart';
 import '../../../utils/ChatService/Message.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/scheduler.dart';
 
 class ChatDetailPage extends StatefulWidget {
   ChatUserComponentModel? model;
@@ -55,11 +56,13 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     setState(() {
       chatMessages.add(ChatMessage.fromMessage(message, MessageType.Receiver));
     });
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-    );
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   void handleInitialMessages(List<Message> messages) {
@@ -154,92 +157,103 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChatDetailPageAppBar(
-        username: widget.model?.name,
-        profile_url: widget.model?.image,
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: chatMessages.length,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              itemBuilder: (context, index) {
-                return ChatBubble(
-                  chatMessage: chatMessages[index],
-                );
-              },
+        appBar: ChatDetailPageAppBar(
+          username: widget.model?.name,
+          profile_url: widget.model?.image,
+        ),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: chatMessages.length,
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                itemBuilder: (context, index) {
+                  return ChatBubble(
+                    chatMessage: chatMessages[index],
+                  );
+                },
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 16, bottom: 10),
-            height: 80,
-            width: double.infinity,
-            color: Colors.white,
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    showModal();
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 21,
-                    ),
+            Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 16, bottom: 10),
+                  height: 80,
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          showModal();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 21,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Flexible(
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Type message...",
+                              hintStyle: TextStyle(color: Colors.grey.shade500),
+                              border: InputBorder.none),
+                          controller: _messageTextEditingController,
+                        ),
+                      ),
+                      SizedBox(
+                        width:
+                            90, // Adjust this value according to the size of your FloatingActionButton
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Type message...",
-                        hintStyle: TextStyle(color: Colors.grey.shade500),
-                        border: InputBorder.none),
-                    controller: _messageTextEditingController,
+                Positioned(
+                  bottom: 10,
+                  right: 30,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      chatService
+                          ?.sendMessage(_messageTextEditingController.text);
+                      setState(() {
+                        chatMessages.add(ChatMessage(
+                            message: _messageTextEditingController.text,
+                            type: MessageType.Sender,
+                            timeSent: DateTime.now()));
+                        _messageTextEditingController.text = "";
+                      });
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut,
+                        );
+                      });
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Color.fromARGB(238, 236, 20, 200),
+                    ),
+                    backgroundColor: Color.fromARGB(255, 235, 20, 92),
+                    elevation: 0,
                   ),
                 ),
               ],
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(right: 30, bottom: 10),
-            child: FloatingActionButton(
-              onPressed: () {
-                chatService?.sendMessage(_messageTextEditingController.text);
-                setState(() {
-                  chatMessages.add(ChatMessage(
-                      message: _messageTextEditingController.text,
-                      type: MessageType.Sender,
-                      timeSent: DateTime.now()));
-                  _messageTextEditingController.text = "";
-                });
-                _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeOut,
-                );
-              },
-              child: const Icon(
-                Icons.send,
-                color: Color.fromARGB(238, 236, 20, 200),
-              ),
-              backgroundColor: Color.fromARGB(255, 235, 20, 92),
-              elevation: 0,
-            ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ));
   }
 }
