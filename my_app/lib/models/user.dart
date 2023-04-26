@@ -43,7 +43,6 @@ class User {
       required this.profileUrl,
       this.id});
 
-
   // User.fromJSON(Map<String, dynamic> json) {
   //   name = json["name"];
   //   email = json["email"];
@@ -52,7 +51,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
         name: json['name'] as String,
-        email: json['email'] as String,
+        email: json['email'] as String?,
         collegeName: json['college_name'] as String,
         profileUrl: json['profile_img'] as String,
         id: json["id"]);

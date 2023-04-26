@@ -5,11 +5,14 @@ from Routes.Helpers.MatchGenerationHelpers import buildFilterObject, compare
 
 def suggestedMatches():
     try:
-        userID = request.get_json()["user_id"]
+        if not ("user_id" in request.args):
+            return jsonify({"message": "Could not parse field."}), 400
+        else:
+            userID = request.args.get("user_id")
     except:
         return jsonify({"message": "Something went wrong parsing the 'user_id'."}), 400
     try:
-        num_of_users = request.get_json()["num_of_users"]
+        num_of_users = request.args.get("num_of_users")
         if num_of_users > 40:
             num_of_users = 40
     except:
@@ -22,7 +25,7 @@ def suggestedMatches():
     except Exception as err:
         return jsonify({"message": f'Error finding user with id = {userID}.'}), 500
     
-    filterObject = buildFilterObject(request.get_json(), primaryUser)
+    filterObject = buildFilterObject(request.args, primaryUser)
     pipeline = [{"$match": filterObject}, {"$sample": { "size": 200 }}]
     randUsersDicts = User.list_serialize(User.aggregate(pipeline))
 

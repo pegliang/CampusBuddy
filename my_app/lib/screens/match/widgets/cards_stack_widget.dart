@@ -6,6 +6,7 @@ import 'package:my_app/models/user.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app/models/user_provider.dart';
 import 'package:my_app/utils/requests/matching.dart';
+
 class CardsStackWidget extends StatefulWidget {
   const CardsStackWidget({Key? key}) : super(key: key);
 
@@ -19,17 +20,16 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
 
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
   late final AnimationController _animationController;
-  Future <void> _loadMatches() async {
+  Future<void> _loadMatches() async {
     String userID =
-        Provider.of<UserProvider>(context, listen: false).user?.id ??
-            ""; 
+        Provider.of<UserProvider>(context, listen: false).user?.id ?? "";
     List<User> users = await getSuggestedMatches(userID);
+
     setState(() {
       draggableItems = users;
     });
   }
 
- 
   @override
   void initState() {
     super.initState();
@@ -45,6 +45,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
         swipeNotifier.value = Swipe.none;
       }
     });
+    _loadMatches();
   }
 
   @override
