@@ -218,7 +218,7 @@ class ProfileScreen extends StatelessWidget {
                         radius: 50.0,
                         backgroundImage: NetworkImage(''),
                       ),
-                    ]),
+            )]),
                 const SizedBox(
                   height: 15,
                 ),
