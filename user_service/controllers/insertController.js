@@ -55,7 +55,12 @@ async function registerController(req, res) {
             majors, minors, gpa, year, courses, clubs, profile_img, desc, interests,
         });
 
-        await sendVerificationEmail(email);
+        try {
+            await sendVerificationEmail(email);
+        } catch (err) {
+            console.error("Cannot send verification email");
+            console.error(err);
+        }
 
         return res.send();
     } catch (err) {
