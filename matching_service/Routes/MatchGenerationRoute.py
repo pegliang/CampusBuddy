@@ -2,6 +2,7 @@ from flask import request, jsonify
 from bson.objectid import ObjectId
 from Database.Models.User import User
 from Routes.Helpers.MatchGenerationHelpers import buildFilterObject, compare
+import sys
 
 def suggestedMatches():
     try:
@@ -30,32 +31,39 @@ def suggestedMatches():
     filterObject = buildFilterObject(request.args, primaryUser)
     ignoreSeenUsers = {
         "$lookup": {
-        "from": "swipes",
-        "let": { "targetUser": "$_id" },
-        "pipeline": [
-            {
-            "$match": {
-                "$expr": {
-                "$and": [
-                    { "$eq": ["$primaryUserID", primaryUser.pk] },
-                    { "$eq": ["$targetUserID", "$targetUser"] },
-                ],
+            "from": "swipes",
+            "let": { "targetUser": {
+            "$toString": "$_id" 
+        }},
+            "pipeline": [
+                {
+                "$match": {
+                    "$expr": {
+                    "$and": [
+                        { "$eq": ["$primaryUserID", userID] },
+                        { "$eq": ["$targetUserID", "$$targetUser"] },
+                    ],
+                    },
                 },
-            },
-            },
-        ],
-        "as": "matchedSwipes",
+                },
+            ],
+            "as": "matchedSwipes",
         },
     }
-    pipeline = [ignoreSeenUsers ,{"$match": filterObject}, {"$sample": { "size": 200 }}, {
-    "$project": {
-      "matchedSwipes": 0,
-    },
-  },]
+    pipeline = [ignoreSeenUsers, 
+                {"$match": {
+                    "matchedSwipes": {"$eq": []}}},
+                {"$match": filterObject},
+                {"$sample": { "size": 200 }}, 
+                {"$project": {
+                    "matchedSwipes": 0,
+                }}
+                ]
+    print(User.aggregate(pipeline=pipeline), file=sys.stderr)
     randUsersDicts = User.list_serialize(User.aggregate(pipeline))
-
     similarity_scores = compare(primaryUser.serialize(), randUsersDicts)
     sortedUsers = sorted(similarity_scores, key=lambda x: x["similarity_score"], reverse=True)[:num_of_users]
 
     jsonUsers = jsonify(sortedUsers)
     return jsonUsers
+

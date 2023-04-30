@@ -46,8 +46,7 @@ def buildFilterObject(body, userObject):
         fil["year"] = yearLimiter
 
     fil["_id"] = {"$ne": userObject.pk}
-    
-    fil["matchedSwipes"] = { "$eq": [] }
+
     return fil
 
 def compare(target, userDicts):
