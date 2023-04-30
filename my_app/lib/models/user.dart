@@ -35,14 +35,14 @@ class User {
   String? gender;
   String? race;
   String? sexualOrientation;
-  String? major;
-  String? minor;
+  List<dynamic>? major;
+  List<dynamic>? minor;
   num? gpa;
   num? year;
-  String? courses;
-  String? clubs;
+  List<dynamic>? courses;
+  List<dynamic>? clubs;
   String? desc;
-  String? interests;
+  List<dynamic>? interests;
 
   User(
       {required this.name,
@@ -66,20 +66,20 @@ class User {
     return User(
         name: json['name'] as String,
         email: json['email'] as String?,
-        collegeName: json['college_name'] as String,
-        profileUrl: json['profile_img'] as String,
-        id: json["id"],
-        gender: json['gender'] as String,
-        race: json['race'] as String,
-        sexualOrientation: json['sexual_orientation'] as String,
-        major: json['majors'] as String,
-        minor: json['minors'] as String,
-        gpa: json['gpa'] as num,
-        year: json['year'] as num,
-        courses: json['courses'] as String,
-        clubs: json['clubs'] as String,
-        desc: json['desc'] as String,
-        interests: json['interests'] as String);
+        collegeName: json['college_name'] as String?,
+        profileUrl: json['profile_img'] as String?,
+        id: json["id"] as String?,
+        gender: json['gender'] as String?,
+        race: json['race'] as String?,
+        sexualOrientation: json['sexual_orientation'] as String?,
+        major: json['majors'] as List<dynamic>?,
+        minor: json['minors'] as List<dynamic>?,
+        gpa: json['gpa'] as num?,
+        year: json['year'] as num?,
+        courses: json['courses'] as List<dynamic>?,
+        clubs: json['clubs'] as List<dynamic>?,
+        desc: json['desc'] as String?,
+        interests: json['interests'] as List<dynamic>?);
   }
 
   Map<String, dynamic> toJson() {
