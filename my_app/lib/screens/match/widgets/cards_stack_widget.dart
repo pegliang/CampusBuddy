@@ -132,31 +132,33 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
             padding: const EdgeInsets.only(bottom: 46.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ActionButtonWidget(
-                  onPressed: () {
-                    swipeNotifier.value = Swipe.left;
-                    _animationController.forward();
-                    swipeUser(false);
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                ActionButtonWidget(
-                  onPressed: () {
-                    swipeNotifier.value = Swipe.right;
-                    _animationController.forward();
-                    swipeUser(true);
-                  },
-                  icon: const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
+              children: draggableItems.isEmpty
+                  ? []
+                  : [
+                      ActionButtonWidget(
+                        onPressed: () {
+                          swipeNotifier.value = Swipe.left;
+                          _animationController.forward();
+                          swipeUser(false);
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      ActionButtonWidget(
+                        onPressed: () {
+                          swipeNotifier.value = Swipe.right;
+                          _animationController.forward();
+                          swipeUser(true);
+                        },
+                        icon: const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
             ),
           ),
         ),
