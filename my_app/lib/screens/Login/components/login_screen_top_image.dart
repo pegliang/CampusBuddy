@@ -12,24 +12,27 @@ class LoginScreenTopImage extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Student Login",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          "Login",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
-        const SizedBox(height: defaultPadding * 2),
+        //const SizedBox(height: defaultPadding * 2),
         Row(
+          
           children: const [
-            Spacer(),
+            //Spacer(),
             Expanded(
               flex: 8,
+              
               child: Image(
-                image: AssetImage('assets/campus.jpeg'),
-                height: 200,
+                image: AssetImage('assets/cblogo.png'),
+                height: 300,
+                
               ),
             ),
-            Spacer(),
+            
           ],
         ),
-        const SizedBox(height: defaultPadding * 2),
+         const SizedBox(height: defaultPadding / 1000),
       ],
     );
   }

@@ -5,8 +5,8 @@ class Background extends StatelessWidget {
   const Background({
     Key? key,
     required this.child,
-    this.topImage = "assets/bckgd.jpeg",
-    this.bottomImage = "assets/campus1.jpeg",
+    this.topImage = "assets/cblogo.png",
+    this.bottomImage = "assets/cblogo.png",
   }) : super(key: key);
 
   final String topImage, bottomImage;

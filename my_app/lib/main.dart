@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Screens/Welcome/welcome_screen.dart';
+import 'package:my_app/screens/Login/login_screen.dart';
 import 'package:my_app/constants.dart';
 import 'package:provider/provider.dart';
 import '../models/user_provider.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const WelcomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
