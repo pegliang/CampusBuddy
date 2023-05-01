@@ -35,14 +35,14 @@ class User {
   String? gender;
   String? race;
   String? sexualOrientation;
-  List<dynamic>? major;
-  List<dynamic>? minor;
+  List<String?>? major;
+  List<String?>? minor;
   num? gpa;
   num? year;
-  List<dynamic>? courses;
-  List<dynamic>? clubs;
+  List<String?>? courses;
+  List<String?>? clubs;
   String? desc;
-  List<dynamic>? interests;
+  List<String?>? interests;
 
   User(
       {required this.name,
@@ -64,7 +64,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        name: json['name'] as String,
+        name: json['name'] as String?,
         email: json['email'] as String?,
         collegeName: json['college_name'] as String?,
         profileUrl: json['profile_img'] as String?,
@@ -72,14 +72,24 @@ class User {
         gender: json['gender'] as String?,
         race: json['race'] as String?,
         sexualOrientation: json['sexual_orientation'] as String?,
-        major: json['majors'] as List<dynamic>?,
-        minor: json['minors'] as List<dynamic>?,
+        major: jsonListToStringList(json['majors']),
+        minor: jsonListToStringList(json['minors']),
         gpa: json['gpa'] as num?,
         year: json['year'] as num?,
-        courses: json['courses'] as List<dynamic>?,
-        clubs: json['clubs'] as List<dynamic>?,
+        courses: jsonListToStringList(json['courses']),
+        clubs: jsonListToStringList(json['clubs']),
         desc: json['desc'] as String?,
-        interests: json['interests'] as List<dynamic>?);
+        interests: jsonListToStringList(json['interests']));
+  }
+  static List<String> jsonListToStringList(dynamic field) {
+    List<dynamic> list = field as List<dynamic>;
+    List<String> stringList = [];
+    for (dynamic element in list) {
+      if (element is String) {
+        stringList.add(element);
+      }
+    }
+    return stringList;
   }
 
   Map<String, dynamic> toJson() {
