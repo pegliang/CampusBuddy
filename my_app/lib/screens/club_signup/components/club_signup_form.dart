@@ -25,6 +25,7 @@
 // desc - String
  */
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/club/ClubScreen.dart';
 
 import '../../../components/already_have_club_account.dart';
 import '../../../constants.dart';
@@ -218,7 +219,7 @@ class _ClubSignupFormState extends State<ClubSignUpForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const ClubLoginScreen();
+                    return const ClubScreen();
                   },
                 ),
               );
