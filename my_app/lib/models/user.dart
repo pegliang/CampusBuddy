@@ -1,10 +1,10 @@
 /**
  * The schema for the user
  * 
- * @type {string} name
- * @type {string} email
+ * @type {string} name -
+ * @type {string} email -
  * @type {string} password
- * @type {string} college_name
+ * @type {string} college_name -
  * @type {string} gender?
  * @type {string} race?
  * @type {string} sexual_orientation?
@@ -32,29 +32,64 @@ class User {
   String? collegeName;
   String? id;
   String? profileUrl;
-  static String? statName;
-  static String? statEmail;
-  static String? statCollegeName;
+  String? gender;
+  String? race;
+  String? sexualOrientation;
+  List<String?>? major;
+  List<String?>? minor;
+  num? gpa;
+  num? year;
+  List<String?>? courses;
+  List<String?>? clubs;
+  String? desc;
+  List<String?>? interests;
 
   User(
       {required this.name,
       required this.email,
       required this.collegeName,
       required this.profileUrl,
-      this.id});
+      this.id,
+      required this.gender,
+      required this.race,
+      required this.sexualOrientation,
+      required this.major,
+      required this.minor,
+      required this.gpa,
+      required this.year,
+      required this.courses,
+      required this.clubs,
+      required this.desc,
+      required this.interests});
 
-  // User.fromJSON(Map<String, dynamic> json) {
-  //   name = json["name"];
-  //   email = json["email"];
-  //   collegeName = json["college_name"];
-  // }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        name: json['name'] as String,
+        name: json['name'] as String?,
         email: json['email'] as String?,
-        collegeName: json['college_name'] as String,
-        profileUrl: json['profile_img'] as String,
-        id: json["id"]);
+        collegeName: json['college_name'] as String?,
+        profileUrl: json['profile_img'] as String?,
+        id: json["id"] as String?,
+        gender: json['gender'] as String?,
+        race: json['race'] as String?,
+        sexualOrientation: json['sexual_orientation'] as String?,
+        major: jsonListToStringList(json['majors']),
+        minor: jsonListToStringList(json['minors']),
+        gpa: json['gpa'] as num?,
+        year: json['year'] as num?,
+        courses: jsonListToStringList(json['courses']),
+        clubs: jsonListToStringList(json['clubs']),
+        desc: json['desc'] as String?,
+        interests: jsonListToStringList(json['interests']));
+  }
+  static List<String> jsonListToStringList(dynamic field) {
+    List<dynamic> list = field as List<dynamic>;
+    List<String> stringList = [];
+    for (dynamic element in list) {
+      if (element is String) {
+        stringList.add(element);
+      }
+    }
+    return stringList;
   }
 
   Map<String, dynamic> toJson() {
@@ -63,14 +98,20 @@ class User {
       'email': email,
       'college_name': collegeName,
       'profile_img': profileUrl,
-      'id': id
+      'id': id,
+      'gender': gender,
+      'race': race,
+      'sexual_orientation': sexualOrientation,
+      'majors': major,
+      'minors': minor,
+      'gpa': gpa,
+      'year': year,
+      'courses': courses,
+      'clubs': clubs,
+      'desc': desc,
+      'interests': interests
     };
   }
-
-  //{return User(name: ?? this.name)}
-
-  //@override
-  //List<Object?> get props => [name, email, collegeName];
 }
 
 //tatic void createUser

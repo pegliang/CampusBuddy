@@ -46,7 +46,7 @@ def buildFilterObject(body, userObject):
         fil["year"] = yearLimiter
 
     fil["_id"] = {"$ne": userObject.pk}
-    
+
     return fil
 
 def compare(target, userDicts):

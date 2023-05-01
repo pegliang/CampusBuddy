@@ -1,26 +1,90 @@
 //import 'dart:html';
-
+/**
+ * The schema for the club
+ *
+ * @type {string} name *
+ * @type {string[]} majors*
+ * @type {string[]} minors*
+ * @type {string[]} genders?*
+ * @type {string[]} races?*
+ * @type {string[]} sexual_orientations?*
+ * @type {object[]} eboard_members*
+ * @type {object[]} members?*
+ * @type {string} desc*
+ * 
+ * ----create club 
+ * // userId - String
+// username - String
+// title - String
+// clubName - String
+// majors - String[]
+// minors - String[]
+// gender - String[]
+// races - String[]
+// sexual_orientation - String[]
+// desc - String
+ */
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/club/ClubScreen.dart';
 
 import '../../../components/already_have_club_account.dart';
 import '../../../constants.dart';
 import '../../club_login/club_login.dart';
+import "../../../utils/requests/create_club.dart";
 
-class ClubSignUpForm extends StatelessWidget {
-  const ClubSignUpForm({
-    Key? key,
-  }) : super(key: key);
+class ClubSignUpForm extends StatefulWidget {
+  const ClubSignUpForm({super.key});
+  @override
+  _ClubSignupFormState createState() => _ClubSignupFormState();
+}
+
+class _ClubSignupFormState extends State<ClubSignUpForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _clubNameTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubMajorsTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubMinorsTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubGendersTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubRacesTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubSexualOrtTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubEboardTitleTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubEboardNameTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubDescTextFieldController =
+      TextEditingController();
+
+  Future<void> createClub() async {
+    return createClubRequest({
+      'clubName': _clubNameTextFieldController,
+      'majors': _clubMajorsTextFieldController,
+      'minors': _clubMinorsTextFieldController,
+      'gender': _clubGendersTextFieldController,
+      'races': _clubRacesTextFieldController,
+      'sexual_orientation': _clubSexualOrtTextFieldController,
+      'title': _clubEboardTitleTextFieldController,
+      'username': _clubEboardNameTextFieldController,
+      'desc': _clubDescTextFieldController
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           TextFormField(
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            onSaved: (string) {},
+            controller: _clubNameTextFieldController,
             decoration: const InputDecoration(
               hintText: "club Name",
               prefixIcon: Padding(
@@ -35,9 +99,9 @@ class ClubSignUpForm extends StatelessWidget {
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 cursorColor: kPrimaryColor,
-                onSaved: (string) {},
+                controller: _clubEboardTitleTextFieldController,
                 decoration: const InputDecoration(
-                  hintText: "Club President Name",
+                  hintText: "Club EBoard member title",
                   prefixIcon: Padding(
                     padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.person),
@@ -48,9 +112,9 @@ class ClubSignUpForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            onSaved: (email) {},
+            controller: _clubEboardNameTextFieldController,
             decoration: const InputDecoration(
-              hintText: "club email",
+              hintText: "club eboard member name",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.email),
@@ -58,49 +122,90 @@ class ClubSignUpForm extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              decoration: const InputDecoration(
-                hintText: "password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+              padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+              child: TextFormField(
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                cursorColor: kPrimaryColor,
+                controller: _clubMajorsTextFieldController,
+                decoration: const InputDecoration(
+                  hintText: "intended majors, N/A if open to all",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(defaultPadding),
+                    child: Icon(Icons.person),
+                  ),
                 ),
-              ),
-            ),
-          ),
+              )),
           TextFormField(
-            textInputAction: TextInputAction.done,
-            obscureText: true,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            onSaved: (PasswordCredential) {}, ///// double check this
+            controller: _clubMinorsTextFieldController,
             decoration: const InputDecoration(
-              hintText: "Re-enter password",
+              hintText: "intended minors, N/A if open to all",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.lock),
+                child: Icon(Icons.email),
               ),
             ),
           ),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
               child: TextFormField(
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 cursorColor: kPrimaryColor,
-                onSaved: (string) {},
-                textAlign: TextAlign.left,
+                controller: _clubGendersTextFieldController,
                 decoration: const InputDecoration(
-                  hintText: "Breif Description",
-                  isDense: true,
+                  hintText: "intended genders, N/A if open to all",
                   prefixIcon: Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 50.0),
+                    padding: EdgeInsets.all(defaultPadding),
+                    child: Icon(Icons.person),
                   ),
                 ),
               )),
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            controller: _clubRacesTextFieldController,
+            decoration: const InputDecoration(
+              hintText: "intended races, N/A if open to all",
+              prefixIcon: Padding(
+                padding: EdgeInsets.all(defaultPadding),
+                child: Icon(Icons.email),
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+              child: TextFormField(
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                cursorColor: kPrimaryColor,
+                controller: _clubSexualOrtTextFieldController,
+                decoration: const InputDecoration(
+                  hintText: "intended Sex Orientation, N/A if open to all",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(defaultPadding),
+                    child: Icon(Icons.person),
+                  ),
+                ),
+              )),
+          TextFormField(
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            controller: _clubDescTextFieldController,
+            textAlign: TextAlign.left,
+            decoration: const InputDecoration(
+              hintText: "Breif Description",
+              isDense: true,
+              prefixIcon: Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 50.0),
+              ),
+            ),
+          ),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () {},
@@ -114,7 +219,7 @@ class ClubSignUpForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const ClubLoginScreen();
+                    return const ClubScreen();
                   },
                 ),
               );
