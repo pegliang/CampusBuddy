@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:my_app/responsive.dart';
 import 'package:my_app/screens/Profile/profile.dart';
 import '../../components/background.dart';
-import '../../models/user.dart';
+//import '../../models/user.dart';
 import '../Login/components/login_form.dart';
 import '../../models/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../../widget/profile_widget.dart';
-import '../../utils/user_preferences.dart';
+//import '../../utils/user_preferences.dart';
 import '../../../constants.dart';
-import '../../screens/settings/settings_page.dart';
-import '../../screens/Dashboard/dashboard.dart';
+
+
+//import '../../screens/settings/settings_page.dart';
+//import '../../screens/Dashboard/dashboard.dart';
+import '../../screens/Login/login_screen.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -74,8 +77,7 @@ class ProfilePage extends StatelessWidget {
           Container(
             child: Column(
               children: <Widget>[
-
-              ListTile(
+                ListTile(
                   title: Text(
                     'School',
                     style: TextStyle(
@@ -91,10 +93,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-
-              ListTile(
+                ListTile(
                   title: Text(
                     'GPA',
                     style: TextStyle(
@@ -110,10 +110,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-
-
                 ListTile(
                   title: Text(
                     'Major',
@@ -130,10 +127,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-
-              ListTile(
+                ListTile(
                   title: Text(
                     'Minor',
                     style: TextStyle(
@@ -149,9 +144,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-
                 ListTile(
                   title: Text(
                     'Graduation Year',
@@ -169,9 +162,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Divider(),
-                
-
-              ListTile(
+                ListTile(
                   title: Text(
                     'Current Courses',
                     style: TextStyle(
@@ -187,10 +178,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-                
-
                 ListTile(
                   title: Text(
                     'Club Membership',
@@ -207,10 +195,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Divider(),
-
-
                 ListTile(
                   title: Text(
                     'Friend',
@@ -227,84 +212,29 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-            
-
-
+                Divider(color: Colors.white, thickness: 0),
               ],
             ),
           ),
-            
-
-
-              Container(
-
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white, // background (button) color
-              foregroundColor: Colors.black, // foreground (text) color
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const settingsPage();
-                  },
+          Container(
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white, // background (button) color
+                  foregroundColor: Colors.black, // foreground (text) color
                 ),
-              );
-            },
-            child: const Icon(Icons.settings,
-            size: 50.0)
-          ),
-
-        ) 
-
-//             Center(
-//   child: Column(
-//     children: <Widget>[
-//               Scaffold(
-//                 floatingActionButton: FloatingActionButton(
-//                 onPressed: () {
-//           // Add your onPressed code here!
-//         },
-//         backgroundColor: Colors.red,
-//         child: const Icon(Icons.settings),
-//       ),
-//               )
-//          ]
-//     // margin: const EdgeInsets.all(10.0),
-//     // color: Colors.amber[600],
-//     // width: 48.0,
-//     // height: 48.0,
-//   ),
-// ),
-
-//       //   Container(
-//       //       child: Column(
-//       //         children: <Widget>[
-//       //         Scaffold(
-//       //           floatingActionButton: FloatingActionButton(
-//       //           onPressed: () {
-//       //     // Add your onPressed code here!
-//       //   },
-//       //   backgroundColor: Colors.red,
-//       //   child: const Icon(Icons.settings),
-//       // ),
-//       //         )
-//       //    ]
-//       //     ),    
-//       //     )
-
-
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const LoginScreen();
+                      },
+                    ),
+                  );
+                },
+                child: const Icon(Icons.logout, size: 50.0)),
+          )
         ],
-
-
-
-        
       ),
     );
   }
