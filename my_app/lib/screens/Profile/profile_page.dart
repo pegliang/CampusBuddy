@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import '../../widget/profile_widget.dart';
 import '../../utils/user_preferences.dart';
 import '../../../constants.dart';
+import '../../screens/settings/settings_page.dart';
+import '../../screens/Dashboard/dashboard.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -234,15 +236,75 @@ class ProfilePage extends StatelessWidget {
 
               ],
             ),
-          )
+          ),
             
-          // Container(
-              // for settings button
-          // )     
 
+
+              Container(
+
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white, // background (button) color
+              foregroundColor: Colors.black, // foreground (text) color
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const settingsPage();
+                  },
+                ),
+              );
+            },
+            child: const Icon(Icons.settings,
+            size: 50.0)
+          ),
+
+        ) 
+
+//             Center(
+//   child: Column(
+//     children: <Widget>[
+//               Scaffold(
+//                 floatingActionButton: FloatingActionButton(
+//                 onPressed: () {
+//           // Add your onPressed code here!
+//         },
+//         backgroundColor: Colors.red,
+//         child: const Icon(Icons.settings),
+//       ),
+//               )
+//          ]
+//     // margin: const EdgeInsets.all(10.0),
+//     // color: Colors.amber[600],
+//     // width: 48.0,
+//     // height: 48.0,
+//   ),
+// ),
+
+//       //   Container(
+//       //       child: Column(
+//       //         children: <Widget>[
+//       //         Scaffold(
+//       //           floatingActionButton: FloatingActionButton(
+//       //           onPressed: () {
+//       //     // Add your onPressed code here!
+//       //   },
+//       //   backgroundColor: Colors.red,
+//       //   child: const Icon(Icons.settings),
+//       // ),
+//       //         )
+//       //    ]
+//       //     ),    
+//       //     )
 
 
         ],
+
+
+
+        
       ),
     );
   }
