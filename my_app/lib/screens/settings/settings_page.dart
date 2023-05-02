@@ -9,9 +9,18 @@ class settingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Container(
-          child:const Text("Hello!from settings paggggge!")
-      )
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: const Text('Settings'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: const Text('settings stuffs here'),
+        ),
+      ),
     );
   }
 }
