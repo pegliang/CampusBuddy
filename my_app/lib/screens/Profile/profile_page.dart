@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:my_app/responsive.dart';
 import 'package:my_app/screens/Profile/profile.dart';
@@ -70,26 +72,10 @@ class ProfilePage extends StatelessWidget {
           Container(
             child: Column(
               children: <Widget>[
-                ListTile(
+
+              ListTile(
                   title: Text(
-                    'Year',
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'Senior',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'College Name',
+                    'School',
                     style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 20,
@@ -103,7 +89,126 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 Divider(),
+
+              ListTile(
+                  title: Text(
+                    'GPA',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.gpa}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
+                Divider(),
+
+
+                ListTile(
+                  title: Text(
+                    'Major',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.major}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
+                Divider(),
+
+              ListTile(
+                  title: Text(
+                    'Minor',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.minor}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
+                Divider(),
+
+                ListTile(
+                  title: Text(
+                    'Graduation Year',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.year}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Divider(),
+                
+
+              ListTile(
+                  title: Text(
+                    'Current Courses',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.courses}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
+                Divider(),
+                
+
+                ListTile(
+                  title: Text(
+                    'Club Membership',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.clubs}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
+                Divider(),
+
+
                 ListTile(
                   title: Text(
                     'Friend',
@@ -120,43 +225,20 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'Clubs',
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'clubs you are part of',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'Classes',
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'classes taken',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+                
+            
+
+
               ],
             ),
           )
+
+          // Container(
+              // for settings button
+          // )     
+
+
+
         ],
       ),
     );

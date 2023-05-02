@@ -185,6 +185,8 @@ import 'package:provider/provider.dart';
 import '../../widget/profile_widget.dart';
 import '../../utils/user_preferences.dart';
 import '../../widget/textfield_widget.dart';
+import '../../../constants.dart';
+import '../../screens/Dashboard/dashboard.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -198,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
             height: 250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.pinkAccent, Colors.pink.shade100],
+                colors: [kPrimaryColor, Colors.pink.shade100],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 stops: [0.0, 0.0],
@@ -211,14 +213,12 @@ class ProfileScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white70,
-                      minRadius: 60.0,
-                      child: CircleAvatar(
-                        radius: 50.0,
-                        backgroundImage: NetworkImage(''),
-                      ),
-            )]),
+                      ProfileWidget(
+                  imagePath:  "https://www.pinkvilla.com/files/styles/amp_metadata_content_image/public/janhvi-kapoor-main_3_0.jpg",
+                  isEdit: true,
+                  onClicked: () async {},
+                ),
+                    ]),
                 const SizedBox(
                   height: 15,
                 ),
@@ -245,40 +245,18 @@ class ProfileScreen extends StatelessWidget {
             padding: new EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Email',
-                    style: TextStyle(
-                      color: Colors.pink.shade300,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${Provider.of<UserProvider>(context).user?.email}',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'College Name',
-                    style: TextStyle(
-                      color: Colors.pink.shade300,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${Provider.of<UserProvider>(context).user?.collegeName}',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
                 
+                Divider(
+                color: Colors.white,
+                thickness: 0),
+                
+              TextFieldWidget(
+                  label: 'Gradution Year',
+                  text: '${Provider.of<UserProvider>(context).user?.year}',
+                  onChanged: (collegeName) {},
+                ),
+
+
               Divider(
                 color: Colors.white,
                 thickness: 0,),
@@ -335,7 +313,42 @@ class ProfileScreen extends StatelessWidget {
                 ),
 
 
-                
+                Divider(
+                color: Colors.white,
+                thickness: 0),
+
+        Container(
+        //     padding: new EdgeInsets.all(10.0),
+             
+        // child: OutlinedButton(
+        //   child: Text("Save"),
+        //   style: OutlinedButton.styleFrom(
+        //     primary: kPrimaryLightColor,
+        //     side: BorderSide(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        //   onPressed: () {},
+        // ),
+        
+
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const DashboardScreen();
+                  },
+                ),
+              );
+            },
+            child: Text(
+              "save".toUpperCase(),
+            ),
+          ),
+
+        )   
               ],
             ),
           )
