@@ -1,4 +1,4 @@
-import 'dart:js_util';
+//import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:my_app/responsive.dart';
@@ -225,14 +225,17 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+                Divider(
+                color: Colors.white,
+                thickness: 0),
+               
             
 
 
               ],
             ),
           )
-
+            
           // Container(
               // for settings button
           // )     
