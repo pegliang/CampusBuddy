@@ -1,7 +1,10 @@
 const { initDatabase } = require("./init");
 const { insertUser } = require("./insert");
-const { fetchUserByEmail, fetchUserById, _fetchAllUsers } = require("./fetch");
+const { fetchUserByEmail, fetchUserById } = require("./fetch");
 const { deleteUserByEmail } = require("./delete");
+const { verifyEmailToken } = require("./verify");
+const {getCollegeByID, importFromJSONIfNeeded, searchByCollegeName} = require("./college")
+const {searchCourses, importCoursesFromJSONIfNeeded} = require("./course")
 
 module.exports = {
     initDatabase,
@@ -9,5 +12,10 @@ module.exports = {
     fetchUserByEmail,
     fetchUserById,
     deleteUserByEmail,
-    _fetchAllUsers,
+    verifyEmailToken,
+    getCollegeByID,
+    importFromJSONIfNeeded,
+    searchByCollegeName,
+    searchCourses,
+    importCoursesFromJSONIfNeeded
 }

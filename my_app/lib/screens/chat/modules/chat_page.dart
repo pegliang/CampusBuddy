@@ -4,118 +4,83 @@ import '../../../constants.dart';
 
 import 'package:flutter/cupertino.dart';
 
-import 'package:my_app/screens/chat/components/chat.dart';
-import 'package:my_app/screens/chat/models/chat_users.dart';
+import 'package:my_app/screens/chat/components/chat_user_component.dart';
+import 'package:my_app/screens/chat/models/chat_user_component_model.dart';
+import 'package:my_app/utils/requests/chats.dart';
+import 'package:provider/provider.dart';
+import 'package:my_app/models/user_provider.dart';
 
-// class ChatPage extends StatefulWidget {
-//   @override
-//   _ChatPageState createState() => _ChatPageState();
-// }
-
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
   @override
+  ChatPageState createState() => ChatPageState();
+}
 
-//class _ChatPageState extends State<ChatPage> {
-  // List<ChatUsers> chatUsers = [
-  //   ChatUsers(
-  //       text: "Jane Russel",
-  //       secondaryText: "Awesome Setup",
-  //       image: "images/userImage1.jpeg",
-  //       time: "Now"),
-  //   ChatUsers(
-  //       text: "Glady's Murphy",
-  //       secondaryText: "That's Great",
-  //       image: "images/userImage2.jpeg",
-  //       time: "Yesterday"),
-  //   ChatUsers(
-  //       text: "Jorge Henry",
-  //       secondaryText: "Hey where are you?",
-  //       image: "images/userImage3.jpeg",
-  //       time: "31 Mar"),
-  //   ChatUsers(
-  //       text: "Philip Fox",
-  //       secondaryText: "Busy! Call me in 20 mins",
-  //       image: "images/userImage4.jpeg",
-  //       time: "28 Mar"),
-  //   ChatUsers(
-  //       text: "Debra Hawkins",
-  //       secondaryText: "Thankyou, It's awesome",
-  //       image: "images/userImage5.jpeg",
-  //       time: "23 Mar"),
-  //   ChatUsers(
-  //       text: "Jacob Pena",
-  //       secondaryText: "will update you in evening",
-  //       image: "images/userImage6.jpeg",
-  //       time: "17 Mar"),
-  //   ChatUsers(
-  //       text: "Andrey Jones",
-  //       secondaryText: "Can you please share the file?",
-  //       image: "images/userImage7.jpeg",
-  //       time: "24 Feb"),
-  //   ChatUsers(
-  //       text: "John Wick",
-  //       secondaryText: "How are you?",
-  //       image: "images/userImage8.jpeg",
-  //       time: "18 Feb"),
-  // ];
+class ChatPageState extends State<ChatPage> {
+  List<ChatUserComponentModel> chatUsers = [];
+  List<ChatUserComponentModel> filteredChatUsers = [];
+  final TextEditingController _searchController = TextEditingController();
 
-// class ChatPage extends StatelessWidget {
-//   const ChatPage({Key? key}) : super(key: key);
+  Future<void> _loadUsers() async {
+    String userID =
+        Provider.of<UserProvider>(context, listen: false).user?.id ??
+            ""; // Replace with actual user ID when Uzma implements it
+    List<dynamic> conversations = await getConversations(userID);
+    setState(() {
+      chatUsers = ChatUserComponentModel.fromJSONList(conversations);
+      filteredChatUsers = chatUsers;
+    });
+  }
 
-  // @override
+  @override
+  void initState() {
+    super.initState();
+    _loadUsers();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadUsers();
+    });
+    _searchController.addListener(() {
+      setState(() {
+        if (_searchController.text.isEmpty) {
+          this.filteredChatUsers = this.chatUsers;
+        } else {
+          this.filteredChatUsers = this.chatUsers.where((userComponent) {
+            RegExp regex = RegExp(_searchController.text, caseSensitive: false);
+            return regex.hasMatch(userComponent.name);
+          }).toList();
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "Chats",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      padding:
-                          EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.pink[50],
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Colors.pink,
-                            size: 20,
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            "New",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+              padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
               child: TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
                   hintText: "Search...",
                   hintStyle: TextStyle(color: Colors.grey.shade400),
@@ -126,28 +91,22 @@ class ChatPage extends StatelessWidget {
                   ),
                   filled: true,
                   fillColor: Colors.grey.shade100,
-                  contentPadding: EdgeInsets.all(8),
+                  contentPadding: const EdgeInsets.all(8),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.grey.shade100)),
                 ),
               ),
             ),
-            // ListView.builder(
-            //   itemCount: chatUsers.length,
-            //   shrinkWrap: true,
-            //   padding: EdgeInsets.only(top: 16),
-            //   physics: NeverScrollableScrollPhysics(),
-            //   itemBuilder: (context, index) {
-            //     return ChatUsersList(
-            //       text: chatUsers[index].text,
-            //       secondaryText: chatUsers[index].secondaryText,
-            //       image: chatUsers[index].image,
-            //       time: chatUsers[index].time,
-            //       isMessageRead: (index == 0 || index == 3) ? true : false,
-            //     );
-            //   },
-            // ),
+            ListView.builder(
+              itemCount: filteredChatUsers.length,
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 16),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ChatUserComponent.withModel(filteredChatUsers[index]);
+              },
+            ),
           ],
         ),
       ),

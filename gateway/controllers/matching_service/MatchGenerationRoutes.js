@@ -4,7 +4,8 @@ require("dotenv").config();
 async function getSuggestedMatches(req, res) {
 
     try {
-        const response = await axios.get(process.env.MATCHING_SERVICE_HOST + '/getSuggestedMatches', {
+        const originalUrl = req.originalUrl;
+        const response = await axios.get(process.env.MATCHING_SERVICE_HOST + originalUrl.replace("/matching", ""), {
             validateStatus: () => true,
             data: req.body
         });

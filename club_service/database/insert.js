@@ -33,6 +33,78 @@ async function insertClub(registerRequest) {
 
 }
 
+/**
+ * Allow the user to join a club
+ * @param {string} clubId 
+ * @param {string} userId 
+ * @param {string} username 
+ */
+async function joinClub(clubId, userId, username) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        club.members.push({
+            userId,
+            name: username,
+        });
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * Create a new event for a club
+ * @param {string} clubId 
+ * @param {string} eventObj 
+ */
+async function createEvent(clubId, eventObj) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        for (const event of club.events) {
+            if (event.name === eventObj.name) return;
+        }
+
+        club.events.push({
+            name: eventObj.name,
+            desc: eventObj.desc,
+            startDate: new Date(eventObj.startDate),
+            endDate: new Date(eventObj.endDate),
+            members: [],
+        });
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function rsvpEvent(clubId, eventId, userId) {
+    try {
+        const club = await Club.findById(clubId);
+        if (club === null) throw new Error("Cannot find the club");
+
+        // find the event
+        for (const event of club.events) {
+            if (event._id.toString() === eventId) {
+                event.members.push(userId);
+                break;
+            }
+        }
+
+        await club.save();
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     insertClub,
+    joinClub,
+    createEvent,
+    rsvpEvent,
 }

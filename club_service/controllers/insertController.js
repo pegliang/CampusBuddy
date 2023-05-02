@@ -48,6 +48,73 @@ async function registerController(req, res) {
 
 }
 
+async function joinClubController(req, res) {
+    const userId = req.body.userId;
+    const username = req.body.username;
+    const clubId = req.body.clubId;
+
+    if (!userId || !username || !clubId) return res.status(400).send();
+
+    try {
+        await db.joinClub(clubId, userId, username);
+
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
+async function createEventController(req, res) {
+    const name = req.body.name;
+    const desc = req.body.desc;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    const clubId = req.body.clubId;
+
+    if (!name || !desc || !startDate || !endDate || !clubId) return res.status(400).send();
+
+    // validate the start and end date
+    const startDate_d = new Date(startDate);
+    const endDate_d = new Date(endDate);
+
+    if (startDate_d.toString().toLowerCase() === 'invalid date' ||
+        endDate_d.toString().toLowerCase() === 'invalid date' ||
+        startDate_d > endDate_d) {
+        return res.status(400).send({ status: "Invalid Dates" });
+    }
+
+    try {
+        await db.createEvent(clubId, {
+            name, desc, startDate, endDate
+        });
+
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
+async function rsvpEventController(req, res) {
+    const clubId = req.body.clubId;
+    const userId = req.body.userId;
+    const eventId = req.body.eventId;
+
+    if (!clubId || !userId || !eventId) return res.status(400).send();
+
+    try {
+        await db.rsvpEvent(clubId, eventId, userId);
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
 module.exports = {
     registerController,
+    joinClubController,
+    createEventController,
+    rsvpEventController,
 }

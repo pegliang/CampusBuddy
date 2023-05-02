@@ -1,0 +1,6 @@
+{
+    "name": "sample event",
+    "desc": "sample desc",
+    "startDate": "2024-01-02",
+    "endDate": "2024-01-03"
+}

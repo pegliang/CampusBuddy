@@ -7,7 +7,7 @@
  * @type {string} college_name ~*
  * @type {string} gender? ~
  * @type {string} race? ~
- * @type {string} sexual_orientation?
+ * @type {string} sexual_orientation? ----add this
  * @type {string[]} majors? ~*
  * @type {string[]} minors? ~*
  * @type {number} gpa? ~*

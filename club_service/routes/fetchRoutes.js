@@ -4,5 +4,8 @@ const controller = require("../controllers/fetchController");
 
 router.get("/getClubById", controller.getClubByIdController);
 router.get("/getClubByName", controller.getClubByNameController);
+router.get("/getAllClub", controller.fetchAllClubsController);
+router.get("/getEventByName", controller.getEventByNameController);
+router.post("/checkUserOfMember", controller.checkIfUserIsMemberOfClubController);
 
 module.exports = router;

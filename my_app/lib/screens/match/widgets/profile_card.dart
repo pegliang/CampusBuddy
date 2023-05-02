@@ -1,73 +1,60 @@
-import 'package:my_app/screens/match/model/profile.dart';
 import 'package:flutter/material.dart';
+import '../../../models/user.dart';
+import './profile_detail_widgets.dart' show front, back;
 
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({Key? key, required this.profile}) : super(key: key);
-  final Profile profile;
+class ProfileCard extends StatefulWidget {
+  final User profile;
+
+  const ProfileCard({required this.profile});
+
+  @override
+  _profileCardState createState() => _profileCardState();
+}
+
+class _profileCardState extends State<ProfileCard>
+    with SingleTickerProviderStateMixin {
+  bool _showFront = true;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _flip() {
+    setState(() {
+      if (_showFront) {
+        _animationController.forward();
+      } else {
+        _animationController.reverse();
+      }
+      _showFront = !_showFront;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 580,
-      width: 340,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                profile.imageAsset,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: 80,
-              width: 340,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                shadows: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      profile.name,
-                      style: const TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w800,
-                        fontSize: 21,
-                      ),
-                    ),
-                    Text(
-                      profile.distance,
-                      style: const TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+    return GestureDetector(
+      onTap: _flip,
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 1000),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return RotationTransition(
+            turns: animation,
+            child: child,
+          );
+        },
+        child: _showFront ? front(widget.profile) : back(widget.profile),
       ),
     );
   }

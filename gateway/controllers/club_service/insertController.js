@@ -36,6 +36,65 @@ async function registerController(req, res) {
     }
 }
 
+async function joinClubController(req, res) {
+    const userId = req.body.userId;
+    const username = req.body.username;
+    const clubId = req.body.clubId;
+
+    if (!userId || !username || !clubId) return res.status(400).send();
+
+    try {
+        await axios.post(process.env.CLUB_SERVICE_HOST + "/joinClub", {
+            userId, username, clubId
+        });
+
+        return res.send();
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
+}
+
+async function createEventController(req, res) {
+    const name = req.body.name;
+    const desc = req.body.desc;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    const clubId = req.body.clubId;
+
+    if (!name || !desc || !startDate || !endDate || !clubId) return res.status(400).send();
+
+    try {
+        await axios.post(process.env.CLUB_SERVICE_HOST + "/createEvent", {
+            name, desc, startDate, endDate, clubId
+        });
+
+        return res.send();
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
+}
+
+async function rsvpEventController(req, res) {
+    const clubId = req.body.clubId;
+    const userId = req.body.userId;
+    const eventId = req.body.eventId;
+
+    if (!clubId || !userId || !eventId) return res.status(400).send();
+
+    try {
+        await axios.post(process.env.CLUB_SERVICE_HOST + "/rsvpEvent", {
+            clubId, userId, eventId
+        });
+
+        return res.send();
+    } catch (err) {
+        return res.status(getHTTPErrorCode(err)).send();
+    }
+}
+
 module.exports = {
     registerController,
+    joinClubController,
+    createEventController,
+    rsvpEventController,
 }

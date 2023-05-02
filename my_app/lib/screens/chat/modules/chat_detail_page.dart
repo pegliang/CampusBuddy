@@ -1,29 +1,85 @@
+import 'package:my_app/models/user_provider.dart';
 import 'package:my_app/screens/chat/components/chat_bubble.dart';
 import 'package:my_app/screens/chat/components/chat_detail_page_appbar.dart';
 import 'package:my_app/screens/chat/models/chat_message.dart';
 import 'package:my_app/screens/chat/models/send_menu_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-enum MessageType {
-  Sender,
-  Receiver,
-}
+import '../models/chat_user_component_model.dart';
+import '../../../utils/ChatService/ChatService.dart';
+import '../../../utils/ChatService/Message.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/scheduler.dart';
 
 class ChatDetailPage extends StatefulWidget {
+  ChatUserComponentModel? model;
+
+  ChatDetailPage({required this.model});
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List<ChatMessage> chatMessage = [
-    ChatMessage(message: "Heyy bestie", type: MessageType.Receiver),
-    ChatMessage(message: "what's up?", type: MessageType.Receiver),
-    ChatMessage(message: "Hey, I'm chilling, wbu?", type: MessageType.Sender),
-    ChatMessage(message: "I'm good!", type: MessageType.Receiver),
-    ChatMessage(
-        message: "What class do you have rn?", type: MessageType.Sender),
-  ];
+  List<ChatMessage> chatMessages = [];
+  late ChatService? chatService;
+  final TextEditingController _messageTextEditingController =
+      TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.model != null) {
+        chatService = ChatService(
+            Provider.of<UserProvider>(context, listen: false).user?.id ?? "",
+            widget.model!.conversationID,
+            handleMessage,
+            handleInitialMessages);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Perform any cleanup tasks here before the widget is unmounted
+    chatService?.disconnect();
+    chatService?.initialMessageHandler = null;
+    chatService?.onRecieveHandler = null;
+    chatService = null;
+    super.dispose();
+  }
+
+  void handleMessage(Message message) {
+    setState(() {
+      chatMessages.add(ChatMessage.fromMessage(message, MessageType.Receiver));
+    });
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  void handleInitialMessages(List<Message> messages) {
+    setState(() {
+      for (int i = messages.length - 1; i >= 0; i--) {
+        MessageType mType =
+            Provider.of<UserProvider>(context, listen: false).user?.id ==
+                    messages[i].recipient_id
+                ? MessageType.Receiver
+                : MessageType.Sender;
+        chatMessages.insert(0, ChatMessage.fromMessage(messages[i], mType));
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+  }
 
   List<SendMenuItems> menuItems = [
     SendMenuItems(
@@ -101,79 +157,103 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChatDetailPageAppBar(),
-      body: Stack(
-        children: <Widget>[
-          ListView.builder(
-            itemCount: chatMessage.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ChatBubble(
-                chatMessage: chatMessage[index],
-              );
-            },
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: 16, bottom: 10),
-              height: 80,
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      showModal();
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 21,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Type message...",
-                          hintStyle: TextStyle(color: Colors.grey.shade500),
-                          border: InputBorder.none),
-                    ),
-                  ),
-                ],
+        appBar: ChatDetailPageAppBar(
+          username: widget.model?.name,
+          profile_url: widget.model?.image,
+        ),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: chatMessages.length,
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                itemBuilder: (context, index) {
+                  return ChatBubble(
+                    chatMessage: chatMessages[index],
+                  );
+                },
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              padding: EdgeInsets.only(right: 30, bottom: 50),
-              child: FloatingActionButton(
-                onPressed: () {},
-                child: Icon(
-                  Icons.send,
-                  color: Color.fromARGB(238, 236, 20, 200),
+            Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 16, bottom: 10),
+                  height: 80,
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          showModal();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 21,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Flexible(
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Type message...",
+                              hintStyle: TextStyle(color: Colors.grey.shade500),
+                              border: InputBorder.none),
+                          controller: _messageTextEditingController,
+                        ),
+                      ),
+                      SizedBox(
+                        width:
+                            90, // Adjust this value according to the size of your FloatingActionButton
+                      ),
+                    ],
+                  ),
                 ),
-                backgroundColor: Color.fromARGB(255, 235, 20, 92),
-                elevation: 0,
-              ),
+                Positioned(
+                  bottom: 10,
+                  right: 30,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      chatService
+                          ?.sendMessage(_messageTextEditingController.text);
+                      setState(() {
+                        chatMessages.add(ChatMessage(
+                            message: _messageTextEditingController.text,
+                            type: MessageType.Sender,
+                            timeSent: DateTime.now()));
+                        _messageTextEditingController.text = "";
+                      });
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut,
+                        );
+                      });
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Color.fromARGB(238, 236, 20, 200),
+                    ),
+                    backgroundColor: Color.fromARGB(255, 235, 20, 92),
+                    elevation: 0,
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-    );
+          ],
+        ));
   }
 }

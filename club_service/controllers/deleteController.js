@@ -40,7 +40,23 @@ async function deleteClubByNameController(req, res) {
     }
 }
 
+async function leaveClubController(req, res) {
+    const userId = req.query.userId;
+    const clubId = req.query.clubId;
+
+    if (!userId || !clubId) return res.status(400).send();
+
+    try {
+        await db.leaveClub(clubId, userId);
+        return res.send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    }
+}
+
 module.exports = {
     deleteClubByIdController,
     deleteClubByNameController,
+    leaveClubController,
 }
