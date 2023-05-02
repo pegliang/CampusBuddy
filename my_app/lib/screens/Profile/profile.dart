@@ -250,19 +250,9 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 thickness: 0),
                 
+
               TextFieldWidget(
-                  label: 'Gradution Year',
-                  text: '${Provider.of<UserProvider>(context).user?.year}',
-                  onChanged: (collegeName) {},
-                ),
-
-
-              Divider(
-                color: Colors.white,
-                thickness: 0,),
-
-               TextFieldWidget(
-                  label: 'College Name',
+                  label: 'School',
                   text: '${Provider.of<UserProvider>(context).user?.collegeName}',
                   onChanged: (collegeName) {},
                 ),
@@ -273,31 +263,54 @@ class ProfileScreen extends StatelessWidget {
                
 
                TextFieldWidget(
-                  label: 'Friends',
-                  text: 'Friends list',
-                  onChanged: (friends) {},
+                  label: 'GPA',
+                  text: '${Provider.of<UserProvider>(context).user?.gpa}',
+                  onChanged: (gpa) {},
+                ),
+
+              Divider(
+                color: Colors.white,
+                thickness: 0),
+               
+              TextFieldWidget(
+                  label: 'Major',
+                  text: '${Provider.of<UserProvider>(context).user?.major}',
+                  onChanged: (major) {},
+                ),
+
+              Divider(
+                color: Colors.white,
+                thickness: 0),
+               
+
+              TextFieldWidget(
+                  label: 'Minor',
+                  text: '${Provider.of<UserProvider>(context).user?.minor}',
+                  onChanged: (minor) {},
+                ),
+
+              Divider(
+                color: Colors.white,
+                thickness: 0),
+               
+
+
+
+              TextFieldWidget(
+                  label: 'Gradution Year',
+                  text: '${Provider.of<UserProvider>(context).user?.year}',
+                  onChanged: (year) {},
                 ),
 
 
-                Divider(
+              Divider(
                 color: Colors.white,
-                thickness: 0),
+                thickness: 0,),
 
-             TextFieldWidget(
-                  label: 'Clubs',
-                  text: 'Clubs list',
-                  onChanged: (Clubs) {},
-                ),
-
-
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-
-
-                TextFieldWidget(
-                  label: 'Classes',
-                  text: 'classes taken',
+               
+              TextFieldWidget(
+                  label: 'Current Courses',
+                  text: '${Provider.of<UserProvider>(context).user?.courses}',
                   onChanged: (classes) {},
                 ),
 
@@ -306,16 +319,12 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 thickness: 0),
 
-               TextFieldWidget(
-                  label: 'Sexual Orientation',
-                  text: 'Male/Female',
-                  onChanged: (sex) {},
-                ),
 
 
-                Divider(
-                color: Colors.white,
-                thickness: 0),
+             
+
+                
+
 
         Container(
         //     padding: new EdgeInsets.all(10.0),
