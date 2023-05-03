@@ -17,7 +17,7 @@ Widget front(User user) {
         Positioned(
           bottom: 0,
           child: Container(
-            height: 80,
+            height: 100,
             width: 340,
             decoration: ShapeDecoration(
               color: Colors.white,
@@ -51,6 +51,15 @@ Widget front(User user) {
                       fontFamily: 'Nunito',
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    user.desc ?? "",
+                    style: const TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
                       color: Colors.grey,
                     ),
                   ),
