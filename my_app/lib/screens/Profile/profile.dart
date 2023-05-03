@@ -200,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
             height: 250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [kPrimaryColor, Colors.pink.shade100],
+                colors: [kPrimaryColor, Colors.white],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 stops: [0.0, 0.0],
@@ -227,13 +227,13 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   '${Provider.of<UserProvider>(context).user?.email}',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 25,
                   ),
                 ),
@@ -319,13 +319,6 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 thickness: 0),
 
-
-
-             
-
-                
-
-
         Container(
 
         child: ElevatedButton(
@@ -342,6 +335,14 @@ class ProfileScreen extends StatelessWidget {
             child: Text(
               "save".toUpperCase(),
             ),
+            style: ElevatedButton.styleFrom(
+              primary: kPrimaryColor, // background
+              onPrimary: Colors.white, 
+             // minimumSize: Size(30, 30), // foreground
+  ),
+     
+     
+
           ),
 
         )   
