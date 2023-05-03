@@ -19,6 +19,8 @@ class ChatPage extends StatefulWidget {
 
 class ChatPageState extends State<ChatPage> {
   List<ChatUserComponentModel> chatUsers = [];
+  List<ChatUserComponentModel> filteredChatUsers = [];
+  final TextEditingController _searchController = TextEditingController();
 
   Future<void> _loadUsers() async {
     String userID =
@@ -27,6 +29,7 @@ class ChatPageState extends State<ChatPage> {
     List<dynamic> conversations = await getConversations(userID);
     setState(() {
       chatUsers = ChatUserComponentModel.fromJSONList(conversations);
+      filteredChatUsers = chatUsers;
     });
   }
 
@@ -36,6 +39,18 @@ class ChatPageState extends State<ChatPage> {
     _loadUsers();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _loadUsers();
+    });
+    _searchController.addListener(() {
+      setState(() {
+        if (_searchController.text.isEmpty) {
+          this.filteredChatUsers = this.chatUsers;
+        } else {
+          this.filteredChatUsers = this.chatUsers.where((userComponent) {
+            RegExp regex = RegExp(_searchController.text, caseSensitive: false);
+            return regex.hasMatch(userComponent.name);
+          }).toList();
+        }
+      });
     });
   }
 
@@ -58,32 +73,6 @@ class ChatPageState extends State<ChatPage> {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 2, bottom: 2),
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.pink[50],
-                      ),
-                      child: Row(
-                        children: const <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Colors.pink,
-                            size: 20,
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            "New",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -91,6 +80,7 @@ class ChatPageState extends State<ChatPage> {
             Padding(
               padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
               child: TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
                   hintText: "Search...",
                   hintStyle: TextStyle(color: Colors.grey.shade400),
@@ -109,12 +99,12 @@ class ChatPageState extends State<ChatPage> {
               ),
             ),
             ListView.builder(
-              itemCount: chatUsers.length,
+              itemCount: filteredChatUsers.length,
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 16),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return ChatUserComponent.withModel(chatUsers[index]);
+                return ChatUserComponent.withModel(filteredChatUsers[index]);
               },
             ),
           ],
