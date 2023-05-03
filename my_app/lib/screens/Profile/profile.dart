@@ -338,7 +338,7 @@ class ProfileScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               primary: kPrimaryColor, // background
               onPrimary: Colors.white, 
-             // minimumSize: Size(30, 30), // foreground
+              //minimumSize: Size(50, 30), // foreground
   ),
      
      
