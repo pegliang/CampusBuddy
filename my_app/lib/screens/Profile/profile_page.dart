@@ -28,7 +28,7 @@ class ProfilePage extends StatelessWidget {
             height: 250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.pinkAccent, Colors.pink.shade100],
+                colors: [Colors.pinkAccent, Colors.white],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 stops: [0.0, 0.0],
@@ -60,13 +60,13 @@ class ProfilePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   '${Provider.of<UserProvider>(context).user?.email}',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 25,
                   ),
                 ),
