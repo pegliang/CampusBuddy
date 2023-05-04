@@ -65,5 +65,5 @@ def suggestedMatches():
     sortedUsers = sorted(similarity_scores, key=lambda x: x["similarity_score"], reverse=True)[:num_of_users]
 
     jsonUsers = jsonify(sortedUsers)
-    return jsonUsers
+    return randUsersDicts
 

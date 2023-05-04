@@ -354,6 +354,9 @@ class _SignupFormState extends State<SignUpForm> {
                         } catch (err) {
                           // Do something when User register fails (Display message etc)
                           print(err.toString());
+                          setState(() {
+                            isLoading = false;
+                          });
                         }
                       }
                     },
