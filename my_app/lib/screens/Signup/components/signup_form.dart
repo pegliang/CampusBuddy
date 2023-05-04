@@ -25,6 +25,9 @@ import '../../../components/already_have_an_account.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
 import '../../../utils/requests/register.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import '../../../utils/requests/imageUpload.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -64,6 +67,7 @@ class _SignupFormState extends State<SignUpForm> {
       TextEditingController();
   final TextEditingController _interestsTextFieldController =
       TextEditingController();
+  File? _pickedImage;
 
   Future<void> registerUser() async {
     return registerRequest({
@@ -81,8 +85,16 @@ class _SignupFormState extends State<SignUpForm> {
       'clubs': [_clubsTextFieldController.text],
       'desc': _descTextFieldController.text,
       'interests': [_interestsTextFieldController.text],
-      "profile_img": "www.google.com"
-    });
+    }, _pickedImage);
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _pickedImage = File(pickedImage.path);
+      });
+    }
   }
 
   @override
@@ -91,6 +103,19 @@ class _SignupFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          CircleAvatar(
+            radius: 40,
+            backgroundImage:
+                _pickedImage != null ? FileImage(_pickedImage!) : null,
+            child: _pickedImage == null
+                ? const Icon(Icons.person, size: 40)
+                : null,
+          ),
+          TextButton.icon(
+            onPressed: () => _pickImage(ImageSource.gallery),
+            icon: const Icon(Icons.image),
+            label: const Text('Add Image'),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
@@ -125,7 +150,7 @@ class _SignupFormState extends State<SignUpForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.name,
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               controller: _schoolNameTextFieldController,
