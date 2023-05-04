@@ -31,6 +31,10 @@ import '../../../components/already_have_club_account.dart';
 import '../../../constants.dart';
 import '../../club_login/club_login.dart';
 import "../../../utils/requests/create_club.dart";
+import '../../../models/user.dart';
+import '../../../models/user_provider.dart';
+import 'package:provider/provider.dart';
+import '../../Dashboard/dashboard.dart';
 
 class ClubSignUpForm extends StatefulWidget {
   const ClubSignUpForm({super.key});
@@ -62,15 +66,17 @@ class _ClubSignupFormState extends State<ClubSignUpForm> {
 
   Future<void> createClub() async {
     return createClubRequest({
-      'clubName': _clubNameTextFieldController,
-      'majors': _clubMajorsTextFieldController,
-      'minors': _clubMinorsTextFieldController,
-      'gender': _clubGendersTextFieldController,
-      'races': _clubRacesTextFieldController,
-      'sexual_orientation': _clubSexualOrtTextFieldController,
-      'title': _clubEboardTitleTextFieldController,
-      'username': _clubEboardNameTextFieldController,
-      'desc': _clubDescTextFieldController
+      'clubName': _clubNameTextFieldController.text,
+      'majors': [_clubMajorsTextFieldController.text],
+      'minors': [_clubMinorsTextFieldController.text],
+      'gender': [_clubGendersTextFieldController.text],
+      'races': [_clubRacesTextFieldController.text],
+      'sexual_orientation': [_clubSexualOrtTextFieldController.text],
+      'title': _clubEboardTitleTextFieldController.text,
+      'username': _clubEboardNameTextFieldController.text,
+      'desc': _clubDescTextFieldController.text,
+      'userId':
+          '${Provider.of<UserProvider>(context, listen: false).user?.email}',
     });
   }
 
@@ -208,23 +214,42 @@ class _ClubSignupFormState extends State<ClubSignUpForm> {
           ),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (_formKey.currentState != null &&
+                  _formKey.currentState!.validate()) {
+                try {
+                  await createClub();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return DashboardScreen();
+                      },
+                    ),
+                  );
+                  // Do Something once user registers successfully (Move on to home screen, save credentials etc)
+                } catch (err) {
+                  print(err);
+                  // Do something when User register fails (Display message etc)
+                }
+              }
+            },
             child: Text("Sign Up".toUpperCase()),
           ),
           const SizedBox(height: defaultPadding),
-          AlreadyHaveClubAccountCheck(
-            login: false,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const ClubScreen();
-                  },
-                ),
-              );
-            },
-          ),
+          // AlreadyHaveClubAccountCheck(
+          //   login: false,
+          //   press: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) {
+          //           return const DashboardScreen();
+          //         },
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

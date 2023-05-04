@@ -3,6 +3,7 @@ import 'package:my_app/constants.dart';
 import 'package:my_app/responsive.dart';
 import '../../components/club_background.dart';
 import 'components/club_signup_screen_img.dart';
+import '../club/ClubScreen.dart';
 import 'components/club_signup_form.dart';
 //import 'components/social_sign_up.dart';
 
@@ -11,35 +12,48 @@ class ClubSignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
-      
-      child: SingleChildScrollView(
-        child: Responsive(
-          mobile: const MobileSignupScreen(),
-          desktop: Row(
-            children: [
-              const Expanded(
-                child: ClubSignUpScreenTopImage(),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SizedBox(
-                      width: 450,
-                      child: ClubSignUpForm(),
-                    ),
-                    SizedBox(height: defaultPadding / 2),
-                    // SocalSignUp()
-                  ],
-                ),
-              )
-            ],
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('CampusBuddy'),
+          backgroundColor: kPrimaryColor,
+          elevation: 1,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
-      ),
-    );
-    
+        body: Container(
+          child: SingleChildScrollView(
+            child: Responsive(
+              mobile: const MobileSignupScreen(),
+              desktop: Row(
+                children: [
+                  const Expanded(
+                    child: ClubSignUpScreenTopImage(),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SizedBox(
+                          width: 450,
+                          child: ClubSignUpForm(),
+                        ),
+                        SizedBox(height: defaultPadding / 2),
+                        // SocalSignUp()
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 

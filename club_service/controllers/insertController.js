@@ -18,7 +18,7 @@ async function registerController(req, res) {
     const eboard_member = req.body.eboard_member;
     const members = [];
     const desc = req.body.desc;
-
+    console.log("here");
     if (!name || !majors || !minors || !desc || !eboard_member) return res.status(400).send();
 
     // make sure eboard members are parse correctly
