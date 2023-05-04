@@ -20,7 +20,6 @@ Future<String?> uploadImage(File imageFile) async {
     final url = Uri.parse(
         'https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload?api_key=${CLOUDINARY_API_KEY}&timestamp=$time&signature=${messageSignature.toString()}');
 
-    print(url.toString());
     //     "https://api.cloudinary.com/v1_1/${env["CLOUD_NAME"]}/auto/upload");
     final bytes = await imageFile.readAsBytes();
     // Create a new multipart request
@@ -38,7 +37,6 @@ Future<String?> uploadImage(File imageFile) async {
 
     // Parse the response body as JSON
     final jsonResponse = json.decode(responseString);
-    print(jsonResponse);
     // Check if the upload was successful
     if (response.statusCode == 200) {
       return jsonResponse["url"];
