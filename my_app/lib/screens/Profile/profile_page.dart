@@ -42,8 +42,7 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ProfileWidget(
-                        imagePath:
-                            "https://www.pinkvilla.com/files/styles/amp_metadata_content_image/public/janhvi-kapoor-main_3_0.jpg",
+                        imagePath: Provider.of<UserProvider>(context).user?.profileUrl ?? '',
                         onClicked: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -92,6 +91,23 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                ListTile(
+                  title: Text(
+                    'Interest',
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${Provider.of<UserProvider>(context).user?.interests}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+
                 Divider(),
                 ListTile(
                   title: Text(
@@ -194,23 +210,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'Friend',
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'your friend list',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+               
+               
                 Divider(color: Colors.white, thickness: 0),
               ],
             ),

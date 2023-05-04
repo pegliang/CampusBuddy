@@ -90,7 +90,8 @@ flutter:
     - assets/C2.png
     - assets/c5.png
     - assets/cblogo.png
-    - assets/avatar_3.jpeg 
+    - assets/avatar_3.jpeg
+    - 'assets/cbtry.png' 
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -171,7 +171,6 @@
 //       );
 // }
 
-
 // on edit mode
 import 'package:flutter/material.dart';
 import 'package:my_app/responsive.dart';
@@ -187,11 +186,34 @@ import '../../utils/user_preferences.dart';
 import '../../widget/textfield_widget.dart';
 import '../../../constants.dart';
 import '../../screens/Dashboard/dashboard.dart';
+import '../../utils/requests/register.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _majorTextFieldController =
+      TextEditingController();
+  final TextEditingController _minorTextFieldController =
+      TextEditingController();
+  final TextEditingController _coursesTextFieldController =
+      TextEditingController();
+  final TextEditingController _gpaTextFieldController = TextEditingController();
+  final TextEditingController _interestsTextFieldController =
+      TextEditingController();
+  final TextEditingController _yearTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubsTextFieldController =
+      TextEditingController();
+  final TextEditingController _schoolNameTextFieldController =
+      TextEditingController();
+
   Widget build(BuildContext context) {
     return Background(
       child: ListView(
@@ -211,13 +233,16 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
                       ProfileWidget(
-                  imagePath:  "https://www.pinkvilla.com/files/styles/amp_metadata_content_image/public/janhvi-kapoor-main_3_0.jpg",
-                  isEdit: true,
-                  onClicked: () async {},
-                ),
+                        imagePath: Provider.of<UserProvider>(context)
+                                .user
+                                ?.profileUrl ??
+                            '',
+                        isEdit: true,
+                        onClicked: () async {},
+                      ),
                     ]),
                 const SizedBox(
                   height: 15,
@@ -240,112 +265,99 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-         
           Container(
             padding: new EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-                
-
-              TextFieldWidget(
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
                   label: 'School',
-                  text: '${Provider.of<UserProvider>(context).user?.collegeName}',
-                  onChanged: (collegeName) {},
+                  text:
+                      '${Provider.of<UserProvider>(context).user?.collegeName}',
+                  onChanged: (_schoolNameTextFieldController) {},
                 ),
-
-              Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-
-               TextFieldWidget(
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Interest',
+                  text: '${Provider.of<UserProvider>(context).user?.interests}',
+                  onChanged: (_interestsTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
                   label: 'GPA',
                   text: '${Provider.of<UserProvider>(context).user?.gpa}',
-                  onChanged: (gpa) {},
+                  onChanged: (_gpaTextFieldController) {},
                 ),
-
-              Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-              TextFieldWidget(
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
                   label: 'Major',
                   text: '${Provider.of<UserProvider>(context).user?.major}',
-                  onChanged: (major) {},
+                  onChanged: (_majorTextFieldController) {},
                 ),
-
-              Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-
-              TextFieldWidget(
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
                   label: 'Minor',
                   text: '${Provider.of<UserProvider>(context).user?.minor}',
-                  onChanged: (minor) {},
+                  onChanged: (_minorTextFieldController) {},
                 ),
-
-              Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-
-
-
-              TextFieldWidget(
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
                   label: 'Gradution Year',
                   text: '${Provider.of<UserProvider>(context).user?.year}',
-                  onChanged: (year) {},
+                  onChanged: (_yearTextFieldController) {},
                 ),
-
-
-              Divider(
-                color: Colors.white,
-                thickness: 0,),
-
-               
-              TextFieldWidget(
+                Divider(
+                  color: Colors.white,
+                  thickness: 0,
+                ),
+                TextFieldWidget(
                   label: 'Current Courses',
                   text: '${Provider.of<UserProvider>(context).user?.courses}',
-                  onChanged: (classes) {},
+                  onChanged: (_coursesTextFieldController) {},
                 ),
-
-
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-
-        Container(
-
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const DashboardScreen();
-                  },
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Clubs',
+                  text: '${Provider.of<UserProvider>(context).user?.clubs}',
+                  onChanged: (_clubsTextFieldController) {},
                 ),
-              );
-            },
-            child: Text(
-              "save".toUpperCase(),
-            ),
-            style: ElevatedButton.styleFrom(
-              primary: kPrimaryColor, // background
-              onPrimary: Colors.white, 
-              //minimumSize: Size(50, 30), // foreground
-  ),
-     
-     
+                Container(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      updateUser({
+                        'id': _majorTextFieldController.text,
+                        'college': _schoolNameTextFieldController.text,
+                        'gpa': _gpaTextFieldController.text,
+                        'majors': _majorTextFieldController,
+                        'minors': _minorTextFieldController.text,
+                        'courses': _coursesTextFieldController.text,
+                        'clubs': _clubsTextFieldController.text,
+                        'gradYear': _yearTextFieldController.text,
+                        'interests': _interestsTextFieldController.text,
+                      });
+                      
 
-          ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const DashboardScreen();
+                          },
+                        ),
 
-        )   
+                      );
+                      //catch(err){print(err);}
+                    },
+                    child: Text(
+                      "save".toUpperCase(),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor, // background
+                      onPrimary: Colors.white,
+                      //minimumSize: Size(50, 30), // foreground
+                    ),
+                  ),
+                )
               ],
             ),
           )
