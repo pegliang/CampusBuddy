@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_app/utils/requests/imageUpload.dart';
 import './request_url.dart';
+import 'dart:io';
 
 final _emailReg = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[eE][dD][uU]$");
 final _passwordReg =
@@ -8,10 +10,15 @@ final _passwordReg =
 
 /// Ping the backend server to register a new user
 /// Throw an exception if the status code is not 200
-Future<void> registerRequest(Map<String, dynamic> registerObj) async {
+Future<void> registerRequest(
+    Map<String, dynamic> registerObj, File? imageFile) async {
   final reqEmail = registerObj["email"];
   final reqPassword = registerObj["password"];
-
+  String? imageURL;
+  if (imageFile != null) {
+    imageURL = await uploadImage(imageFile);
+  }
+  registerObj["profile_img"] = imageURL;
   // no email or password field given
   if (reqEmail == null || reqPassword == null) {
     throw Exception("The email or password field is empty");
