@@ -52,6 +52,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/cbtry.png
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -82,7 +90,8 @@ flutter:
     - assets/C2.png
     - assets/c5.png
     - assets/cblogo.png
-    - assets/avatar_3.jpeg 
+    - assets/avatar_3.jpeg
+    - 'assets/cbtry.png' 
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

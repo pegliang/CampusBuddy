@@ -12,7 +12,7 @@ class LoginScreenTopImage extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Login",
+          "",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
         //const SizedBox(height: defaultPadding * 2),
@@ -25,9 +25,10 @@ class LoginScreenTopImage extends StatelessWidget {
               
               child: Image(
                 image: AssetImage('assets/cblogo.png'),
-                height: 300,
+                height: 200,
                 
               ),
+              
             ),
             
           ],

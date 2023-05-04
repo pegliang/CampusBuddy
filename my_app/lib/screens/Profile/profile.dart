@@ -171,7 +171,6 @@
 //       );
 // }
 
-
 // on edit mode
 import 'package:flutter/material.dart';
 import 'package:my_app/responsive.dart';
@@ -185,11 +184,36 @@ import 'package:provider/provider.dart';
 import '../../widget/profile_widget.dart';
 import '../../utils/user_preferences.dart';
 import '../../widget/textfield_widget.dart';
+import '../../../constants.dart';
+import '../../screens/Dashboard/dashboard.dart';
+import '../../utils/requests/register.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _majorTextFieldController =
+      TextEditingController();
+  final TextEditingController _minorTextFieldController =
+      TextEditingController();
+  final TextEditingController _coursesTextFieldController =
+      TextEditingController();
+  final TextEditingController _gpaTextFieldController = TextEditingController();
+  final TextEditingController _interestsTextFieldController =
+      TextEditingController();
+  final TextEditingController _yearTextFieldController =
+      TextEditingController();
+  final TextEditingController _clubsTextFieldController =
+      TextEditingController();
+  final TextEditingController _schoolNameTextFieldController =
+      TextEditingController();
+
   Widget build(BuildContext context) {
     return Background(
       child: ListView(
@@ -198,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
             height: 250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.pinkAccent, Colors.pink.shade100],
+                colors: [kPrimaryColor, Colors.white],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 stops: [0.0, 0.0],
@@ -209,16 +233,17 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white70,
-                      minRadius: 60.0,
-                      child: CircleAvatar(
-                        radius: 50.0,
-                        backgroundImage: NetworkImage(''),
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      ProfileWidget(
+                        imagePath: Provider.of<UserProvider>(context)
+                                .user
+                                ?.profileUrl ??
+                            '',
+                        isEdit: true,
+                        onClicked: () async {},
                       ),
-            )]),
+                    ]),
                 const SizedBox(
                   height: 15,
                 ),
@@ -227,115 +252,112 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   '${Provider.of<UserProvider>(context).user?.email}',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 25,
                   ),
                 ),
               ],
             ),
           ),
-         
           Container(
             padding: new EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Email',
-                    style: TextStyle(
-                      color: Colors.pink.shade300,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${Provider.of<UserProvider>(context).user?.email}',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text(
-                    'College Name',
-                    style: TextStyle(
-                      color: Colors.pink.shade300,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${Provider.of<UserProvider>(context).user?.collegeName}',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                
-              Divider(
-                color: Colors.white,
-                thickness: 0,),
-
-               TextFieldWidget(
-                  label: 'College Name',
-                  text: '${Provider.of<UserProvider>(context).user?.collegeName}',
-                  onChanged: (collegeName) {},
-                ),
-
-              Divider(
-                color: Colors.white,
-                thickness: 0),
-               
-
-               TextFieldWidget(
-                  label: 'Friends',
-                  text: 'Friends list',
-                  onChanged: (friends) {},
-                ),
-
-
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-
-             TextFieldWidget(
-                  label: 'Clubs',
-                  text: 'Clubs list',
-                  onChanged: (Clubs) {},
-                ),
-
-
-                Divider(
-                color: Colors.white,
-                thickness: 0),
-
-
+                Divider(color: Colors.white, thickness: 0),
                 TextFieldWidget(
-                  label: 'Classes',
-                  text: 'classes taken',
-                  onChanged: (classes) {},
+                  label: 'School',
+                  text:
+                      '${Provider.of<UserProvider>(context).user?.collegeName}',
+                  onChanged: (_schoolNameTextFieldController) {},
                 ),
-
-
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Interest',
+                  text: '${Provider.of<UserProvider>(context).user?.interests}',
+                  onChanged: (_interestsTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'GPA',
+                  text: '${Provider.of<UserProvider>(context).user?.gpa}',
+                  onChanged: (_gpaTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Major',
+                  text: '${Provider.of<UserProvider>(context).user?.major}',
+                  onChanged: (_majorTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Minor',
+                  text: '${Provider.of<UserProvider>(context).user?.minor}',
+                  onChanged: (_minorTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Gradution Year',
+                  text: '${Provider.of<UserProvider>(context).user?.year}',
+                  onChanged: (_yearTextFieldController) {},
+                ),
                 Divider(
-                color: Colors.white,
-                thickness: 0),
-
-               TextFieldWidget(
-                  label: 'Sexual Orientation',
-                  text: 'Male/Female',
-                  onChanged: (sex) {},
+                  color: Colors.white,
+                  thickness: 0,
                 ),
+                TextFieldWidget(
+                  label: 'Current Courses',
+                  text: '${Provider.of<UserProvider>(context).user?.courses}',
+                  onChanged: (_coursesTextFieldController) {},
+                ),
+                Divider(color: Colors.white, thickness: 0),
+                TextFieldWidget(
+                  label: 'Clubs',
+                  text: '${Provider.of<UserProvider>(context).user?.clubs}',
+                  onChanged: (_clubsTextFieldController) {},
+                ),
+                Container(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      updateUser({
+                        'id': _majorTextFieldController.text,
+                        'college': _schoolNameTextFieldController.text,
+                        'gpa': _gpaTextFieldController.text,
+                        'majors': _majorTextFieldController,
+                        'minors': _minorTextFieldController.text,
+                        'courses': _coursesTextFieldController.text,
+                        'clubs': _clubsTextFieldController.text,
+                        'gradYear': _yearTextFieldController.text,
+                        'interests': _interestsTextFieldController.text,
+                      });
+                      
 
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const DashboardScreen();
+                          },
+                        ),
 
-                
+                      );
+                      //catch(err){print(err);}
+                    },
+                    child: Text(
+                      "save".toUpperCase(),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor, // background
+                      onPrimary: Colors.white,
+                      //minimumSize: Size(50, 30), // foreground
+                    ),
+                  ),
+                )
               ],
             ),
           )
