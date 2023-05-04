@@ -68,9 +68,13 @@ class _SignupFormState extends State<SignUpForm> {
   final TextEditingController _interestsTextFieldController =
       TextEditingController();
   File? _pickedImage;
+  bool isLoading = false;
 
   Future<void> registerUser() async {
-    return registerRequest({
+    setState(() {
+      isLoading = true;
+    });
+    await registerRequest({
       'email': _emailTextFieldController.text,
       'password': _passwordTextFieldController.text,
       'name': _fullNameTextFieldController.text,
@@ -86,6 +90,9 @@ class _SignupFormState extends State<SignUpForm> {
       'desc': _descTextFieldController.text,
       'interests': [_interestsTextFieldController.text],
     }, _pickedImage);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -328,27 +335,35 @@ class _SignupFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: defaultPadding / 1),
           ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState != null &&
-                  _formKey.currentState!.validate()) {
-                try {
-                  await registerUser();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
-                      },
-                    ),
-                  );
-                  // Do Something once user registers successfully (Move on to home screen, save credentials etc)
-                } catch (err) {
-                  // Do something when User register fails (Display message etc)
-                }
-              }
-            },
-            child: Text("Sign Up".toUpperCase()),
-          ),
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      if (_formKey.currentState != null &&
+                          _formKey.currentState!.validate()) {
+                        try {
+                          await registerUser();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return LoginScreen();
+                              },
+                            ),
+                          );
+                          // Do Something once user registers successfully (Move on to home screen, save credentials etc)
+                        } catch (err) {
+                          // Do something when User register fails (Display message etc)
+                          print(err.toString());
+                        }
+                      }
+                    },
+              child: Text("SIGN UP"),
+              style: isLoading
+                  ? ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.grey),
+                    )
+                  : null),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             login: false,
