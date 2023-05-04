@@ -17,4 +17,5 @@ class RequestURL {
   static const getSuggestedMatches =
       "http://localhost:4000/matching/getSuggestedMatches";
   static const updateUser = "http://localhost:4000/user/updateUser";
+  static const fetchAllClubs = "http://localhost:4000/club/getAllClubs"
 }
