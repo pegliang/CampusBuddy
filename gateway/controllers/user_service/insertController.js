@@ -57,6 +57,19 @@ async function registerController(req, res) {
     }
 }
 
+async function updateController(req, res) {
+
+
+    try {
+        await axios.post(process.env.USER_SERVICE_HOST + "/updateUser", req.body);
+        return res.status(200).json({message: "Success!"});
+    } catch (err) {
+        console.log(err);
+        return res.status(getHTTPErrorCode(err)).send();
+    }
+}
+
 module.exports = {
     registerController,
+    updateController
 }

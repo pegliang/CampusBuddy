@@ -13,6 +13,7 @@ const courseController = require("../controllers/user_service/courseController")
 
 router.post("/register", insertController.registerController);
 router.post("/login", loginController.loginController);
+router.post("/updateUser", insertController.updateController);
 
 router.get("/getUserAccountInfoByEmail", fetchController.fetchUserByEmailController);
 router.get("/getUserAccountInfoById", fetchController.fetchUserByIdController);

@@ -44,6 +44,48 @@ async function insertUser(registerRequest) {
 
 }
 
+async function updateUser(req) {
+    const {id, college, gpa, majors, minors, gradYear, courses, clubs, interests} = req;
+
+    const updated = {};
+    if (college) {
+        updated.college_name = college;
+    }
+    if (gpa) {
+        updated.gpa = gpa;
+    }
+    if (majors) {
+        updated.majors = majors;
+    }
+
+    if (minors) {
+        updated.minors = minors;
+    }
+
+    if (gradYear) {
+        updated.year = gradYear;
+    }
+
+    if (courses) {
+        updated.courses = courses;
+    }
+
+    if (clubs) {
+        updated.clubs = clubs;
+    }
+
+    if (interests) {
+        updated.interests = interests;
+    }
+    try {
+        return User.updateOne({_id: id}, updated);
+    } catch (err) {
+        throw err;
+    }
+
+}
+
 module.exports = {
     insertUser,
+    updateUser
 }

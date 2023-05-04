@@ -16,4 +16,5 @@ class RequestURL {
   static const swipe = "http://localhost:4000/matching/swipe";
   static const getSuggestedMatches =
       "http://localhost:4000/matching/getSuggestedMatches";
+  static const updateUser = "http://localhost:4000/user/updateUser";
 }
