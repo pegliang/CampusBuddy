@@ -69,6 +69,22 @@ async function registerController(req, res) {
     }
 }
 
+async function updateController(req, res) {
+    const id = req.body.id;
+    // bad request if these required fields are missing
+    if (!id)
+        return res.status(400).send();
+    // attempt to add the user to the database
+    try {
+        await db.updateUser(req.body)
+        return res.status(200).json({message: "Success!"})
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send();
+    } 
+}
+
 module.exports = {
     registerController,
+    updateController
 }

@@ -50,3 +50,27 @@ Future<void> registerRequest(
     rethrow;
   }
 }
+
+Future<void> updateUser(Map<String, dynamic> updatedVals) async {
+  final id = updatedVals["id"];
+
+  // no email or password field given
+  if (id == null) {
+    throw Exception("No ID");
+  }
+
+  try {
+    final res = await http.post(Uri.parse(RequestURL.updateUser),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(updatedVals));
+
+    final statusCode = res.statusCode;
+
+    if (statusCode != 200) {
+      throw Exception(
+          "Update User request failed with a status code of $statusCode");
+    }
+  } catch (err) {
+    rethrow;
+  }
+}
