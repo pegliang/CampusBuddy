@@ -33,7 +33,9 @@ async function getClubByNameController(req, res) {
 
 async function fetchAllClubsController(req, res) {
     try {
-        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `/getAllClubs`);
+        console.log("here");
+        const response = await axios.get(process.env.CLUB_SERVICE_HOST + `/getAllClub`);
+        
 
         if (!response || !response.data) return res.status(500).send();
 

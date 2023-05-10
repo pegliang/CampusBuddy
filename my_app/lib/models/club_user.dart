@@ -43,7 +43,7 @@ class ClubUser {
 
   factory ClubUser.fromJson(Map<String, dynamic> json) {
     return ClubUser(
-      clubname: json['username'] as String?,
+      clubname: json['name'] as String?,
       majors: jsonListToStringList(json['majors']),
       minors: jsonListToStringList(json['minors']),
       gender: jsonListToStringList(json['gender']),
@@ -57,6 +57,11 @@ class ClubUser {
   }
 
   static List<String> jsonListToStringList(dynamic field) {
+    if (field == null) {
+      return [];
+    }
+    print(field);
+
     List<dynamic> list = field as List<dynamic>;
     List<String> stringList = [];
     for (dynamic element in list) {
@@ -69,6 +74,7 @@ class ClubUser {
 
   Map<String, dynamic> toJson() {
     return {
+      'clubname': clubname,
       'username': username,
       'title': title,
       'majors': majors,
