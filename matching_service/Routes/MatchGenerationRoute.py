@@ -61,6 +61,8 @@ def suggestedMatches():
                 ]
     print(User.aggregate(pipeline=pipeline), file=sys.stderr)
     randUsersDicts = User.list_serialize(User.aggregate(pipeline))
+    if len(randUsersDicts) == 0:
+        return randUsersDicts
     similarity_scores = compare(primaryUser.serialize(), randUsersDicts)
     sortedUsers = sorted(similarity_scores, key=lambda x: x["similarity_score"], reverse=True)[:num_of_users]
 

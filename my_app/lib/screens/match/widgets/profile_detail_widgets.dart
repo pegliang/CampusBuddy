@@ -6,6 +6,7 @@ Widget front(User user) {
     height: 580,
     width: 340,
     padding: const EdgeInsets.symmetric(vertical: 10),
+    color: Colors.white,
     child: Stack(
       children: [
         Positioned.fill(
